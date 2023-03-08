@@ -1,5 +1,7 @@
 export default Object.freeze({
   LOGIN: "Login",
   REGISTRATION: "Registration",
-  HOME:"Home"
+  HOMENAV: "HomeNav",
+  HOME: "Home",
+  PROFILE:"Profile"
 })
