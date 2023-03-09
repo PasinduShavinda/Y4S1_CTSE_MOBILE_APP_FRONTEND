@@ -7,10 +7,8 @@ import AppFormField from "../../components/PetTraining/common/AppFormField";
 import colors from "../../utils/colors";
 import SubmitButton from "../../components/PetTraining/common/SubmitBUtton";
 import routes from "../../navigation/PetTraining/routes";
-import { registerUser } from "../../services/PetTraining/userService";
-// import routes from "../navigation/routes";
-// import { saveUser } from "../api/userService";
-// import { Snackbar } from "react-native-paper";
+import { registerUser, saveUser } from "../../services/PetTraining/userService";
+import { Snackbar } from "react-native-paper";
 
 export default function RegistrationScreen({ route, navigation }) {
   const validationSchema = Yup.object().shape({
@@ -35,9 +33,13 @@ export default function RegistrationScreen({ route, navigation }) {
     }
 
     await registerUser(data)
-      .then((response) => {
-        console.log("Done registering");
-        navigation.navigate(routes.LOGIN);
+      .then(async function (response) {
+        await saveUser(data,response.user.uid).then((response) => {
+          SetSnackVisible(true)
+          setTimeout(() => {
+            navigation.navigate(routes.LOGIN);
+          }, 2500);
+        });
       })
       .catch((error) => {
         console.log(error);
@@ -60,7 +62,10 @@ export default function RegistrationScreen({ route, navigation }) {
     <Screen>
       <ScrollView>
         <View>
-          <Image style={styles.logo} source={require("../../assets/logo.png")} />
+          <Image
+            style={styles.logo}
+            source={require("../../assets/logo.png")}
+          />
         </View>
         <View style={styles.form}>
           <AppForm
@@ -122,7 +127,7 @@ export default function RegistrationScreen({ route, navigation }) {
             </View>
           </AppForm>
         </View>
-        {/* <Snackbar
+        <Snackbar
           visible={snakVisible}
           onDismiss={() => SetSnackVisible(false)}
           duration={2000}
@@ -138,9 +143,9 @@ export default function RegistrationScreen({ route, navigation }) {
           <View>
             <Text style={styles.snackbar}>Registered Successfully.</Text>
           </View>
-        </Snackbar> */}
+        </Snackbar>
       </ScrollView>
-      {/* <Snackbar
+      <Snackbar
         visible={errorSnakVisible}
         onDismiss={() => SetErrorSnackVisible(false)}
         duration={2000}
@@ -161,7 +166,7 @@ export default function RegistrationScreen({ route, navigation }) {
               <Text style={styles.errsnackbar}>{error.password}</Text>
             ))}
         </View>
-      </Snackbar> */}
+      </Snackbar>
     </Screen>
   );
 }

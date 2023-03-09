@@ -9,6 +9,7 @@ const Tab = createBottomTabNavigator();
 export default function HomeNavigator() {
   return (
     <Tab.Navigator
+      
       screenOptions={{
         headerShown: false,
         tabBarStyle: { height: 60, backgroundColor: colors.lightPurple },
