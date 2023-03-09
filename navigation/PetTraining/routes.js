@@ -3,5 +3,10 @@ export default Object.freeze({
   REGISTRATION: "Registration",
   HOMENAV: "HomeNav",
   HOME: "Home",
-  PROFILE:"Profile"
-})
+  PROFILE: "Profile",
+  PROFILENAV: "ProfileNav",
+  TRAININGITEMNav: "TraingItemNav",
+  DETAILS: "Details",
+  REVIEW:"Review"
+
+});

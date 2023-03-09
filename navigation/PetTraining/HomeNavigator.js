@@ -4,6 +4,7 @@ import React from "react";
 import HomeScreen from "../../screens/PetTraining/HomeScreen";
 import ProfileScreen from "../../screens/PetTraining/ProfileScreen";
 import colors from "../../utils/colors";
+import ProfileNavigator from "./ProfileNavigator";
 
 const Tab = createBottomTabNavigator();
 export default function HomeNavigator() {
@@ -30,8 +31,8 @@ export default function HomeNavigator() {
         }}
       />
       <Tab.Screen
-        name="Profile"
-        component={ProfileScreen}
+        name="ProfileNav"
+        component={ProfileNavigator}
         options={{
           tabBarIcon: ({ focused, size, color }) => (
             <FontAwesome
