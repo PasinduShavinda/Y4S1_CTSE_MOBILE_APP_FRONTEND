@@ -267,10 +267,10 @@ export function AdminAddDoctor() {
                         <Text style={styles.titleStyle}>About</Text>
                         <InputField
                             placeholder="about"
-                            editable
-                            multiline
-                            numberOfLines={7}
-                            maxLength={100}
+                            // editable
+                            // multiline
+                            // numberOfLines={7}
+                            // maxLength={100}
                             onChangeText={setAbout}
                             value={about}
                             onFocus={() => handleError(null, 'about')}
@@ -395,5 +395,13 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         marginVertical: 10,
     },
+    inputContainer: {
+        height: 95,
+        backgroundColor: COLORS.light,
+        flexDirection: 'row',
+        paddingHorizontal: 15,
+        marginTop: 20
+        
+      },
 });
 

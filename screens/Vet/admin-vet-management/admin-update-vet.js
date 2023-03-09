@@ -3,6 +3,8 @@ import { View, Text, TextInput, TouchableOpacity, Image, Alert, StyleSheet, Safe
 import { fireDB } from '../../../database/firebaseConfig';
 import { updateDoc, doc } from 'firebase/firestore';
 import * as ImagePicker from 'expo-image-picker';
+import InputField from '../../../components/Vet/InputField';
+import COLORS from '../../../utils/Vet/colors';
 
 export function AdminUpdateVet({ route, navigation }) {
 
@@ -56,19 +58,21 @@ export function AdminUpdateVet({ route, navigation }) {
       about: newAbout,
       profilePicture: newProfilePicture,
     }).then(() => {
-      navigation.navigate('VetHome');
+      Alert.alert('Successfully Updated')
+      navigation.navigate('AdminViewDoc')
     }).catch((error) => {
       alert(error.message)
     })
   };
 
   return (
-    <SafeAreaView style={styles.mainSheet}>
+    <SafeAreaView style={{ backgroundColor: COLORS.white, flex: 1 }}>
       <View>
         <Text style={styles.createBogHeader}>Admin Update Doctor</Text>
       </View>
-      <ScrollView>
-        <View style={styles.bodySheet}>
+      <ScrollView
+        contentContainerStyle={{ paddingTop: 50, paddingHorizontal: 20 }}>
+        <View style={{ marginVertical: 20 }}>
           {imageUri && <Image source={{ uri: imageUri }} style={{ width: 200, height: 200 }} />}
           <TouchableOpacity onPress={handleChooseImage}>
             <Text>Choose Image</Text>
@@ -77,8 +81,7 @@ export function AdminUpdateVet({ route, navigation }) {
           {/* Name field */}
           <View>
             <Text style={styles.titleStyle}>Name</Text>
-            <TextInput
-              style={styles.input}
+            <InputField
               onChangeText={setNewName}
               value={newName}
               placeholder="name"
@@ -88,8 +91,7 @@ export function AdminUpdateVet({ route, navigation }) {
           {/* Specialization field */}
           <View>
             <Text style={styles.titleStyle}>Specialization</Text>
-            <TextInput
-              style={styles.input}
+            <InputField
               onChangeText={setNewSpec}
               value={newSpec}
               placeholder="specialization"
@@ -99,8 +101,7 @@ export function AdminUpdateVet({ route, navigation }) {
           {/* Mobile Number field */}
           <View>
             <Text style={styles.titleStyle}>Contact Number</Text>
-            <TextInput
-              style={styles.input}
+            <InputField
               onChangeText={setNewContact}
               value={newContact}
               placeholder="mobile"
@@ -111,8 +112,7 @@ export function AdminUpdateVet({ route, navigation }) {
           {/* Email field */}
           <View>
             <Text style={styles.titleStyle}>Email</Text>
-            <TextInput
-              style={styles.input}
+            <InputField
               onChangeText={setNewEmail}
               value={newEmail}
               placeholder="email"
@@ -123,8 +123,7 @@ export function AdminUpdateVet({ route, navigation }) {
           {/* Charges field */}
           <View>
             <Text style={styles.titleStyle}>Charges</Text>
-            <TextInput
-              style={styles.input}
+            <InputField
               onChangeText={setNewCharge}
               value={newCharge}
               placeholder="charges"
@@ -134,8 +133,7 @@ export function AdminUpdateVet({ route, navigation }) {
           {/* Experience field */}
           <View>
             <Text style={styles.titleStyle}>Experience</Text>
-            <TextInput
-              style={styles.input}
+            <InputField
               onChangeText={setNewExp}
               value={newExp}
               placeholder="experience"
@@ -145,8 +143,7 @@ export function AdminUpdateVet({ route, navigation }) {
           {/* Location field */}
           <View>
             <Text style={styles.titleStyle}>Location</Text>
-            <TextInput
-              style={styles.input}
+            <InputField
               onChangeText={setNewLoc}
               value={newLoc}
               placeholder="location"
@@ -157,7 +154,7 @@ export function AdminUpdateVet({ route, navigation }) {
           <View>
             <Text style={styles.titleStyle}>About</Text>
             <TextInput
-              style={styles.multiText}
+              style={styles.inputContainer}
               placeholder="about"
               editable
               multiline
@@ -167,16 +164,16 @@ export function AdminUpdateVet({ route, navigation }) {
               value={newAbout}
             />
           </View>
-			{/* UPDATE BUTTON */}
-      <View style={styles.createNewBtnMain}>
-        <Button
-          title="UPDATE"
-          onPress={handleUpdate}
-          style={styles.createNewBtn}
-          color="orange"
-        />
-      </View>
-          
+          {/* UPDATE BUTTON */}
+          <View style={styles.createNewBtnMain}>
+            <Button
+              title="UPDATE"
+              onPress={handleUpdate}
+              style={styles.createNewBtn}
+              color="orange"
+            />
+          </View>
+
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -275,6 +272,13 @@ const styles = StyleSheet.create({
     width: 150,
     height: 150,
     marginBottom: 10,
+  },
+  inputContainer: {
+    height: 95,
+    backgroundColor: COLORS.light,
+    flexDirection: 'row',
+    paddingHorizontal: 15,
+
   },
 });
 

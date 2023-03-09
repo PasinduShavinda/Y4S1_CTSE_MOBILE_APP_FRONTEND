@@ -28,7 +28,7 @@ const InputField = ({
           ]}>
           <Icon
             name={iconName}
-            style={{color: COLORS.darkBlue, fontSize: 22, marginRight: 10}}
+            style={{color: COLORS.darkBlue, fontSize: 32, marginRight: 10}}
           />
           <TextInput
             autoCorrect={false}
@@ -53,7 +53,7 @@ const InputField = ({
   const style = StyleSheet.create({
     label: {
       marginVertical: 5,
-      fontSize: 14,
+      fontSize: 24,
       color: COLORS.grey,
     },
     inputContainer: {
