@@ -148,11 +148,6 @@ export function AdminViewVets({ navigation }) {
         });
     };
 
-    // const handleDelete = () => {
-    //     fireDB.collection('users').doc(route.params.id).delete();
-    //     navigation.goBack();
-    //   };
-
     return (
         <View style={styles.mainSheet}>
             <FlatList

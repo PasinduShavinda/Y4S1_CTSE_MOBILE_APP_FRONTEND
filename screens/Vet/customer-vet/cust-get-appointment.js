@@ -15,7 +15,7 @@ import {
 //import Icon from "react-native-vector-icons/FontAwesome";
 import InputField from '../../../components/Vet/InputField';
 import COLORS from '../../../utils/Vet/colors';
-import { fireDB, fireStorage } from '../../../database/firebaseConfig';
+import { fireDB } from '../../../database/firebaseConfig';
 import { collection, addDoc, doc } from "firebase/firestore";
 
 export function GetAppointment() {
