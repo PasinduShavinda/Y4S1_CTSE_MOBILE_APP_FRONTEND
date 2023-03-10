@@ -32,8 +32,17 @@ export function VetHome({ navigation }) {
 
                 <View style={styles.createNewBtnMain}>
                     <Button
-                        title="View Doctor"
+                        title="Admin View Doctor"
                         onPress={() => navigation.navigate('AdminViewDoc')}
+                        style={styles.createNewBtn}
+                        color="blue"
+                    />
+                </View>
+
+                <View style={styles.createNewBtnMain}>
+                    <Button
+                        title="Customer Get Appointment"
+                        onPress={() => navigation.navigate('GetAppointment')}
                         style={styles.createNewBtn}
                         color="blue"
                     />
