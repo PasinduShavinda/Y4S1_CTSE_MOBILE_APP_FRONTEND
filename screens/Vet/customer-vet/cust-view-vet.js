@@ -15,15 +15,18 @@ import {
     Sepe,
     ActivityIndicator
 } from 'react-native';
-import { Card, Icon } from 'react-native-elements'
+import { Icon } from 'react-native-elements'
 import { Couches } from './Couches';
 import { fireDB } from '../../../database/firebaseConfig';
-import { getDocs, collection, doc } from "firebase/firestore";
+import { getDocs, collection } from "firebase/firestore";
 
 export function CustViewDoc({ navigation }) {
 
     const [vets, setVets] = useState([]);
+    const [search, setSearch] = useState("");
+    const [filteredVets, setFilteredVets] = useState([]);
     const [isLoading, setIsLoading] = useState(true)
+
 
     useEffect(() => {
         const loadVets = async () => {
@@ -42,26 +45,38 @@ export function CustViewDoc({ navigation }) {
         loadVets();
     }, []);
 
+    // Search
+    useEffect(() => {
+        setFilteredVets(
+            vets.filter(
+                (vet) =>
+                    vet.name.toLowerCase().includes(search.toLowerCase()) ||
+                    vet.spec.toLowerCase().includes(search.toLowerCase()) ||
+                    vet.contact.toLowerCase().includes(search.toLowerCase())
+            )
+        );
+    }, [search, vets]);
+
+
     if (isLoading) {
         return <View style={[styles.container, styles.horizontal]}>
             <ActivityIndicator size="large" />
         </View>;
     }
-    const renderVetItem = ({ item }) => (
-        <View>
-            <Couches
-                src={{ uri: item.profilePicture }}
-                name={item.name}
-                spec={item.spec}
-                contact={item.contact}
-                onPress={() => this.props.navigation.navigate('')}
-            />
-        </View>
-    );
+    // const renderVetItem = ({ item }) => (
+    //     <View>
+    //         <Couches
+    //             src={{ uri: item.profilePicture }}
+    //             name={item.name}
+    //             spec={item.spec}
+    //             contact={item.contact}
+    //             onPress={() => this.props.navigation.navigate('')}
+    //         />
+    //     </View>
+    // );
 
     return (
         <ScrollView
-            showsVerticalScrollIndicator={false}
             style={{
                 backgroundColor: "#fff",
                 paddingHorizontal: 20
@@ -75,23 +90,11 @@ export function CustViewDoc({ navigation }) {
             }}>
                 <View>
                     <Text style={{
-                        //fontFamily:"calibri",
                         fontSize: 22,
                         textAlign: "center",
                     }}>Vetrinaries
                     </Text>
                 </View>
-                {/* <View style={{
-                        width:"50%",
-                        alignItems:"flex-end"
-                    }}>
-                        <Image
-                          source={{
-                            uri: 'https://img.freepik.com/free-photo/attractive-young-male-nutriologist-lab-coat-smiling-against-white-background_662251-2960.jpg',
-                        }}
-                          style={{width:16,height:20}}
-                        />
-                    </View> */}
             </View>
 
             <View style={{
@@ -117,44 +120,20 @@ export function CustViewDoc({ navigation }) {
                     />
                     <TextInput
                         placeholder="Search Vetrinaries"
+                        onChangeText={(text) => setSearch(text)}
                         style={{
-                            //fontFamily:"Medium",
                             paddingHorizontal: 20,
                             fontSize: 12
                         }}
                     />
                 </View>
-
-
-                {/* <View style={{
-                                alignItems:"center",
-                                elevation:2,
-                                width:"15%",
-                                backgroundColor:"#FFF",
-                                marginLeft:5,
-                                height:35,
-                                borderRadius:10,
-                                marginLeft:1,
-                                justifyContent:"center"
-                            }}>
-                                <Image
-                                source={require('../images/sort.png')}
-                                style={{
-                                    width:18,height:25
-                                }}
-                                />
-                            </View> */}
-
             </View>
-
-
             <View style={{
                 flexDirection: "row",
                 width: "100%",
                 alignItems: "center"
             }}>
                 <Text style={{
-                    //fontFamily:"calibri",
                     fontSize: 18,
                     color: "#4f4a4a"
                 }}>
@@ -166,45 +145,27 @@ export function CustViewDoc({ navigation }) {
                 horizontal
                 showsHorizontalScrollIndicator={false}
             >
-                {/* <Couches
-                    // source={{
-                    //     uri: 'https://img.freepik.com/free-photo/attractive-young-male-nutriologist-lab-coat-smiling-against-white-background_662251-2960.jpg',
-                    // }}
-                    src={{ uri: 'https://img.freepik.com/free-photo/attractive-young-male-nutriologist-lab-coat-smiling-against-white-background_662251-2960.jpg' }}
-                    name="Dr. Ashan Silva"
-                    spec="Vetrinary Sergeon"
-                    contact="0119090987"
-                    onPress={() => this.props.navigation.navigate('')}
-                />
-                <Couches
-                    // source={{
-                    //     uri: 'https://img.freepik.com/free-photo/attractive-young-male-nutriologist-lab-coat-smiling-against-white-background_662251-2960.jpg',
-                    // }}
-                    src={{ uri: 'https://img.freepik.com/free-photo/attractive-young-male-nutriologist-lab-coat-smiling-against-white-background_662251-2960.jpg' }}
-                    name="Dr. Anusha Perera"
-                    spec="Vetrinary Dentist"
-                    contact="0119090987"
-                    onPress={() => this.props.navigation.navigate('')}
-
-                />
-                <Couches
-                    // source={{
-                    //     uri: 'https://img.freepik.com/free-photo/attractive-young-male-nutriologist-lab-coat-smiling-against-white-background_662251-2960.jpg',
-                    // }}
-                    src={{ uri: 'https://img.freepik.com/free-photo/attractive-young-male-nutriologist-lab-coat-smiling-against-white-background_662251-2960.jpg' }}
-                    name="Dr. Naween Asanka"
-                    spec="Vetrinary Neurologist"
-                    contact="0119090987"
-                    onPress={() => this.props.navigation.navigate('')}
-
-                /> */}
-        
-                    <FlatList
-                        data={vets}
-                        renderItem={renderVetItem}
-                        keyExtractor={(item) => item.id}
-                    />
-
+                {filteredVets.map((v) => [
+                    <View>
+                        <Couches
+                            src={{ uri: v.profilePicture }}
+                            name={v.name}
+                            spec={v.spec}
+                            contact={v.contact}
+                            email={v.email}
+                            charge={v.charge}
+                            exp={v.exp}
+                            about={v.about}
+                            loc = {v.loc}
+                            onPress={() => this.props.navigation.navigate('')}
+                        />
+                    </View>
+                ])}
+                {/* <FlatList
+                    data={vets}
+                    renderItem={renderVetItem}
+                    keyExtractor={(item) => item.id}
+                ></FlatList> */}
             </ScrollView>
 
 
@@ -227,75 +188,91 @@ export function CustViewDoc({ navigation }) {
 
 
 
+            {/* <View style={{
+                flexDirection: "row",
+                marginTop: 30,
+                marginBottom: 10,
+                alignItems: "center"
+            }}>
+                <Text style={{
+                    //fontFamily:"Open Sans",
+                    color: "#4f4a4a",
+                    fontSize: 20
+                }}>
+                    New Arrivals
+                </Text>
+                <View style={{
+                    height: 5,
+                    width: 5,
+                    borderRadius: 5,
+                    backgroundColor: "#4f4a4a",
+                    marginHorizontal: 4
+                }}>
+                </View>
+                <Text style={{
+                    //fontFamily:"calibri",
+                    fontSize: 10,
+                    color: "#4f4a4a"
+                }}>
+                    Good Quality items
+                </Text>
+            </View> */}
 
+            {/* <ScrollView
+                horizontal
+                showsHorizontalScrollIndicator={false}
+            >
 
-            {/* 
-                    <View style={{
-                        flexDirection:"row",
-                        marginTop:30,
-                        marginBottom:10,
-                        alignItems:"center"
-                    }}>
-                        <Text style={{
-                            //fontFamily:"Open Sans",
-                            color:"#4f4a4a",
-                            fontSize:20
-                        }}>
-                            New Arrivals
-                        </Text>
-                        <View style={{
-                            height:5,
-                            width:5,
-                            borderRadius:5,
-                            backgroundColor:"#4f4a4a",
-                            marginHorizontal:4
-                        }}>
-                        </View>
-                        <Text style={{
-                            //fontFamily:"calibri",
-                            fontSize:10,
-                            color:"#4f4a4a"
-                        }}>
-                            Good Quality items
-                        </Text>
-                    </View> */}
+                <Image style={{
+                    width: 170,
+                    height: 110,
+                    borderRadius: 10
+                }}
+                    source={{
+                        uri: 'https://www.w3schools.com/howto/img_avatar2.png',
+                    }}
+                />
 
-            {/* <ScrollView 
-                    horizontal
-                    showsHorizontalScrollIndicator={false}
-                    >
+                <Image style={{
+                    width: 170,
+                    height: 110,
+                    borderRadius: 10
+                }}
+                    source={{
+                        uri: 'https://www.w3schools.com/howto/img_avatar2.png',
+                    }}
+                />
 
-                        <New
-                         src={require('../images/sofa.png')}
-                        />
-                        <New
-                        src={require('../images/lr.png')}
-                        />
-                        <New
-                        src={require('../images/sofa.png')}
-                        />
-                    </ScrollView> */}
+                <Image style={{
+                    width: 170,
+                    height: 110,
+                    borderRadius: 10
+                }}
+                    source={{
+                        uri: 'https://www.w3schools.com/howto/img_avatar2.png',
+                    }}
+                />
+
+            </ScrollView> */}
 
             {/* <Text style={{
-                        marginTop:20,
-                        color:"#4f4a4a",
-                        fontSize:18,
-                        //fontFamily:"calibri"
-                    }}>
-                        Best Sellers
-                    </Text> */}
+                marginTop: 20,
+                color: "#4f4a4a",
+                fontSize: 18,
+                //fontFamily:"calibri"
+            }}>
+                Best Sellers
+            </Text> */}
 
 
             {/* <ScrollView
-            showsHorizontalScrollIndicator={false}
-            horizontal>
-
+                showsHorizontalScrollIndicator={false}
+                horizontal>
+                
                     <Best/>
                     <Best/>
                     <Best/>
             </ScrollView> */}
-
-
         </ScrollView>
     );
 }

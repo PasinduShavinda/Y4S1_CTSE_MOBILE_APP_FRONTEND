@@ -1,17 +1,16 @@
 import React from 'react';
-import { Text, View, Imag, TouchableOpacity, Image } from 'react-native';
+import { Text, View, TouchableOpacity, Image } from 'react-native';
+import { Icon, FontAwesomeIcon } from 'react-native-elements'
 
 export function Couches(props) {
-    const src = props.src;
-    const name = props.name;
     return (
         <TouchableOpacity
             // onPress={this.props.onPress}
             style={{
                 marginTop: 30,
                 backgroundColor: "#FFF",
-                height: 250,
-                width: 200,
+                height: 550,
+                width: 260,
                 elevation: 2,
                 borderRadius: 10,
                 padding: 15,
@@ -23,8 +22,8 @@ export function Couches(props) {
             <Image
                 source={props.src}
                 style={{
-                    width: 170,
-                    height: 110,
+                    width: 230,
+                    height: 250,
                     borderRadius: 10
                 }}
             />
@@ -36,7 +35,7 @@ export function Couches(props) {
                 <Text style={{
                     // fontFamily: "Bold",
                     color: "#4f4a4a",
-                    fontSize: 12
+                    fontSize: 17
                 }}>
                     {props.name}
                 </Text>
@@ -49,30 +48,22 @@ export function Couches(props) {
                 }}>
 
                 </View>
-                <Text style={{
+                {/* <Text style={{
                     color: "red",
                     fontSize: 9,
                     // fontFamily: "Bold"
                 }}>
                     New
-                </Text>
+                </Text> */}
 
             </View>
             <Text style={{
-                    // fontFamily: "Bold",
-                    color: "#4f4a4a",
-                    fontSize: 12
-                }}>
-                    {props.spec}
-                </Text>
-
-            {/* <Text style={{
-                fontSize: 9,
-                color: "#4f4a4a",
-                // fontFamily: "Regular"
+                color: "red",
+                fontSize: 18,
+                // fontFamily: "Bold"
             }}>
-                Full
-            </Text> */}
+                {props.spec}
+            </Text>
 
             <View style={{
                 flexDirection: "row",
@@ -80,13 +71,132 @@ export function Couches(props) {
                 alignItems: "center",
                 width: "100%"
             }}>
-                <View style={{
-                    width: "80%"
-                }}>
+                <Icon
+                    name="phone"
+                    underlayColor="transparent"
+                // onPress={this.onPressPlace}
+                />
+                <View>
                     <Text style={{
                         fontSize: 15,
                         // fontFamily: "Bold"
-                    }}>contact: {props.contact}</Text>
+                    }}>{props.contact}</Text>
+                </View>
+                <View style={{
+                    width: "20%"
+                }}>
+                </View>
+            </View>
+
+
+            <View style={{
+                flexDirection: "row",
+                marginTop: 5,
+                alignItems: "center",
+                width: "100%"
+            }}>
+                <Icon
+                    name="email"
+                    underlayColor="transparent"
+                // onPress={this.onPressPlace}
+                />
+                <View>
+                    <Text style={{
+                        fontSize: 15,
+                        // fontFamily: "Bold"
+                    }}>{props.email}</Text>
+                </View>
+                <View style={{
+                    width: "20%"
+                }}>
+                </View>
+            </View>
+
+            <View style={{
+                flexDirection: "row",
+                marginTop: 5,
+                alignItems: "center",
+                width: "100%"
+            }}>
+                <Icon
+                    name="place"
+                    underlayColor="transparent"
+                // onPress={this.onPressPlace}
+                />
+                <View>
+                    <Text style={{
+                        fontSize: 15,
+                        // fontFamily: "Bold"
+                    }}>{props.loc}</Text>
+                </View>
+                <View style={{
+                    width: "20%"
+                }}>
+                </View>
+            </View>
+
+            <View style={{
+                flexDirection: "row",
+                marginTop: 5,
+                alignItems: "center",
+                width: "100%"
+            }}>
+                <Icon
+                    name=""
+                    underlayColor="transparent"
+                // onPress={this.onPressPlace}
+                />
+                <View>
+                    <Text style={{
+                        fontSize: 15,
+                        // fontFamily: "Bold"
+                    }}>Charges : LKR {props.charge}</Text>
+                </View>
+                <View style={{
+                    width: "20%"
+                }}>
+                </View>
+            </View>
+            
+            <View style={{
+                flexDirection: "row",
+                marginTop: 5,
+                alignItems: "center",
+                width: "100%"
+            }}>
+                <Icon
+                    name=""
+                    underlayColor="transparent"
+                // onPress={this.onPressPlace}
+                />
+                <View>
+                    <Text style={{
+                        fontSize: 15,
+                        // fontFamily: "Bold"
+                    }}>Experience : {props.exp}</Text>
+                </View>
+                <View style={{
+                    width: "20%"
+                }}>
+                </View>
+            </View>
+
+            <View style={{
+                flexDirection: "row",
+                marginTop: 5,
+                alignItems: "center",
+                width: "100%"
+            }}>
+                <Icon
+                    name=""
+                    underlayColor="transparent"
+                // onPress={this.onPressPlace}
+                />
+                <View>
+                    <Text style={{
+                        fontSize: 15,
+                        // fontFamily: "Bold"
+                    }}>About : {props.about}</Text>
                 </View>
                 <View style={{
                     width: "20%"
