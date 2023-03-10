@@ -5,14 +5,17 @@ import colors from "../../utils/colors";
 
 const Tab = createMaterialTopTabNavigator();
 
-export default function ItemTopNavigator() {
+export default function ItemTopNavigator({ route }) {
+   const { item } = route.params;
   return (
     <Tab.Navigator
       screenOptions={{
         tabBarIndicatorStyle: { backgroundColor: colors.primary}, 
       }}
     >
-      <Tab.Screen name="Details" component={TrainingItemScreen} />
+      <Tab.Screen name="Details">
+        {(props)=> <TrainingItemScreen {...props} item={item} />}
+      </Tab.Screen>
       <Tab.Screen name="Review" component={ReviewScreen} />
     </Tab.Navigator>
   );

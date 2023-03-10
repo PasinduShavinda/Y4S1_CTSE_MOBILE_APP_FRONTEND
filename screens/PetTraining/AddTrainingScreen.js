@@ -15,12 +15,16 @@ import AppFormField from "../../components/PetTraining/common/AppFormField";
 import Checkbox from "../../components/PetTraining/common/Checkbox";
 import SubmitButton from "../../components/PetTraining/common/SubmitBUtton";
 import imageUpload from "../../services/PetTraining/imageUpload";
-import addTraining from "../../services/PetTraining/trainingService";
+import { addTraining } from "../../services/PetTraining/trainingService";
 import { Snackbar } from "react-native-paper";
+import { auth } from "../../database/firebaseConfig";
+import MapScreen from "./SelectLocationScreen";
 
 export default function AddTrainingScreen() {
   const [isLoading, setIsLoding] = useState(false);
   const [isSnackbarVisible, setIsSnackbarVisible] = useState(false);
+  const [location, setLocation] = useState(null);
+  const user = auth.currentUser;
 
   const validationSchema = Yup.object().shape({
     images: Yup.array()
@@ -28,6 +32,8 @@ export default function AddTrainingScreen() {
       .required()
       .label("Images"),
     description: Yup.string().required().label("Description"),
+    experience: Yup.string().required().label("Experience"),
+    locationDetails: Yup.string().required().label("Location Details"),
   });
 
   const [typeCheckboxes, setTypeCheckboxes] = useState([
@@ -43,9 +49,13 @@ export default function AddTrainingScreen() {
   };
 
   const [ageCheckboxes, setAgeCheckboxes] = useState([
-    { label: "3months - 1year", checked: false },
-    { label: "1year - 3year", checked: false },
-    { label: "3+ years", checked: false },
+    {
+      label: "3months - 1year",
+      icon: "clock-time-two-outline",
+      checked: false,
+    },
+    { label: "1year - 3year", icon: "clock-time-four-outline", checked: false },
+    { label: "3+ years", icon: "clock-time-seven-outline", checked: false },
   ]);
 
   const handleAgeCheckboxChange = (index) => {
@@ -79,18 +89,20 @@ export default function AddTrainingScreen() {
       .map((c) => age.push({ lable: c.label }));
     sizeCheckboxes
       .filter((t) => t.checked)
-      .map((c) => size.push({ lable: c.label, icon: c.icon, size: c.size}));
+      .map((c) => size.push({ lable: c.label, icon: c.icon, size: c.size }));
 
     await imageUpload(values.images)
       .then(async (response) => {
         const data = {
+          userId: user.uid,
           description: values.description,
           experience: values.experience,
           images: [...response],
           petType: type,
           petAge: age,
           petSize: size,
-          Location: "Gampaha",
+          location: location,
+          locationDetails: values.locationDetails,
         };
         await addTraining(data)
           .then(() => {
@@ -106,6 +118,14 @@ export default function AddTrainingScreen() {
         setIsLoding(false);
         console.log("Error", error);
       });
+  };
+  const saveLocation = (marker) => {
+    const newMarker = {
+      latitude: marker.latitude,
+      longitude: marker.longitude,
+    };
+    setLocation(newMarker);
+    console.log(marker);
   };
 
   return (
@@ -124,6 +144,7 @@ export default function AddTrainingScreen() {
               images: [],
               description: "",
               experience: "",
+              locationDetails: "",
             }}
             onSubmit={(values) => handleSubmit(values)}
             validationSchema={validationSchema}
@@ -139,6 +160,7 @@ export default function AddTrainingScreen() {
                 multiline
                 numberOfLines={4}
                 height={90}
+                placeholder="Give a breaf description"
               />
               <Text style={styles.text}>Training Experience</Text>
               <AppFormField
@@ -147,6 +169,7 @@ export default function AddTrainingScreen() {
                 multiline
                 numberOfLines={4}
                 height={90}
+                placeholder="Enter your training experience"
               />
               <Text style={styles.text}>Accepting Pet Type</Text>
               <View style={styles.checkbox}>
@@ -182,7 +205,16 @@ export default function AddTrainingScreen() {
                 ))}
               </View>
               <Text style={styles.text}>Location</Text>
+              <AppFormField
+                maxLength={255}
+                name="locationDetails"
+                multiline
+                numberOfLines={4}
+                height={90}
+                placeholder="Enter location details"
+              />
             </View>
+            <MapScreen onSave={saveLocation} style={styles.map} />
             <SubmitButton
               title={"submit"}
               style={styles.submitButton}
@@ -242,5 +274,11 @@ const styles = StyleSheet.create({
   snackBarText: {
     color: colors.white,
     fontSize: 15,
+  },
+  map: {
+    height: 400,
+    width: "99%",
+    marginBottom: 10,
+    marginTop: -20,
   },
 });

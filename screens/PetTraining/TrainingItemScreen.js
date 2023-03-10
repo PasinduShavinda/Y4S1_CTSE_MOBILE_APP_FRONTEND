@@ -14,8 +14,11 @@ import colors from "../../utils/colors";
 import Rating from "../../components/PetTraining/Rating";
 import AppButton from "../../components/PetTraining/common/AppButton";
 import { ImageSlider } from "react-native-image-slider-banner";
+import Map from "../../components/PetTraining/Map";
+import { auth } from "../../database/firebaseConfig";
 
-export default function TrainingItemScreen() {
+export default function TrainingItemScreen({ item }) {
+  console.log(item);
   const [user, setUser] = useState({});
   const [refreshing, setRefreshing] = useState(false);
   async function getCurrentUser() {
@@ -24,6 +27,13 @@ export default function TrainingItemScreen() {
       setRefreshing(false);
     });
   }
+  const imageData = [];
+  const images = [...item.images];
+  images.forEach((image) => {
+    imageData.push({ img: image });
+  });
+  const types = [...item.petType];
+
   useEffect(() => {
     getCurrentUser();
   }, []);
@@ -40,18 +50,9 @@ export default function TrainingItemScreen() {
       >
         <View style={styles.imageContainer}>
           <ImageSlider
-            data={[
-              {
-                img: "https://firebasestorage.googleapis.com/v0/b/ctse-mobile-app.appspot.com/o/petTraining%2Fafb17b0d-b952-4637-b0d3-1ed0e3ac3839.jpeg?alt=media&token=e44e3717-0269-4314-9dbd-c182c6225476",
-                
-              },
-              {
-                img: "https://firebasestorage.googleapis.com/v0/b/ctse-mobile-app.appspot.com/o/petTraining%2Fa3594b63-842b-4cb9-aba9-a188aef7383d.jpeg?alt=media&token=6b0c3610-e93f-42b9-a3c5-cada8fe5172d",
-              },
-            ]}
+            data={imageData}
             autoPlay={true}
             closeIconColor={colors.primary}
-            
           />
         </View>
         {/* 2 */}
@@ -65,67 +66,83 @@ export default function TrainingItemScreen() {
             <AppButton title={"Contact"} style={styles.contactBtn} />
             <Rating />
           </View>
-          <View style={styles.like}>
-            <MaterialCommunityIcons
-              name="cards-heart"
-              size={33}
-              color={colors.primary}
-            />
-            <Text style={[{ fontSize: 16, fontWeight: "bold" }]}>6</Text>
-          </View>
+          {auth.currentUser.uid == item.userId && (
+            <View style={styles.like}>
+              <MaterialCommunityIcons
+                name="file-document-edit"
+                size={33}
+                color={colors.primary}
+              />
+              <MaterialCommunityIcons
+                style={{ marginLeft: 15 }}
+                name="delete"
+                size={33}
+                color={colors.primary}
+              />
+            </View>
+          )}
         </View>
         {/* 3 */}
         <View>
           <View>
             <Text style={styles.secHeading}>Description</Text>
-            <Text style={styles.secText}>
-              Material Top Tabs is a component in Material Design that displays
-              a horizontal row of tabs at the top of a screen, allowing users to
-              switch between different sections or views of an app.
-            </Text>
+            <Text style={styles.secText}>{item.description}</Text>
           </View>
           <View>
             <Text style={styles.secHeading}>Training Experience</Text>
-            <Text style={styles.secText}>
-              Material Top Tabs is a component in Material Design that displays
-              a horizontal row of tabs at the top of a screen, allowing users to
-              switch between different sections or views of an app.
-            </Text>
+            <Text style={styles.secText}>{item.experience}</Text>
           </View>
           <View>
             <Text style={styles.secHeading}>Accepting Pet Types</Text>
-            <Text style={styles.secText}>Dogs</Text>
-            <Text style={styles.secText}>Cats</Text>
-            <Text style={styles.secText}>Others</Text>
+            {item.petType.map((type, index) => {
+              return (
+                <View
+                  key={index}
+                  style={{ flexDirection: "row", marginLeft: 10 }}
+                >
+                  <MaterialCommunityIcons name={type.icon} size={20} />
+                  <Text style={styles.secText}>{type.lable}</Text>
+                </View>
+              );
+            })}
           </View>
           <View>
             <Text style={styles.secHeading}>Accepting Pet Age</Text>
-            <Text style={styles.secText}>3months</Text>
-            <Text style={styles.secText}>Over 1year</Text>
-            <Text style={styles.secText}>Any</Text>
+            {item.petAge.map((type, index) => {
+              return (
+                <View
+                  key={index}
+                  style={{ flexDirection: "row", marginLeft: 10 }}
+                >
+                  <MaterialCommunityIcons name={type.icon} size={20} />
+                  <Text style={styles.secText}>{type.lable}</Text>
+                </View>
+              );
+            })}
           </View>
           <View>
             <Text style={styles.secHeading}>Accepting Pet Size</Text>
-            <Text style={styles.secText}>1-5KG</Text>
-            <Text style={styles.secText}>5-10KG</Text>
-            <Text style={styles.secText}>10+KG</Text>
+            {item.petSize.map((type, index) => {
+              return (
+                <View
+                  key={index}
+                  style={{ flexDirection: "row", marginLeft: 10 }}
+                >
+                  <MaterialCommunityIcons name={type.icon} size={type.size} />
+                  <Text style={styles.secText}>{type.lable}</Text>
+                </View>
+              );
+            })}
           </View>
         </View>
         {/* 3 */}
         <View>
           <View>
             <Text style={styles.secHeading}>Location</Text>
-            <Text style={styles.secText}>
-              Material Top Tabs is a component in Material Design that displays
-              a horizontal row of tabs at the top of a screen, allowing users to
-              switch between different sections or views of an app.
-            </Text>
+            <Text style={styles.secText}>{item.locationDetails}</Text>
           </View>
           <View>
-            <Image
-              style={styles.item2}
-              source={require("../../assets/location.jpg")}
-            />
+            <Map location={item.location} style={styles.map} />
           </View>
         </View>
       </ScrollView>
@@ -173,5 +190,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginTop: -40,
+    justifyContent: "space-between",
+    marginLeft: -10,
+    
+  },
+  map: {
+    height: 400,
+    width: "99%",
+    marginBottom: 10,
   },
 });

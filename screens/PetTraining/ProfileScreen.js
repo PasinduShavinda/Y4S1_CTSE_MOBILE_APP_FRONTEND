@@ -7,22 +7,45 @@ import {
   ScrollView,
   TouchableHighlight,
   Touchable,
+  RefreshControl,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Screen from "../../components/PetTraining/common/Screen";
 import { auth } from "../../database/firebaseConfig";
 import { currentUser } from "../../services/PetTraining/userService";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import routes from "../../navigation/PetTraining/routes";
 import colors from "../../utils/colors";
+import { getAllTrainings } from "../../services/PetTraining/trainingService";
 
 export default function ProfileScreen({ navigation }) {
   const [user, setUser] = useState({});
+  const [listings, setListings] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
+
   async function getCurrentUser() {
-    await currentUser().then((res) => {
+    await currentUser().then(async (res) => {
       setUser(res.data());
     });
   }
+  const getAll = async () => {
+    const listings = [];
+    await getAllTrainings()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((snapshot) => {
+          if (auth.currentUser.uid == snapshot.data().userId) {
+            listings.push(snapshot.data());
+          }
+        });
+      setRefreshing(false);
+
+      })
+      .catch((error) => {
+        console.log("Error: ", error);
+      });
+    setListings(listings);
+  };
+
   const signOut = async () => {
     await auth
       .signOut()
@@ -37,115 +60,106 @@ export default function ProfileScreen({ navigation }) {
   };
   useEffect(() => {
     getCurrentUser();
+    getAll();
   }, []);
-
+const onRefresh = useCallback(() => {
+  setRefreshing(true);
+  getCurrentUser();
+  getAll();
+}, []);
   return (
     <Screen>
-      <View style={styles.user}>
-        <Image
-          style={styles.avatar}
-          source={require("../../assets/avatar.png")}
-        />
-        <View style={{ flex: 1 }}>
-          <Text style={styles.name}>{user.name}</Text>
-          <Text>Edit </Text>
+      <ScrollView
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >
+        <View style={styles.user}>
+          <Image
+            style={styles.avatar}
+            source={require("../../assets/avatar.png")}
+          />
+          <View style={{ flex: 1 }}>
+            <Text style={styles.name}>{user.name}</Text>
+            <Text>Edit </Text>
+          </View>
+          <MaterialCommunityIcons
+            name="logout"
+            size={40}
+            onPress={() => {
+              Alert.alert("Sign Out", "Are you sure want sign out?", [
+                {
+                  text: "Sign Out",
+                  onPress: () => signOut(),
+                },
+                {
+                  text: "Cancel",
+                  onPress: () => {},
+                },
+              ]);
+            }}
+          />
         </View>
-        <MaterialCommunityIcons
-          name="logout"
-          size={40}
-          onPress={() => {
-            Alert.alert("Sign Out", "Are you sure want sign out?", [
-              {
-                text: "Sign Out",
-                onPress: () => signOut(),
-              },
-              {
-                text: "Cancel",
-                onPress: () => {},
-              },
-            ]);
-          }}
-        />
-      </View>
-      {/* end of upper section */}
-      <View style={styles.addListings}>
-        <Text style={styles.secHeading}>Add New Listings</Text>
-        <View style={styles.itemRow}>
-          <TouchableHighlight
-            underlayColor={colors.lightPurple}
-            onPress={() => navigation.navigate(routes.ADDTRAINING)}
-          >
-            <View style={styles.itemwithText}>
-              <Image
-                style={styles.item}
-                source={require("../../assets/training.png")}
-              />
-              <Text style={styles.itemText}>Training</Text>
-            </View>
-          </TouchableHighlight>
-          <TouchableHighlight>
-            <View style={styles.itemwithText}>
-              <Image style={styles.item} />
-              <Text style={styles.itemText}>Sitting</Text>
-            </View>
-          </TouchableHighlight>
-          <TouchableHighlight>
-            <View style={styles.itemwithText}>
-              <Image style={styles.item} />
-              <Text style={styles.itemText}>Selling</Text>
-            </View>
-          </TouchableHighlight>
-          <TouchableHighlight>
-            <View style={styles.itemwithText}>
-              <Image style={styles.item} />
-              <Text style={styles.itemText}>Vat</Text>
-            </View>
-          </TouchableHighlight>
-        </View>
-      </View>
-      <View style={styles.myListings}>
-        <Text style={styles.secHeading}>My Listings</Text>
-        <ScrollView horizontal={true}>
+        {/* end of upper section */}
+        <View style={styles.addListings}>
+          <Text style={styles.secHeading}>Add New Listings</Text>
           <View style={styles.itemRow}>
             <TouchableHighlight
               underlayColor={colors.lightPurple}
-              onPress={() => navigation.navigate(routes.TRAININGITEMNav)}
+              onPress={() => navigation.navigate(routes.ADDTRAINING)}
             >
-              <Image
-                style={styles.item2}
-                source={require("../../assets/item.jpg")}
-              />
+              <View style={styles.itemwithText}>
+                <Image
+                  style={styles.item}
+                  source={require("../../assets/training.png")}
+                />
+                <Text style={styles.itemText}>Training</Text>
+              </View>
             </TouchableHighlight>
-            <TouchableHighlight
-              underlayColor={colors.lightPurple}
-              onPress={() => navigation.navigate(routes.TRAININGITEMNav)}
-            >
-              <Image
-                style={styles.item2}
-                source={require("../../assets/item.jpg")}
-              />
+            <TouchableHighlight>
+              <View style={styles.itemwithText}>
+                <Image style={styles.item} />
+                <Text style={styles.itemText}>Sitting</Text>
+              </View>
             </TouchableHighlight>
-            <TouchableHighlight
-              underlayColor={colors.lightPurple}
-              onPress={() => navigation.navigate(routes.TRAININGITEMNav)}
-            >
-              <Image
-                style={styles.item2}
-                source={require("../../assets/item.jpg")}
-              />
+            <TouchableHighlight>
+              <View style={styles.itemwithText}>
+                <Image style={styles.item} />
+                <Text style={styles.itemText}>Selling</Text>
+              </View>
             </TouchableHighlight>
-            <TouchableHighlight
-              underlayColor={colors.lightPurple}
-              onPress={() => navigation.navigate(routes.TRAININGITEMNav)}
-            >
-              <Image
-                style={styles.item2}
-                source={require("../../assets/item.jpg")}
-              />
+            <TouchableHighlight>
+              <View style={styles.itemwithText}>
+                <Image style={styles.item} />
+                <Text style={styles.itemText}>Vat</Text>
+              </View>
             </TouchableHighlight>
           </View>
-        </ScrollView>
-      </View>
+        </View>
+        <View style={styles.myListings}>
+          <Text style={styles.secHeading}>My Listings</Text>
+          <ScrollView horizontal={true}>
+            <View style={styles.itemRow}>
+              {listings.map((item, index) => {
+                return (
+                  <TouchableHighlight
+                    key={index}
+                    underlayColor={colors.lightPurple}
+                    onPress={() =>
+                      navigation.navigate(routes.TRAININGITEMNav, { item })
+                    }
+                  >
+                    <Image
+                      style={styles.item2}
+                      source={{ uri: item.images[0] }}
+                    />
+                  </TouchableHighlight>
+                );
+              })}
+            </View>
+          </ScrollView>
+        </View>
+      </ScrollView>
     </Screen>
   );
 }
