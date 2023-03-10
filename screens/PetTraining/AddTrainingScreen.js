@@ -20,7 +20,7 @@ import { Snackbar } from "react-native-paper";
 
 export default function AddTrainingScreen() {
   const [isLoading, setIsLoding] = useState(false);
-  const [isSnackbarVisible, setIsSnackbarVisible] = useState(true);
+  const [isSnackbarVisible, setIsSnackbarVisible] = useState(false);
 
   const validationSchema = Yup.object().shape({
     images: Yup.array()
@@ -31,9 +31,9 @@ export default function AddTrainingScreen() {
   });
 
   const [typeCheckboxes, setTypeCheckboxes] = useState([
-    { label: "Dogs", checked: false },
-    { label: "Cats", checked: false },
-    { label: "Other", checked: false },
+    { label: "Dogs", icon: "dog-side", checked: false },
+    { label: "Cats", icon: "cat", checked: false },
+    { label: "Other", icon: "pastafarianism", checked: false },
   ]);
 
   const handleTypeCheckboxChange = (index) => {
@@ -55,9 +55,9 @@ export default function AddTrainingScreen() {
   };
 
   const [sizeCheckboxes, setSizeCheckboxes] = useState([
-    { label: "1 - 5 KG", checked: false },
-    { label: "5 - 10 KG", checked: false },
-    { label: "10+ KG", checked: false },
+    { label: "1 - 5 KG", icon: "weight-kilogram", size: 5, checked: false },
+    { label: "5 - 10 KG", icon: "weight-kilogram", size: 5, checked: false },
+    { label: "10+ KG", icon: "weight-kilogram", size: 5, checked: false },
   ]);
 
   const handleSizeCheckboxChange = (index) => {
@@ -68,21 +68,34 @@ export default function AddTrainingScreen() {
 
   const handleSubmit = async (values) => {
     setIsLoding(true);
+    const type = [];
+    const age = [];
+    const size = [];
+    typeCheckboxes
+      .filter((t) => t.checked)
+      .map((c) => type.push({ lable: c.label, icon: c.icon }));
+    ageCheckboxes
+      .filter((t) => t.checked)
+      .map((c) => age.push({ lable: c.label }));
+    sizeCheckboxes
+      .filter((t) => t.checked)
+      .map((c) => size.push({ lable: c.label, icon: c.icon, size: c.size}));
+
     await imageUpload(values.images)
       .then(async (response) => {
         const data = {
           description: values.description,
           experience: values.experience,
           images: [...response],
-          petType: "",
-          petAge: "",
-          petSize: "",
-          Location: "",
+          petType: type,
+          petAge: age,
+          petSize: size,
+          Location: "Gampaha",
         };
         await addTraining(data)
           .then(() => {
             setIsLoding(false);
-            setIsSnackbarVisible(true)
+            setIsSnackbarVisible(true);
           })
           .catch((error) => {
             setIsLoding(false);
@@ -170,7 +183,11 @@ export default function AddTrainingScreen() {
               </View>
               <Text style={styles.text}>Location</Text>
             </View>
-            <SubmitButton title={"submit"} style={styles.submitButton} fontSize={16} />
+            <SubmitButton
+              title={"submit"}
+              style={styles.submitButton}
+              fontSize={16}
+            />
           </AppForm>
         </View>
       </ScrollView>
@@ -185,10 +202,10 @@ export default function AddTrainingScreen() {
             setIsSnackbarVisible(false);
           },
         }}
-        style={{ backgroundColor: colors.primary }}
+        style={{ backgroundColor: colors.secondary }}
       >
         <View>
-          <Text style={styles.snackBarText} >Saved Successfully</Text>
+          <Text style={styles.snackBarText}>Saved Successfully</Text>
         </View>
       </Snackbar>
     </Screen>
@@ -214,13 +231,13 @@ const styles = StyleSheet.create({
   text: {
     color: colors.secondary,
     fontSize: 15,
-    fontWeight:"bold"
+    fontWeight: "bold",
   },
   checkbox: {
     marginTop: 15,
   },
   submitButton: {
-    height:50
+    height: 50,
   },
   snackBarText: {
     color: colors.white,
