@@ -19,8 +19,9 @@ export function VetHome({ navigation }) {
             <View>
                 <Text style={styles.createBogHeader}>Vet Home Page</Text>
             </View>
+        <ScrollView>
             <View style={styles.bodySheet}>
-
+                
                 <View style={styles.createNewBtnMain}>
                     <Button
                         title="Admin Add Doctor"
@@ -57,16 +58,17 @@ export function VetHome({ navigation }) {
                     />
                 </View>
 
-                
-                {/* <View style={styles.createNewBtnMain}>
+                <View style={styles.createNewBtnMain}>
                     <Button
                         title="Customer View Vets"
                         onPress={() => navigation.navigate('CustViewDoc')}
                         style={styles.createNewBtn}
                         color="blue"
                     />
-                </View> */}
+                </View>
+                
             </View>
+            </ScrollView>
         </SafeAreaView>
     );
 }
@@ -150,8 +152,8 @@ const styles = StyleSheet.create({
         marginLeft: 30,
     },
     createNewBtnMain: {
-        marginTop: 50,
-        marginBottom: 50,
+        marginTop:5,
+        marginBottom: 20,
         paddingBottom: 20,
     },
 });

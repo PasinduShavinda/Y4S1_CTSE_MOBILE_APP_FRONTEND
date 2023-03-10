@@ -8,6 +8,7 @@ import {AdminUpdateVet} from './screens/Vet/admin-vet-management/admin-update-ve
 import {GetAppointment} from './screens/Vet/customer-vet/cust-get-appointment';
 import { ViewAppointment } from './screens/Vet/customer-vet/cust-view-appointment';
 import { UpdateAppointment } from './screens/Vet/customer-vet/cust-update_appointment';
+import { CustViewDoc } from './screens/Vet/customer-vet/cust-view-vet';
 
 const Stack = createNativeStackNavigator();
 
@@ -25,6 +26,7 @@ export default function App() {
         <Stack.Screen name="GetAppointment" component={GetAppointment} />
         <Stack.Screen name="ViewAppointment" component={ViewAppointment} />
         <Stack.Screen name="UpdateAppointment" component={UpdateAppointment} />
+        <Stack.Screen name="CustViewDoc" component={CustViewDoc} />
 
       </Stack.Navigator>
     </NavigationContainer>
