@@ -21,9 +21,11 @@ function ImageInput({ imageUri, onChangeImage }) {
     try {
       const result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        quality: 0.5,
+        allowsEditing: true,
+        quality: 1,
+        multiple: true,
       });
-      if (!result.cancelled) onChangeImage(result.uri);
+      if (!result.canceled) onChangeImage(result.uri);
     } catch (error) {
       console.log(error);
     }
@@ -46,7 +48,7 @@ function ImageInput({ imageUri, onChangeImage }) {
           <MaterialCommunityIcons
             name="camera"
             size={40}
-            color={colors.mediumGray}
+            color={colors.secondary}
           />
         )}
         {imageUri && <Image source={{ uri: imageUri }} style={styles.image} />}
@@ -56,13 +58,15 @@ function ImageInput({ imageUri, onChangeImage }) {
 }
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.lightGray,
+    backgroundColor: colors.lightPurple,
     borderRadius: 15,
     justifyContent: "center",
     alignItems: "center",
-    height: 100,
-    width: 100,
+    height: 140,
+    width: 140,
     overflow: "hidden",
+    borderColor: colors.primary,
+    borderWidth:1
   },
   image: {
     height: "100%",

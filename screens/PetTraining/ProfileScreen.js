@@ -1,4 +1,13 @@
-import { View, Text, StyleSheet, Image, Alert, ScrollView, TouchableHighlight, Touchable } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  Alert,
+  ScrollView,
+  TouchableHighlight,
+  Touchable,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import Screen from "../../components/PetTraining/common/Screen";
 import { auth } from "../../database/firebaseConfig";
@@ -62,43 +71,73 @@ export default function ProfileScreen({ navigation }) {
       <View style={styles.addListings}>
         <Text style={styles.secHeading}>Add New Listings</Text>
         <View style={styles.itemRow}>
-          <View style={styles.item}>
-            <Text>Training</Text>
-          </View>
-          <View style={styles.item}>
-            <Text>sitting</Text>
-          </View>
-          <View style={styles.item}>
-            <Text>Selling</Text>
-          </View>
-          <View style={styles.item}>
-            <Text>Vet</Text>
-          </View>
+          <TouchableHighlight
+            underlayColor={colors.lightPurple}
+            onPress={() => navigation.navigate(routes.ADDTRAINING)}
+          >
+            <View style={styles.itemwithText}>
+              <Image
+                style={styles.item}
+                source={require("../../assets/training.png")}
+              />
+              <Text style={styles.itemText}>Training</Text>
+            </View>
+          </TouchableHighlight>
+          <TouchableHighlight>
+            <View style={styles.itemwithText}>
+              <Image style={styles.item} />
+              <Text style={styles.itemText}>Sitting</Text>
+            </View>
+          </TouchableHighlight>
+          <TouchableHighlight>
+            <View style={styles.itemwithText}>
+              <Image style={styles.item} />
+              <Text style={styles.itemText}>Selling</Text>
+            </View>
+          </TouchableHighlight>
+          <TouchableHighlight>
+            <View style={styles.itemwithText}>
+              <Image style={styles.item} />
+              <Text style={styles.itemText}>Vat</Text>
+            </View>
+          </TouchableHighlight>
         </View>
       </View>
       <View style={styles.myListings}>
         <Text style={styles.secHeading}>My Listings</Text>
         <ScrollView horizontal={true}>
           <View style={styles.itemRow}>
-            <TouchableHighlight underlayColor={colors.lightPurple} onPress={()=> navigation.navigate(routes.TRAININGITEMNav)}>
+            <TouchableHighlight
+              underlayColor={colors.lightPurple}
+              onPress={() => navigation.navigate(routes.TRAININGITEMNav)}
+            >
               <Image
                 style={styles.item2}
                 source={require("../../assets/item.jpg")}
               />
             </TouchableHighlight>
-            <TouchableHighlight underlayColor={colors.lightPurple} onPress={()=> navigation.navigate(routes.TRAININGITEMNav)}>
+            <TouchableHighlight
+              underlayColor={colors.lightPurple}
+              onPress={() => navigation.navigate(routes.TRAININGITEMNav)}
+            >
               <Image
                 style={styles.item2}
                 source={require("../../assets/item.jpg")}
               />
             </TouchableHighlight>
-            <TouchableHighlight underlayColor={colors.lightPurple} onPress={()=> navigation.navigate(routes.TRAININGITEMNav)}>
+            <TouchableHighlight
+              underlayColor={colors.lightPurple}
+              onPress={() => navigation.navigate(routes.TRAININGITEMNav)}
+            >
               <Image
                 style={styles.item2}
                 source={require("../../assets/item.jpg")}
               />
             </TouchableHighlight>
-            <TouchableHighlight underlayColor={colors.lightPurple} onPress={()=> navigation.navigate(routes.TRAININGITEMNav)}>
+            <TouchableHighlight
+              underlayColor={colors.lightPurple}
+              onPress={() => navigation.navigate(routes.TRAININGITEMNav)}
+            >
               <Image
                 style={styles.item2}
                 source={require("../../assets/item.jpg")}
@@ -138,16 +177,27 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     paddingLeft: 10,
+    color: colors.secondary,
   },
   itemRow: {
     flexDirection: "row",
     marginTop: 5,
   },
+  itemwithText: {
+    flexDirection: "column",
+    alignItems: "center",
+  },
+  itemText: {
+    fontSize: 15,
+    fontWeight: "bold",
+    marginTop: -8,
+    color: colors.secondary,
+  },
   item: {
     width: 80,
     height: 80,
-    borderColor: "black",
-    borderWidth: 1,
+    borderColor: colors.primary,
+    borderWidth: 3,
     borderRadius: 50,
     margin: 10,
   },

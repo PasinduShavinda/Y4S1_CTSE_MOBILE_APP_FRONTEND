@@ -7,6 +7,7 @@ export default Object.freeze({
   PROFILENAV: "ProfileNav",
   TRAININGITEMNav: "TraingItemNav",
   DETAILS: "Details",
-  REVIEW:"Review"
+  REVIEW: "Review",
+  ADDTRAINING:"AddTraining"
 
 });
