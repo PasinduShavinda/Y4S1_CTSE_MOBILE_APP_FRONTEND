@@ -40,25 +40,34 @@ const ContactPetSitter = ({route}) => {
       <SafeAreaView className="flex-1 bg-white relative">
         
       <View className="mt-8">
-      <View className="px-6 mt-6 space-y-1">
+      <View className=" flex-row inset-x-0 top-5 justify-between px-6">
+      <TouchableOpacity
+              onPress={() => navigation.navigate("PetSittingHomeScreen")}
+              className="w-10 h-10  items-center justify-center bg-white"
+            >
+              <FontAwesome5 name="arrow-left" size={24} color="#CF9FFF" />
+            </TouchableOpacity>
+            </View>
+      <View className="px-6 mt-4 space-y-1">
           <Text className="text-[#3C6072] text-[36px] ">Contact</Text>
           <Text className="text-[#CF9FFF] text-[38px] font-bold">
           {data.Name}
           </Text>
+          
           </View>
                 </View>
               
   
               
-        <View className='flex-1 mt-12 items-center'>
+        <View className='flex-1 mt-8 items-center'>
          
-        <View className='w-3/4'>
-        
+        <View className='w-5/6'>
+        <Text className="text-[#3C6072] text-[26px] ">Message</Text>
           <TextInput
-            className='w-full bg-white border border-[#CF9FFF] p-2 mb-2 h-40'
+            className='w-full bg-white border border-[#CF9FFF] p-2 mb-2 h-60 mt-3'
             onChangeText={setMessage}
             value={message}
-            placeholder="Message"
+            
             multiline
            
           />
@@ -78,10 +87,7 @@ const ContactPetSitter = ({route}) => {
            <FontAwesome5 name="sms" size={35} color="#CF9FFF" />
           <Text className="text-[#CF9FFF] text-[25px] px-5">Send SMS</Text>
           </TouchableOpacity>
-        
-      
-       
-        
+         
       </View>
   
       </View>
@@ -91,7 +97,7 @@ const ContactPetSitter = ({route}) => {
   
       <TouchableOpacity
             onPress={()=>makePhoneCall()}
-            className="absolute bottom-10 right-10 w-24 h-24 border-l-2 border-r-2 border-t-4 border-[#CF9FFF] rounded-full items-center justify-center"
+            className="absolute bottom-6 right-10 w-24 h-24 border-l-2 border-r-2 border-t-4 border-[#CF9FFF] rounded-full items-center justify-center"
           >
              
             <Animatable.View
