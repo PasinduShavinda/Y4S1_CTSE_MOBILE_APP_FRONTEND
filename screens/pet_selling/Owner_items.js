@@ -73,11 +73,11 @@ export default function Owner_items({ navigation, route }) {
   return (
     <View style={styles.containerStyle}>
       <Text>hi</Text>
-      <View>
+      {/* <View>
         <View>
           <Text>fgvgv</Text>
         </View>
-      </View>
+      </View> */}
       <ScrollView>
         <View>
           {DATA.map((title, key) => {
