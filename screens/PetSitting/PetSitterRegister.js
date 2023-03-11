@@ -7,7 +7,8 @@ import {fireDB,fireStorage} from '../../database/firebaseConfig'
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage"
 import {collection,addDoc, setDoc} from 'firebase/firestore'
 import { useNavigation } from "@react-navigation/native";
-import { doc, getDocFromCache ,deleteDoc ,updateDoc} from "firebase/firestore";
+import { doc, getDoc ,deleteDoc ,updateDoc} from "firebase/firestore";
+import { FontAwesome, FontAwesome5, MaterialIcons,AntDesign,Feather } from "@expo/vector-icons";
 
 const PetSitterRegister = () => {
     const [email, setEmail] = useState('');
@@ -23,9 +24,7 @@ const PetSitterRegister = () => {
   
   const navigation = useNavigation();
 
-  const setToastMsg=msg=>{
-    ToastAndroid.showWithGravity(msg,ToastAndroid.SHORT,ToastAndroid.CENTER);
-  }
+
 
   useEffect(()=>{
     (async()=>{
@@ -68,9 +67,9 @@ useEffect(()=>{
   const ReadData=async()=>{
    
 
-const docRef = doc(fireDB, "petsitters","jk");
+const docRef = doc(fireDB, "petsitters","jki");
 
-  const docSnap = await getDocFromCache(docRef);
+  const docSnap = await getDoc(docRef);
   if(docSnap.exists()){
     setExistProfile(true);
     setName(docSnap.data().Name);
@@ -133,9 +132,6 @@ uploadTask.on('state_changed',
       case 'storage/canceled':
        
         break;
-
-   
-
       case 'storage/unknown':
         
         break;
@@ -162,7 +158,12 @@ uploadTask.on('state_changed',
 
 
 const handleSubmit=async()=>{
-  const docRef = await setDoc(doc(fireDB,"petsitters","jk"),{
+  if (!name || !phone || !adress || !email || !description || !selected ) {
+    ToastAndroid.show("Please fill all the items", ToastAndroid.SHORT);
+  } else if (/^\d+$/.test(phone) === false || phone.length !== 10) {
+      ToastAndroid.show("Please fill a valid mobile number", ToastAndroid.SHORT);
+  } else {
+  const docRef = await setDoc(doc(fireDB,"petsitters","jki"),{
     Name:name,
     Phone:phone,
     Adress:adress,
@@ -170,12 +171,14 @@ const handleSubmit=async()=>{
     imageurl:imageurl,
     description:description,
     types:selected
-   }).then(navigation.navigate("Alldata"));
-   console.log("Document written with ID",docRef.id);
+   }).then(navigation.navigate("PetSittingHomeScreen"));
+   ToastAndroid.show(`Petsitter Profile Created`, ToastAndroid.SHORT);
+   
+  }
 }
 
 const updateProfile=async()=>{
-  const docRef = await updateDoc(doc(fireDB,"petsitters","jk"),{
+  const docRef = await updateDoc(doc(fireDB,"petsitters","jki"),{
     Name:name,
     Phone:phone,
     Adress:adress,
@@ -275,16 +278,38 @@ const data = [
         value={description}
       />
     {profile ==null &&(
-     <Button className="border border-gray-400 rounded-lg py-2 px-4 mb-4" title="Submit" onPress={handleSubmit} />
+     
+     <TouchableOpacity
+     onPress={handleSubmit}
+            className="py-2 px-4 bg-[#000000] text-[#CF9FFF] font-semibold rounded-full items-center justify-center flex-row mt-4 "
+          > 
+           <FontAwesome5 name="paw" size={35} color="#CF9FFF" />
+          <Text className="text-[#CF9FFF] text-[25px] px-5">Become a Pet Sitters</Text>
+          </TouchableOpacity>
     )}
       
       {profile !==null &&(
-          <Button className="border border-gray-400 rounded-lg py-2 px-4 mb-4" title="update profile" onPress={updateProfile} />
+         
+          <TouchableOpacity
+          onPress={updateProfile}
+                 className="py-2 px-4 bg-[#211D1D] text-[#EEDD0E] font-semibold rounded-full items-center justify-center flex-row mt-4 "
+               > 
+                <FontAwesome5 name="edit" size={35} color="#EEDD0E" />
+               <Text className="text-[#EEDD0E] text-[25px] px-5">Update Profile</Text>
+               </TouchableOpacity>
+          
       )}
      
        
      {profile !==null &&(
-          <Button className="border border-gray-400 rounded-lg py-2 px-4 mb-4" title="delete profile" onPress={deleteProfile} />
+          
+          <TouchableOpacity
+          onPress={deleteProfile}
+                 className="py-2 px-4 bg-[#211D1D] text-[#C51804] font-semibold rounded-full items-center justify-center flex-row mt-4 "
+               > 
+                <FontAwesome5 name="trash-alt" size={35} color="#C51804" />
+               <Text className="text-[#C51804] text-[25px] px-5">Remove Profile</Text>
+               </TouchableOpacity>
       )}
 
 

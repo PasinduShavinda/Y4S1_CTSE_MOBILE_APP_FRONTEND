@@ -8,6 +8,7 @@ import AllPetsSitters from "./../../screens/PetSitting/AllPetsSitters"
 import PetSitterRegister from "../../screens/PetSitting/PetSitterRegister";
 import SpecificPetSitter from "./../../screens/PetSitting/SpecificPetSitter"
 import ContactPetSitter from "./../../screens/PetSitting/ContactPetSitter"
+
 const Stack = createNativeStackNavigator();
 
 const PetsittingNavigation = () => {
@@ -20,6 +21,7 @@ const PetsittingNavigation = () => {
         <Stack.Screen name="PetSitterRegister" component={PetSitterRegister} />
         <Stack.Screen name="SpecificPetSitter" component={SpecificPetSitter} />
         <Stack.Screen name="ContactPetSitter" component={ContactPetSitter} />
+        
         
       </Stack.Navigator>
   

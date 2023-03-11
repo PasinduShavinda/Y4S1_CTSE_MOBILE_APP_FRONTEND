@@ -1,4 +1,4 @@
-import { View, Text ,FlatList,Image,ScrollView,ActivityIndicator,SafeAreaView,TouchableOpacity} from 'react-native'
+import { View, Text ,FlatList,Image,ScrollView,ActivityIndicator,SafeAreaView,TouchableOpacity,TextInput} from 'react-native'
 import React, { useEffect ,useLayoutEffect,useState} from 'react'
 import { collection, getDocs, onSnapshot } from "firebase/firestore"
 import {fireDB} from './../../database/firebaseConfig'
@@ -7,8 +7,10 @@ import { useNavigation } from "@react-navigation/native";
 
 const AllPetsSitters = () => {
     const[data,setData] = useState([]);
+    const [filteredData, setFilteredData] = useState([]);
     const navigation = useNavigation();
     const [filterText, setFilterText] = useState("");
+
  useLayoutEffect(()=>{
   const ref =collection(fireDB,"petsitters");
   onSnapshot(ref,(petsitters)=>
@@ -17,7 +19,7 @@ const AllPetsSitters = () => {
     data:petsitters.data()
   }))))
 
- })
+ },[])
  useLayoutEffect(() => {
   navigation.setOptions({
     headerShown: false,
@@ -25,7 +27,17 @@ const AllPetsSitters = () => {
 }, []);
 
 
+useEffect(() => {
+  setFilteredData(filterData(data, filterText));
+}, [data, filterText]);
 
+const filterData = (data, filterText) => {
+  return data.filter(petsitter => {
+    const name = petsitter.data.Name || '';
+    const address = petsitter.data.Adress || '';
+    return name.toLowerCase().includes(filterText.toLowerCase()) || address.toLowerCase().includes(filterText.toLowerCase());
+  });
+}
 
 
   
@@ -36,13 +48,18 @@ const AllPetsSitters = () => {
           <Text className="text-[44px] text-[#CF9FFF] font-bold">Discover</Text>
           <Text className="text-[#605B63] text-[34px]">Suitable Pet Sitter</Text>
         </View>
-
-       
       </View>
 <View>
     
   </View>
-
+  <View className="px-4 mt-4">
+        <TextInput
+          placeholder="Search"
+          value={filterText}
+          onChangeText={text => setFilterText(text)}
+          className="border border-gray-400 rounded-full px-4 py-2"
+        />
+      </View>
    
       
         <View className=" flex-1 items-center justify-center">
@@ -55,18 +72,9 @@ const AllPetsSitters = () => {
           <View>
             <View className="flex-row items-center justify-between px-4 mt-8">
               <Text className="text-[#605B63] text-[28px] font-bold">
-                Top Tips
+                Top Pet Sitters
               </Text>
-              <TouchableOpacity className="flex-row items-center justify-center space-x-2">
-                <Text className="text-[#605B63] text-[20px] font-bold">
-                  Explore
-                </Text>
-                <FontAwesome
-                  name="long-arrow-right"
-                  size={24}
-                  color="#605B63"
-                />
-              </TouchableOpacity>
+           
             </View>
 
             <View className="px-4 mt-8 flex-row items-center justify-evenly flex-wrap">
@@ -74,7 +82,7 @@ const AllPetsSitters = () => {
 
 
 
-{data?.map((petsitter, i) => (
+{filteredData?.map((petsitter, i) => (
                     <TouchableOpacity
                     onPress={() => navigation.navigate("SpecificPetSitter", { param: petsitter.data })}
                     className="rounded-md border border-purple-500 space-y-2 px-3 py-2 shadow-lg bg-white w-[162px] my-2"

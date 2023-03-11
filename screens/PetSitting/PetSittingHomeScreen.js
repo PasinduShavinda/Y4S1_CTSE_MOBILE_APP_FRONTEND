@@ -76,7 +76,7 @@ const PetSittingHomeScreen = () => {
               iterationCount={"infinite"}
               className="py-2 px-4 bg-[#000000]  font-semibold rounded-full items-center justify-center"
             >
-              <Text className="text-[#CF9FFF] text-[30px] font-semibold">Become a Pet Sitter</Text>
+              <Text className="text-[#CF9FFF] text-[30px] font-semibold">Pet Sitter Profile</Text>
             </Animatable.View>
           </TouchableOpacity>
         </View>
