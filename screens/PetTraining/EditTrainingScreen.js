@@ -5,7 +5,7 @@ import {
   ScrollView,
   ActivityIndicator,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Screen from "../../components/PetTraining/common/Screen";
 import AppForm from "../../components/PetTraining/common/AppForm";
 import AppFormImagePicker from "../../components/PetTraining/common/AppFormImagePicker";
@@ -20,11 +20,36 @@ import { Snackbar } from "react-native-paper";
 import { auth } from "../../database/firebaseConfig";
 import MapScreen from "./SelectLocationScreen";
 
-export default function AddTrainingScreen() {
+export default function EditTrainingScreen({item}) {
   const [isLoading, setIsLoding] = useState(false);
   const [isSnackbarVisible, setIsSnackbarVisible] = useState(false);
   const [location, setLocation] = useState(null);
   const user = auth.currentUser;
+
+  useEffect(() => {
+    const petType = [...item.petType]
+    const petAge = [...item.petAge]
+    const petSize = [...item.petSize]
+
+    typeCheckboxes.forEach(item => {
+      const found = petType.find(type => type.lable === item.label);
+      if (found) {
+        handleTypeCheckboxChange(item.index)
+      }
+    })
+    ageCheckboxes.forEach((item) => {
+      const found = petAge.find((type) => type.lable === item.label);
+      if (found) {
+        handleAgeCheckboxChange(item.index);
+      }
+    });
+    sizeCheckboxes.forEach((item) => {
+      const found = petSize.find((type) => type.lable === item.label);
+      if (found) {
+        handleSizeCheckboxChange(item.index);
+      }
+    });
+  },[])
 
   const validationSchema = Yup.object().shape({
     images: Yup.array()
@@ -37,9 +62,9 @@ export default function AddTrainingScreen() {
   });
 
   const [typeCheckboxes, setTypeCheckboxes] = useState([
-    { label: "Dogs", icon: "dog-side", checked: false },
-    { label: "Cats", icon: "cat", checked: false },
-    { label: "Other", icon: "alien", checked: false },
+    { index:0, label: "Dogs", icon: "dog-side", checked: false },
+    { index:1, label: "Cats", icon: "cat", checked: false },
+    { index:2, label: "Other", icon: "pastafarianism", checked: false },
   ]);
 
   const handleTypeCheckboxChange = (index) => {
@@ -49,13 +74,13 @@ export default function AddTrainingScreen() {
   };
 
   const [ageCheckboxes, setAgeCheckboxes] = useState([
-    {
+    {index:0,
       label: "3months - 1year",
       icon: "clock-time-two-outline",
       checked: false,
     },
-    { label: "1year - 3year", icon: "clock-time-four-outline", checked: false },
-    { label: "3+ years", icon: "clock-time-seven-outline", checked: false },
+    { index:1,label: "1year - 3year", icon: "clock-time-four-outline", checked: false },
+    { index:2,label: "3+ years", icon: "clock-time-seven-outline", checked: false },
   ]);
 
   const handleAgeCheckboxChange = (index) => {
@@ -65,9 +90,9 @@ export default function AddTrainingScreen() {
   };
 
   const [sizeCheckboxes, setSizeCheckboxes] = useState([
-    { label: "1 - 5 KG", icon: "weight-kilogram", size: 15, checked: false },
-    { label: "5 - 10 KG", icon: "weight-kilogram", size: 20, checked: false },
-    { label: "10+ KG", icon: "weight-kilogram", size: 25, checked: false },
+    { index:0,label: "1 - 5 KG", icon: "weight-kilogram", size: 5, checked: false },
+    { index:1,label: "5 - 10 KG", icon: "weight-kilogram", size: 5, checked: false },
+    { index:2,label: "10+ KG", icon: "weight-kilogram", size: 5, checked: false },
   ]);
 
   const handleSizeCheckboxChange = (index) => {
@@ -86,7 +111,7 @@ export default function AddTrainingScreen() {
       .map((c) => type.push({ lable: c.label, icon: c.icon }));
     ageCheckboxes
       .filter((t) => t.checked)
-      .map((c) => age.push({ lable: c.label, icon: c.icon }));
+      .map((c) => age.push({ lable: c.label }));
     sizeCheckboxes
       .filter((t) => t.checked)
       .map((c) => size.push({ lable: c.label, icon: c.icon, size: c.size }));
@@ -142,9 +167,9 @@ export default function AddTrainingScreen() {
           <AppForm
             initialValues={{
               images: [],
-              description: "",
-              experience: "",
-              locationDetails: "",
+              description: item.description,
+              experience: item.experience,
+              locationDetails: item.locationDetails,
             }}
             onSubmit={(values) => handleSubmit(values)}
             validationSchema={validationSchema}

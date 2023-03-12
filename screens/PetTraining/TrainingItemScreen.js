@@ -5,6 +5,7 @@ import {
   Image,
   ScrollView,
   RefreshControl,
+  Alert,
 } from "react-native";
 import React, { useCallback, useEffect, useState } from "react";
 import Screen from "../../components/PetTraining/common/Screen";
@@ -16,8 +17,10 @@ import AppButton from "../../components/PetTraining/common/AppButton";
 import { ImageSlider } from "react-native-image-slider-banner";
 import Map from "../../components/PetTraining/Map";
 import { auth } from "../../database/firebaseConfig";
+import { deleteTraining } from "../../services/PetTraining/trainingService";
+import routes from "../../navigation/PetTraining/routes";
 
-export default function TrainingItemScreen({ item }) {
+export default function TrainingItemScreen({ item, navigation }) {
   console.log(item);
   const [user, setUser] = useState({});
   const [refreshing, setRefreshing] = useState(false);
@@ -61,9 +64,11 @@ export default function TrainingItemScreen({ item }) {
             style={styles.avatar}
             source={require("../../assets/avatar.png")}
           />
-          <View style={{ marginRight: 30 }}>
+          <View style={{ marginRight: 20 }}>
             <Text style={styles.secHeading}>{user.name}</Text>
-            <AppButton title={"Contact"} style={styles.contactBtn} />
+            {auth.currentUser.uid != item.userId && (
+              <AppButton title={"Contact"} style={styles.contactBtn} />
+            )}
             <Rating />
           </View>
           {auth.currentUser.uid == item.userId && (
@@ -72,12 +77,46 @@ export default function TrainingItemScreen({ item }) {
                 name="file-document-edit"
                 size={33}
                 color={colors.primary}
+                onPress={() => {
+                  Alert.alert("Edit", "Are you sure want edit?", [
+                    {
+                      text: "CANCEL",
+                      onPress: () => {},
+                    },
+                    {
+                      text: "EDIT",
+                      onPress: async () => {
+                        navigation.navigate(routes.EDITTRAINING)
+                      },
+                    },
+                  ]);
+                }}
               />
               <MaterialCommunityIcons
                 style={{ marginLeft: 15 }}
                 name="delete"
                 size={33}
                 color={colors.primary}
+                onPress={() => {
+                  Alert.alert("Delete", "Are you sure want delete?", [
+                    {
+                      text: "CANCEL",
+                      onPress: () => {},
+                    },
+                    {
+                      text: "DELETE",
+                      onPress: async () => {
+                        await deleteTraining(item.id)
+                          .then(() => {
+                            setTimeout(() => {
+                              navigation.navigate(routes.PROFILE);
+                            }, 2500);
+                          })
+                          .catch((err) => console.log(err));
+                      },
+                    },
+                  ]);
+                }}
               />
             </View>
           )}
@@ -192,7 +231,6 @@ const styles = StyleSheet.create({
     marginTop: -40,
     justifyContent: "space-between",
     marginLeft: -10,
-    
   },
   map: {
     height: 400,

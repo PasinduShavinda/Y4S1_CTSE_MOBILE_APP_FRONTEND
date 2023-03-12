@@ -1,7 +1,7 @@
 import { createMaterialTopTabNavigator, MaterialTopTabBar } from "@react-navigation/material-top-tabs";
 import ReviewScreen from "../../screens/PetTraining/ReviewScreen";
-import TrainingItemScreen from "../../screens/PetTraining/TrainingItemScreen";
 import colors from "../../utils/colors";
+import TrainingItemNavigator from "./TrainingItemNavigator";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -14,7 +14,7 @@ export default function ItemTopNavigator({ route }) {
       }}
     >
       <Tab.Screen name="Details">
-        {(props)=> <TrainingItemScreen {...props} item={item} />}
+        {(props)=> <TrainingItemNavigator {...props} item={item} />}
       </Tab.Screen>
       <Tab.Screen name="Review" component={ReviewScreen} />
     </Tab.Navigator>

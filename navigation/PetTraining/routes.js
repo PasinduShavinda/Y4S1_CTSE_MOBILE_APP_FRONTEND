@@ -5,9 +5,11 @@ export default Object.freeze({
   HOME: "Home",
   PROFILE: "Profile",
   PROFILENAV: "ProfileNav",
-  TRAININGITEMNav: "TraingItemNav",
+  ITEMTOPNAV: "ItemTopNav",
   DETAILS: "Details",
   REVIEW: "Review",
-  ADDTRAINING:"AddTraining"
-
+  ADDTRAINING: "AddTraining",
+  EDITTRAINING: "EditTraining",
+  TRAININGITEMNAV: "TrainingItemNav",
+  TRAININGITEM:"TrainingItem"
 });

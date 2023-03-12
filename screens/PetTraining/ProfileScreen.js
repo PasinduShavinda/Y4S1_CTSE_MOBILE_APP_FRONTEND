@@ -6,7 +6,6 @@ import {
   Alert,
   ScrollView,
   TouchableHighlight,
-  Touchable,
   RefreshControl,
 } from "react-native";
 import React, { useCallback, useEffect, useState } from "react";
@@ -37,8 +36,7 @@ export default function ProfileScreen({ navigation }) {
             listings.push(snapshot.data());
           }
         });
-      setRefreshing(false);
-
+        setRefreshing(false);
       })
       .catch((error) => {
         console.log("Error: ", error);
@@ -62,11 +60,11 @@ export default function ProfileScreen({ navigation }) {
     getCurrentUser();
     getAll();
   }, []);
-const onRefresh = useCallback(() => {
-  setRefreshing(true);
-  getCurrentUser();
-  getAll();
-}, []);
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    getCurrentUser();
+    getAll();
+  }, []);
   return (
     <Screen>
       <ScrollView
@@ -146,7 +144,7 @@ const onRefresh = useCallback(() => {
                     key={index}
                     underlayColor={colors.lightPurple}
                     onPress={() =>
-                      navigation.navigate(routes.TRAININGITEMNav, { item })
+                      navigation.navigate(routes.ITEMTOPNAV, { item })
                     }
                   >
                     <Image
