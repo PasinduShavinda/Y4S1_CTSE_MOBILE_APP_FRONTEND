@@ -15,6 +15,11 @@ import Google_map from "./Google_map";
 import { Picker } from "@react-native-picker/picker";
 import * as ImagePicker from "expo-image-picker";
 import ImageViewer from "../../components/pet_selling/ImageViewer";
+import {
+  Add_new_pets_to_db,
+  Upload_image,
+} from "../../services/pet_selling/selling_service";
+import { Snackbar } from "react-native-paper";
 
 export default function Add_new_pets({ navigation }) {
   const [number, onChangeNumber] = useState("");
@@ -23,17 +28,45 @@ export default function Add_new_pets({ navigation }) {
   const [selectedLanguage, setSelectedLanguage] = useState();
   const [selectedImage, setSelectedImage] = useState(null);
   const [image, setImage] = useState(null);
+  const [isVisible, setVisible] = useState(false);
+  const [snackbarMsg, setsnackbarMsg] = useState("");
+  const [image_r, setImage_r] = useState("");
 
   // form Data
   const [names, setnames] = useState("");
   const [gender, setgender] = useState(1);
   const [price, setprice] = useState(0);
-  const [category, setcategory] = useState("");
+  const [category, setcategory] = useState("Dog");
   const [age, setage] = useState(0);
   const [description, setdescription] = useState("");
   const [contactNumber, setcontactNumber] = useState(0);
+  const user = "bf734bc34r74vb";
 
-  function handleChoosePhoto() {}
+  const Add_new_pets = async () => {
+    if (names === "") {
+      // setsnackbarMsg("Please fill the all fields");
+      setVisible(true);
+
+      // alert("");
+    } else {
+      let url = await Upload_image(image_r);
+      data = {
+        user_id: user,
+        name: names,
+        gender: gender,
+        price: price,
+        category: category,
+        age: age,
+        description: description,
+        contactNumber: contactNumber,
+        latitudePass: latitudePass,
+        longitudePass: longitudePass,
+        img: url,
+      };
+
+      let data = await Add_new_pets_to_db(data);
+    }
+  };
   function showAlert() {
     navigation.navigate("google-map");
   }
@@ -49,6 +82,7 @@ export default function Add_new_pets({ navigation }) {
       aspect: [4, 3],
       quality: 1,
     });
+    setImage_r(result);
 
     console.log(result);
 
@@ -85,7 +119,7 @@ export default function Add_new_pets({ navigation }) {
             </View>
             <View style={styles.boxRight}>
               <View style={[styles.formDataBox, styles.shadowProp]}>
-                <Text>Pet Name{names}</Text>
+                <Text>Pet Name</Text>
                 <TextInput
                   style={styles.input}
                   onChangeText={setnames}
@@ -169,7 +203,7 @@ export default function Add_new_pets({ navigation }) {
             </View>
           </View>
           <View style={styles.btnStyling}>
-            <Pressable style={styles.button}>
+            <Pressable style={styles.button} onPress={Add_new_pets}>
               <Text style={styles.text}>Publish</Text>
             </Pressable>
           </View>

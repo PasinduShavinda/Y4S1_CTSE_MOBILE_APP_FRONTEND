@@ -11,13 +11,14 @@ import {
   StatusBar,
   ScrollView,
 } from "react-native";
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import { ListItem, Overlay, SearchBar } from "react-native-elements";
 // import Ionicons from "@expo/vector-icons/Ionicons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 // import Item from "../../components/pet_selling/Item";
 import { Foundation } from "@expo/vector-icons";
+import { get_all_pets } from "../../services/pet_selling/selling_service";
 
 const DATA = [
   {
@@ -71,6 +72,23 @@ const DATA = [
 ];
 
 export default function Selling_Page({ navigation, route }) {
+  const [sellingPets, setsellingPets] = useState([]);
+
+  useEffect(() => {
+    const mountSellingPets = async () => {
+      const data_ = await get_all_pets();
+      const array_data = [];
+      data_.forEach((response) => {
+        array_data.push({ id: response.id, ...response.data() });
+      });
+      setsellingPets(array_data);
+      console.log(
+        "===============data===================>>>>>>>>>>>>>>>>>>>>>>"
+      );
+      console.log(sellingPets);
+    };
+    mountSellingPets();
+  }, []);
   return (
     <View style={styles.mainContainer}>
       <SearchBar
