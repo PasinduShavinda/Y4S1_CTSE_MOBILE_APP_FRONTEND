@@ -70,21 +70,11 @@ const DATA = [
     gender: 1,
   },
 ];
+var petsType = "Cats";
 
 export default function Selling_Page({ navigation, route }) {
   const [sellingPets, setsellingPets] = useState([]);
-  function filterByType(type) {
-    // const filteredArray =
-    setsellingPets(
-      sellingPets
-        .filter(function (item) {
-          return item.category == type;
-        })
-        .map(function ({ age, gender, img, id, name }) {
-          return { age, gender, img, id, name };
-        })
-    );
-  }
+  const [petType, setPetType] = useState("Dog");
 
   useLayoutEffect(() => {
     const mountSellingPets = async () => {
@@ -101,6 +91,48 @@ export default function Selling_Page({ navigation, route }) {
     };
     mountSellingPets();
   }, []);
+  const filterByTypeDog = async () => {
+    petsType = "Dogs";
+    // alert(petsType);
+    // const filteredArray =
+    const data_ = await get_all_pets();
+    const array_data = [];
+    data_.forEach((response) => {
+      array_data.push({ id: response.id, ...response.data() });
+    });
+    setsellingPets(array_data);
+    const data = sellingPets.filter(function (item) {
+      return item.category == "Dog";
+    });
+    // alert("");
+    // petsType = type;
+    setsellingPets(data);
+  };
+  const filterByTypeCats = async () => {
+    // alert(petsType);
+    petsType = "Cats";
+    // const filteredArray =
+    // const data = sellingPets.filter(function (item) {
+    //   return item.category == "Dog";
+    // });
+    // alert("");
+    // petsType = type;
+    // setsellingPets(data);
+    const data_ = await get_all_pets();
+    const array_data = [];
+    data_.forEach((response) => {
+      array_data.push({ id: response.id, ...response.data() });
+    });
+    setsellingPets(array_data);
+    const data = sellingPets.filter(function (item) {
+      return item.category == "Cats";
+    });
+    // alert("");
+    // petsType = type;
+    setsellingPets(data);
+
+    // .filter((item) => item.category === petsType)
+  };
 
   return (
     <View style={styles.mainContainer}>
@@ -111,6 +143,7 @@ export default function Selling_Page({ navigation, route }) {
         autoCorrect={false}
       />
       <View>
+        <Text>{petsType}</Text>
         <View style={styles.container}>
           <View style={styles.topBtn}>
             <FontAwesome5.Button
@@ -119,7 +152,7 @@ export default function Selling_Page({ navigation, route }) {
               size={30}
               color="black"
               backgroundColor="#ffffff"
-              onPress={filterByType("Dog")}
+              onPress={filterByTypeDog}
             />
             <Text style={styles.categoryNames}>Dogs</Text>
           </View>
@@ -130,6 +163,7 @@ export default function Selling_Page({ navigation, route }) {
               color="black"
               style={styles.iconStyle}
               backgroundColor="#ffffff"
+              onPress={filterByTypeCats}
             />
             <Text style={styles.categoryNames}>Cats</Text>
           </View>
@@ -145,6 +179,7 @@ export default function Selling_Page({ navigation, route }) {
           </View>
         </View>
       </View>
+      <Text>{petsType}</Text>
       <ScrollView>
         <View>
           {sellingPets.map((title, key) => {

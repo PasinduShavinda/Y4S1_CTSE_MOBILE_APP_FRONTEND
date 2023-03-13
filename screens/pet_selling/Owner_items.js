@@ -11,13 +11,14 @@ import {
   StatusBar,
   ScrollView,
 } from "react-native";
-import { React, useState } from "react";
+import { React, useState, useLayoutEffect } from "react";
 // import { ListItem, Overlay, SearchBar } from "react-native-elements";
 // import Ionicons from "@expo/vector-icons/Ionicons";
 // import { FontAwesome5 } from "@expo/vector-icons";
 // import { MaterialCommunityIcons } from "@expo/vector-icons";
 // import Item from "../Components/Item";
 import { Foundation } from "@expo/vector-icons";
+import { get_all_pets } from "../../services/pet_selling/selling_service";
 const DATA = [
   {
     id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
@@ -70,6 +71,24 @@ const DATA = [
 ];
 
 export default function Owner_items({ navigation, route }) {
+  const [sellingPets, setsellingPets] = useState([]);
+  const u_id = "bf734bc34r74vb";
+
+  useLayoutEffect(() => {
+    const mountSellingPets = async () => {
+      const data_ = await get_my_pets(u_id);
+      const array_data = [];
+      data_.forEach((response) => {
+        array_data.push({ id: response.id, ...response.data() });
+      });
+      setsellingPets(array_data);
+      console.log(
+        "===============data===================>>>>>>>>>>>>>>>>>>>>>>"
+      );
+      console.log(sellingPets);
+    };
+    mountSellingPets();
+  }, []);
   return (
     <View style={styles.containerStyle}>
       <Text>hi</Text>
@@ -80,7 +99,7 @@ export default function Owner_items({ navigation, route }) {
       </View> */}
       <ScrollView>
         <View>
-          {DATA.map((title, key) => {
+          {sellingPets.map((title, key) => {
             return (
               <View key={title.id}>
                 <View style={styles.container}>
