@@ -10,4 +10,5 @@ export default {
   lightGreen: "#E9FAC7",
   lightPurple: "#dfddea",
   red: "#C3141F",
+  yellow: "#FFD64C",
 };

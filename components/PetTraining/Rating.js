@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import colors from "../../utils/colors";
 
 export default function Rating(){
   const [rating, setRating] = useState(0);
@@ -17,7 +18,7 @@ export default function Rating(){
             <Ionicons
               name={star <= rating ? "ios-star" : "ios-star-outline"}
               size={25}
-              color="#FFD64C"
+              color={colors.yellow}
             />
           </TouchableOpacity>
         ))}

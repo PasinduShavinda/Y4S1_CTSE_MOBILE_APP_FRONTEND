@@ -6,6 +6,7 @@ import {
   ScrollView,
   RefreshControl,
   Alert,
+  Linking,
 } from "react-native";
 import React, { useCallback, useEffect, useState } from "react";
 import Screen from "../../components/PetTraining/common/Screen";
@@ -19,6 +20,7 @@ import Map from "../../components/PetTraining/Map";
 import { auth } from "../../database/firebaseConfig";
 import { deleteTraining } from "../../services/PetTraining/trainingService";
 import routes from "../../navigation/PetTraining/routes";
+import StarRating from "../../components/PetTraining/StartRatingDisplay";
 
 export default function TrainingItemScreen({ item, navigation }) {
   console.log(item);
@@ -44,6 +46,9 @@ export default function TrainingItemScreen({ item, navigation }) {
     setRefreshing(true);
     getCurrentUser();
   }, []);
+  const handleContactButtonPress = () => {
+  Linking.openURL('whatsapp://send?phone=+94778528876');
+}
   return (
     <Screen>
       <ScrollView
@@ -64,12 +69,18 @@ export default function TrainingItemScreen({ item, navigation }) {
             style={styles.avatar}
             source={require("../../assets/avatar.png")}
           />
-          <View style={{ marginRight: 20 }}>
+          <View style={{ marginRight: 20, flex: 2 }}>
             <Text style={styles.secHeading}>{user.name}</Text>
             {auth.currentUser.uid != item.userId && (
-              <AppButton title={"Contact"} style={styles.contactBtn} />
+              <AppButton title={"Contact"} style={styles.contactBtn} onPress={handleContactButtonPress} />
             )}
-            <Rating />
+            <View
+              style={{
+                marginLeft:25
+              }}
+            >
+              <StarRating rating={2} />
+            </View>
           </View>
           {auth.currentUser.uid == item.userId && (
             <View style={styles.like}>
@@ -86,7 +97,7 @@ export default function TrainingItemScreen({ item, navigation }) {
                     {
                       text: "EDIT",
                       onPress: async () => {
-                        navigation.navigate(routes.EDITTRAINING)
+                        navigation.navigate(routes.EDITTRAINING);
                       },
                     },
                   ]);
@@ -201,6 +212,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   contactDetails: {
+    display:"flex",
     flexDirection: "row",
   },
   avatar: {

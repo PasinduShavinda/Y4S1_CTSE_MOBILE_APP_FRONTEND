@@ -12,10 +12,11 @@ import React, { useCallback, useEffect, useState } from "react";
 import Screen from "../../components/PetTraining/common/Screen";
 import { auth } from "../../database/firebaseConfig";
 import { currentUser } from "../../services/PetTraining/userService";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import routes from "../../navigation/PetTraining/routes";
 import colors from "../../utils/colors";
 import { getAllTrainings } from "../../services/PetTraining/trainingService";
+import ItemsRow from "../../components/PetTraining/ItemsRow";
 
 export default function ProfileScreen({ navigation }) {
   const [user, setUser] = useState({});
@@ -136,33 +137,7 @@ export default function ProfileScreen({ navigation }) {
         </View>
         <View style={styles.myListings}>
           <Text style={styles.secHeading}>My Listings</Text>
-          <ScrollView horizontal={true}>
-            <View style={styles.itemRow}>
-              {listings.map((item, index) => {
-                return (
-                  <TouchableHighlight
-                    key={index}
-                    underlayColor={colors.lightPurple}
-                    onPress={() =>
-                      navigation.navigate(routes.ITEMTOPNAV, { item })
-                    }
-                  >
-                    <View style={{ margin: 10 }}>
-                      <Image
-                        style={styles.item2}
-                        source={{ uri: item.images[0] }}
-                      />
-
-                      <Image
-                        style={styles.itemIcon}
-                        source={require("../../assets/training.png")}
-                      />
-                    </View>
-                  </TouchableHighlight>
-                );
-              })}
-            </View>
-          </ScrollView>
+          <ItemsRow listings={listings} navigation={navigation} />
         </View>
       </ScrollView>
     </Screen>
@@ -220,29 +195,9 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     margin: 10,
   },
-  itemIcon: {
-    width: 30,
-    height: 30,
-    borderColor: colors.primary,
-    borderWidth: 3,
-    borderRadius: 50,
-    position: "absolute",
-    zIndex: 999,
-    alignSelf: "flex-end",
-  },
   myListings: {
     borderColor: "black",
     borderWidth: 1,
     marginBottom: 10,
-  },
-  item2: {
-    width: 170,
-    height: 170,
-    borderColor: "black",
-    borderWidth: 1,
-    borderRadius: 10,
-
-    position: "relative",
-    zIndex: 1,
   },
 });
