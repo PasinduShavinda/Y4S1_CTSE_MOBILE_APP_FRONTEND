@@ -10,26 +10,31 @@ import {
   ScrollView,
   Pressable,
 } from "react-native";
-import { React, useState } from "react";
+import { React, useState, useLayoutEffect } from "react";
 import Google_map from "./Google_map";
 import { Picker } from "@react-native-picker/picker";
 import * as ImagePicker from "expo-image-picker";
+import { get_all_pets } from "../../services/pet_selling/selling_service";
 //   import ImageViewer from "../../components/pet_selling/ImageViewer";
 
-export default function EditPage({ navigation }) {
+export default function EditPage({ navigation, route }) {
+  const { petId, name, age1, gender1, latitudePass1, longitudePass1, price1 } =
+    route.params;
   const [number, onChangeNumber] = useState("");
-  const [latitudePass, setlatitudePass] = useState(null);
-  const [longitudePass, setlongitudePass] = useState(null);
+  const [latitudePass, setlatitudePass] = useState(latitudePass1);
+  const [longitudePass, setlongitudePass] = useState(longitudePass1);
   const [selectedLanguage, setSelectedLanguage] = useState();
   const [selectedImage, setSelectedImage] = useState(null);
   const [image, setImage] = useState(null);
+  const url_id = route.params?.id;
+  const [sellingPets, setsellingPets] = useState([]);
 
   // form Data
-  const [names, setnames] = useState("");
-  const [gender, setgender] = useState(1);
-  const [price, setprice] = useState(0);
+  const [names, setnames] = useState(name);
+  const [gender, setgender] = useState(gender1);
+  const [price, setprice] = useState(price1);
   const [category, setcategory] = useState("");
-  const [age, setage] = useState(0);
+  const [age, setage] = useState(age1);
   const [description, setdescription] = useState("");
   const [contactNumber, setcontactNumber] = useState(0);
 
@@ -56,13 +61,32 @@ export default function EditPage({ navigation }) {
       setImage(result.assets[0].uri);
     }
   };
+  // useLayoutEffect(() => {
+  //   console.log(url_id);
+  //   const mountSellingPets = async () => {
+  //     const data_ = await get_all_pets();
+  //     const array_data = [];
+  //     data_.forEach((response) => {
+  //       array_data.push({ id: response.id, ...response.data() });
+  //     });
+  //     const data = array_data.filter(function (item) {
+  //       return item.id == url_id;
+  //     });
+  //     setsellingPets(data);
+  //     console.log(
+  //       "===============data===================>>>>>>>>>>>>>>>>>>>>>>"
+  //     );
+  //     console.log(sellingPets);
+  //   };
+  //   mountSellingPets();
+  // }, []);
 
   return (
     <SafeAreaView>
       <ScrollView>
         <View style={styles.longTextStyles}>
           <View>
-            <Text style={styles.titleOfPage}>Edit dog Information</Text>
+            <Text style={styles.titleOfPage}>Edit dog Information{name}</Text>
           </View>
           <View style={styles.container}>
             <View style={styles.boxLeft}>
@@ -77,11 +101,11 @@ export default function EditPage({ navigation }) {
             </View>
             <View style={styles.boxRight}>
               <View style={[styles.formDataBox, styles.shadowProp]}>
-                <Text>Pet Name{names}</Text>
+                <Text>Pet Name</Text>
                 <TextInput
                   style={styles.input}
                   onChangeText={setnames}
-                  value={names}
+                  value={sellingPets.name}
                   placeholder="useless placeholder"
                   keyboardType="text"
                 />

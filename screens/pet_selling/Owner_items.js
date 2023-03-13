@@ -76,12 +76,15 @@ export default function Owner_items({ navigation, route }) {
 
   useLayoutEffect(() => {
     const mountSellingPets = async () => {
-      const data_ = await get_my_pets(u_id);
+      const data_ = await get_all_pets();
       const array_data = [];
       data_.forEach((response) => {
         array_data.push({ id: response.id, ...response.data() });
       });
-      setsellingPets(array_data);
+      const data = array_data.filter(function (item) {
+        return item.user_id == u_id;
+      });
+      setsellingPets(data);
       console.log(
         "===============data===================>>>>>>>>>>>>>>>>>>>>>>"
       );
@@ -114,7 +117,7 @@ export default function Owner_items({ navigation, route }) {
                   <View style={styles.eachItemDetails}>
                     <View style={styles.itemFullDetails}>
                       <View>
-                        <Text style={styles.itemTitle}>{title.title}</Text>
+                        <Text style={styles.itemTitle}>{title.name}</Text>
                         <Text style={styles.itemTypePet}>Abyssinian</Text>
                         <Text>{title.age} Years old</Text>
                       </View>
@@ -139,10 +142,14 @@ export default function Owner_items({ navigation, route }) {
                             title="Edit"
                             onPress={() => {
                               // Pass and merge params back to home screen
-                              navigation.navigate({
-                                name: "Edit",
-                                params: { id: title.id },
-                                merge: true,
+                              navigation.navigate("Edit", {
+                                petId: title.id,
+                                name: title.name,
+                                age: title.age,
+                                gender: title.gender,
+                                latitudePass: title.latitudePass,
+                                longitudePass: title.longitudePass,
+                                price: title.price,
                               });
                             }}
                           />
