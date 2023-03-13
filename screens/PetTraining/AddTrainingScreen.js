@@ -96,6 +96,7 @@ export default function AddTrainingScreen() {
         const data = {
           userId: user.uid,
           description: values.description,
+          contact: values.contact,
           experience: values.experience,
           images: [...response],
           petType: type,
@@ -145,6 +146,7 @@ export default function AddTrainingScreen() {
               description: "",
               experience: "",
               locationDetails: "",
+              contact: "",
             }}
             onSubmit={(values) => handleSubmit(values)}
             validationSchema={validationSchema}
@@ -160,6 +162,12 @@ export default function AddTrainingScreen() {
                 multiline
                 numberOfLines={4}
                 height={90}
+                placeholder="Give a breaf description"
+              />
+              <Text style={styles.text}>Contact Number(WhatsApp)</Text>
+              <AppFormField
+                maxLength={255}
+                name="contact"
                 placeholder="Give a breaf description"
               />
               <Text style={styles.text}>Training Experience</Text>
@@ -214,7 +222,11 @@ export default function AddTrainingScreen() {
                 placeholder="Enter location details"
               />
             </View>
-            <MapScreen onSave={saveLocation} style={styles.map} preLocation={null} />
+            <MapScreen
+              onSave={saveLocation}
+              style={styles.map}
+              preLocation={null}
+            />
             <SubmitButton
               title={"submit"}
               style={styles.submitButton}

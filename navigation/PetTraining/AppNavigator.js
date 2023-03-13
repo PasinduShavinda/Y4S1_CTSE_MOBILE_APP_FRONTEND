@@ -5,7 +5,7 @@ import LoginScreen from '../../screens/PetTraining/LoginScreen';
 import RegistrationScreen from '../../screens/PetTraining/RegistrationScreen';
 import colors from '../../utils/colors';
 import ActionBarImage from '../../utils/headerImage';
-import HomeNavigator from './HomeNavigator';
+import HomeNavigator from './MainNavigator';
 
 const Stack = createNativeStackNavigator();
 

@@ -7,7 +7,7 @@ import colors from "../../utils/colors";
 import ProfileNavigator from "./ProfileNavigator";
 
 const Tab = createBottomTabNavigator();
-export default function HomeNavigator() {
+export default function MainNavigator() {
   return (
     <Tab.Navigator
       

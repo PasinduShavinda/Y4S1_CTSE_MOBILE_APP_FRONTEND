@@ -47,7 +47,8 @@ export default function TrainingItemScreen({ item, navigation }) {
     getCurrentUser();
   }, []);
   const handleContactButtonPress = () => {
-  Linking.openURL('whatsapp://send?phone=+94778528876');
+
+  Linking.openURL(`whatsapp://send?phone=+${item.contact}`);
 }
   return (
     <Screen>
@@ -61,6 +62,7 @@ export default function TrainingItemScreen({ item, navigation }) {
             data={imageData}
             autoPlay={true}
             closeIconColor={colors.primary}
+            
           />
         </View>
         {/* 2 */}
@@ -201,7 +203,15 @@ export default function TrainingItemScreen({ item, navigation }) {
 }
 
 const styles = StyleSheet.create({
-  imageContainer: {},
+  imageContainer: {
+    borderColor: colors.white,
+    borderWidth: 1,
+    marginBottom: 10,
+    backgroundColor: colors.white,
+    borderRadius: 8,
+    elevation: 8,
+    shadowColor: colors.secondary,
+  },
   item2: {
     width: "95%",
     height: 400,
@@ -212,8 +222,17 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   contactDetails: {
-    display:"flex",
+    display: "flex",
     flexDirection: "row",
+    borderColor: colors.white,
+    borderWidth: 1,
+    marginBottom: 30,
+    backgroundColor: colors.white,
+    borderRadius: 8,
+    elevation: 8,
+    shadowColor: colors.secondary,
+    paddingBottom: 10,
+    paddingTop: 10,
   },
   avatar: {
     width: 70,

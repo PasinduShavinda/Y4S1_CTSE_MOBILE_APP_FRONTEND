@@ -147,10 +147,15 @@ export default function ProfileScreen({ navigation }) {
 const styles = StyleSheet.create({
   user: {
     flexDirection: "row",
-    borderColor: "black",
     borderWidth: 1,
     alignItems: "center",
+    borderColor: colors.white,
+    borderWidth: 1,
     marginBottom: 30,
+    backgroundColor: colors.white,
+    borderRadius: 8,
+    elevation: 8,
+    shadowColor: colors.secondary,
   },
   avatar: {
     flex: 0.4,
@@ -163,9 +168,14 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   addListings: {
-    borderColor: "black",
+    borderColor: colors.white,
     borderWidth: 1,
     marginBottom: 30,
+    backgroundColor: colors.white,
+    borderRadius: 8,
+    elevation: 8,
+    shadowColor: colors.secondary,
+    paddingBottom: 10,
   },
   secHeading: {
     fontSize: 18,
@@ -196,8 +206,12 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   myListings: {
-    borderColor: "black",
+    borderColor: colors.white,
     borderWidth: 1,
     marginBottom: 10,
+    backgroundColor: colors.white,
+    borderRadius: 8,
+    elevation: 8,
+    shadowColor: colors.secondary,
   },
 });
