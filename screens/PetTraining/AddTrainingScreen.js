@@ -150,7 +150,7 @@ export default function AddTrainingScreen() {
             validationSchema={validationSchema}
           >
             <View style={{ marginLeft: 15 }}>
-              <AppFormImagePicker name={"images"} />
+              <AppFormImagePicker name={"images"} preValues={null} />
             </View>
             <View style={styles.fields}>
               <Text style={styles.text}>Description</Text>
@@ -214,7 +214,7 @@ export default function AddTrainingScreen() {
                 placeholder="Enter location details"
               />
             </View>
-            <MapScreen onSave={saveLocation} style={styles.map} />
+            <MapScreen onSave={saveLocation} style={styles.map} preLocation={null} />
             <SubmitButton
               title={"submit"}
               style={styles.submitButton}

@@ -4,10 +4,10 @@ import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
 // import { firebase } from "../firebase/config";
 
-export default function MapScreen({onSave, style}) {
+export default function MapScreen({onSave, style, preLocation}) {
   const [location, setLocation] = useState(null);
   const [marker, setMarker] = useState(null);
-  const [markers, setMarkers] = useState([]);
+  const [markers, setMarkers] = useState(preLocation !== null ? [preLocation ]: []);
 
   useEffect(() => {
     async function getCurrentLocation() {
@@ -19,6 +19,7 @@ export default function MapScreen({onSave, style}) {
       const { coords } = await Location.getCurrentPositionAsync({});
       setLocation(coords);
     }
+    
 
     getCurrentLocation();
   }, []);
@@ -54,7 +55,7 @@ export default function MapScreen({onSave, style}) {
           }}
           onPress={handleMapPress}
         >
-          {markers.map((marker,index) => (
+          {markers.map((marker, index) => (
             <Marker
               key={index}
               coordinate={{
@@ -73,11 +74,21 @@ export default function MapScreen({onSave, style}) {
           )}
         </MapView>
       )}
-      {marker && (
-        <View style={styles.buttonContainer}>
-          <Button title="Save" onPress={handleSavePress} />
-        </View>
-      )}
+      <View style={styles.buttonContainer}>
+        {marker && (
+          <View>
+            <Button title="Save" onPress={handleSavePress} />
+          </View>
+        )}
+        {markers.length !==0 && (
+          <View style={{marginLeft:10}} >
+            <Button title="Clear" onPress={() => {
+              setMarkers([])
+              setMarker(null)
+            }} />
+          </View>
+        )}
+      </View>
     </View>
   );
 }
@@ -96,5 +107,6 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 20,
     alignSelf: "center",
+    flexDirection:"row"
   },
 });

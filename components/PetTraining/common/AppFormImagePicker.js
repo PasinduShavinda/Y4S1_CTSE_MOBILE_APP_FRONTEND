@@ -4,7 +4,7 @@ import ErrorMessage from "./ErrorMessage";
 import ImageInputList from "./ImageInputList";
 import { useFormikContext } from "formik";
 
-function AppFormImagePicker({ name }) {
+function AppFormImagePicker({ name, preValues }) {
   const { errors, setFieldValue, touched, values } = useFormikContext();
   const imageUris = values[name];
   const handleAdd = (uri) => {
@@ -19,7 +19,7 @@ function AppFormImagePicker({ name }) {
   return (
     <>
       <ImageInputList
-        imageUris={imageUris}
+        imageUris={preValues !== null ? [...imageUris, ...preValues] : [...imageUris]}
         onAddImage={handleAdd}
         onRemoveImage={handleRemove}
       />

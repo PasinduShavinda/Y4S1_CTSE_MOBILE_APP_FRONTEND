@@ -15,28 +15,31 @@ import AppFormField from "../../components/PetTraining/common/AppFormField";
 import Checkbox from "../../components/PetTraining/common/Checkbox";
 import SubmitButton from "../../components/PetTraining/common/SubmitBUtton";
 import imageUpload from "../../services/PetTraining/imageUpload";
-import { addTraining } from "../../services/PetTraining/trainingService";
+import {
+  addTraining,
+  updateTraining,
+} from "../../services/PetTraining/trainingService";
 import { Snackbar } from "react-native-paper";
 import { auth } from "../../database/firebaseConfig";
 import MapScreen from "./SelectLocationScreen";
 
-export default function EditTrainingScreen({item}) {
+export default function EditTrainingScreen({ item }) {
   const [isLoading, setIsLoding] = useState(false);
   const [isSnackbarVisible, setIsSnackbarVisible] = useState(false);
   const [location, setLocation] = useState(null);
   const user = auth.currentUser;
 
   useEffect(() => {
-    const petType = [...item.petType]
-    const petAge = [...item.petAge]
-    const petSize = [...item.petSize]
+    const petType = [...item.petType];
+    const petAge = [...item.petAge];
+    const petSize = [...item.petSize];
 
-    typeCheckboxes.forEach(item => {
-      const found = petType.find(type => type.lable === item.label);
+    typeCheckboxes.forEach((item) => {
+      const found = petType.find((type) => type.lable === item.label);
       if (found) {
-        handleTypeCheckboxChange(item.index)
+        handleTypeCheckboxChange(item.index);
       }
-    })
+    });
     ageCheckboxes.forEach((item) => {
       const found = petAge.find((type) => type.lable === item.label);
       if (found) {
@@ -49,7 +52,7 @@ export default function EditTrainingScreen({item}) {
         handleSizeCheckboxChange(item.index);
       }
     });
-  },[])
+  }, []);
 
   const validationSchema = Yup.object().shape({
     images: Yup.array()
@@ -62,9 +65,9 @@ export default function EditTrainingScreen({item}) {
   });
 
   const [typeCheckboxes, setTypeCheckboxes] = useState([
-    { index:0, label: "Dogs", icon: "dog-side", checked: false },
-    { index:1, label: "Cats", icon: "cat", checked: false },
-    { index:2, label: "Other", icon: "pastafarianism", checked: false },
+    { index: 0, label: "Dogs", icon: "dog-side", checked: false },
+    { index: 1, label: "Cats", icon: "cat", checked: false },
+    { index: 2, label: "Other", icon: "alien", checked: false },
   ]);
 
   const handleTypeCheckboxChange = (index) => {
@@ -74,13 +77,24 @@ export default function EditTrainingScreen({item}) {
   };
 
   const [ageCheckboxes, setAgeCheckboxes] = useState([
-    {index:0,
+    {
+      index: 0,
       label: "3months - 1year",
       icon: "clock-time-two-outline",
       checked: false,
     },
-    { index:1,label: "1year - 3year", icon: "clock-time-four-outline", checked: false },
-    { index:2,label: "3+ years", icon: "clock-time-seven-outline", checked: false },
+    {
+      index: 1,
+      label: "1year - 3year",
+      icon: "clock-time-four-outline",
+      checked: false,
+    },
+    {
+      index: 2,
+      label: "3+ years",
+      icon: "clock-time-seven-outline",
+      checked: false,
+    },
   ]);
 
   const handleAgeCheckboxChange = (index) => {
@@ -90,9 +104,27 @@ export default function EditTrainingScreen({item}) {
   };
 
   const [sizeCheckboxes, setSizeCheckboxes] = useState([
-    { index:0,label: "1 - 5 KG", icon: "weight-kilogram", size: 5, checked: false },
-    { index:1,label: "5 - 10 KG", icon: "weight-kilogram", size: 5, checked: false },
-    { index:2,label: "10+ KG", icon: "weight-kilogram", size: 5, checked: false },
+    {
+      index: 0,
+      label: "1 - 5 KG",
+      icon: "weight-kilogram",
+      size: 15,
+      checked: false,
+    },
+    {
+      index: 1,
+      label: "5 - 10 KG",
+      icon: "weight-kilogram",
+      size: 20,
+      checked: false,
+    },
+    {
+      index: 2,
+      label: "10+ KG",
+      icon: "weight-kilogram",
+      size: 25,
+      checked: false,
+    },
   ]);
 
   const handleSizeCheckboxChange = (index) => {
@@ -122,14 +154,14 @@ export default function EditTrainingScreen({item}) {
           userId: user.uid,
           description: values.description,
           experience: values.experience,
-          images: [...response],
+          images: [...response, ...item.images],
           petType: type,
           petAge: age,
           petSize: size,
           location: location,
           locationDetails: values.locationDetails,
         };
-        await addTraining(data)
+        await updateTraining(data, item.id)
           .then(() => {
             setIsLoding(false);
             setIsSnackbarVisible(true);
@@ -175,7 +207,7 @@ export default function EditTrainingScreen({item}) {
             validationSchema={validationSchema}
           >
             <View style={{ marginLeft: 15 }}>
-              <AppFormImagePicker name={"images"} />
+              <AppFormImagePicker name={"images"} preValues={item.images} />
             </View>
             <View style={styles.fields}>
               <Text style={styles.text}>Description</Text>
@@ -239,7 +271,11 @@ export default function EditTrainingScreen({item}) {
                 placeholder="Enter location details"
               />
             </View>
-            <MapScreen onSave={saveLocation} style={styles.map} />
+            <MapScreen
+              onSave={saveLocation}
+              style={styles.map}
+              preLocation={item.location}
+            />
             <SubmitButton
               title={"submit"}
               style={styles.submitButton}

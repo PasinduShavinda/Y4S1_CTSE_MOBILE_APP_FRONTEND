@@ -147,10 +147,17 @@ export default function ProfileScreen({ navigation }) {
                       navigation.navigate(routes.ITEMTOPNAV, { item })
                     }
                   >
-                    <Image
-                      style={styles.item2}
-                      source={{ uri: item.images[0] }}
-                    />
+                    <View style={{ margin: 10 }}>
+                      <Image
+                        style={styles.item2}
+                        source={{ uri: item.images[0] }}
+                      />
+
+                      <Image
+                        style={styles.itemIcon}
+                        source={require("../../assets/training.png")}
+                      />
+                    </View>
                   </TouchableHighlight>
                 );
               })}
@@ -213,6 +220,16 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     margin: 10,
   },
+  itemIcon: {
+    width: 30,
+    height: 30,
+    borderColor: colors.primary,
+    borderWidth: 3,
+    borderRadius: 50,
+    position: "absolute",
+    zIndex: 999,
+    alignSelf: "flex-end",
+  },
   myListings: {
     borderColor: "black",
     borderWidth: 1,
@@ -224,6 +241,8 @@ const styles = StyleSheet.create({
     borderColor: "black",
     borderWidth: 1,
     borderRadius: 10,
-    margin: 10,
+
+    position: "relative",
+    zIndex: 1,
   },
 });

@@ -20,7 +20,7 @@ export async function getAllTrainings() {
   return await getDocs(collection(fireDB, "trainings"));
 }
 
-export async function updateTraining(data) {
+export async function updateTraining(data,id) {
   return await updateDoc(doc(fireDB, "trainings", id), data);
 }
 
