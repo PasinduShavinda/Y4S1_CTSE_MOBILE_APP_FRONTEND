@@ -11,7 +11,7 @@ import {
   StatusBar,
   ScrollView,
 } from "react-native";
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect, useLayoutEffect } from "react";
 import { ListItem, Overlay, SearchBar } from "react-native-elements";
 // import Ionicons from "@expo/vector-icons/Ionicons";
 import { FontAwesome5 } from "@expo/vector-icons";
@@ -73,8 +73,20 @@ const DATA = [
 
 export default function Selling_Page({ navigation, route }) {
   const [sellingPets, setsellingPets] = useState([]);
+  function filterByType(type) {
+    // const filteredArray =
+    setsellingPets(
+      sellingPets
+        .filter(function (item) {
+          return item.category == type;
+        })
+        .map(function ({ age, gender, img, id, name }) {
+          return { age, gender, img, id, name };
+        })
+    );
+  }
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const mountSellingPets = async () => {
       const data_ = await get_all_pets();
       const array_data = [];
@@ -89,6 +101,7 @@ export default function Selling_Page({ navigation, route }) {
     };
     mountSellingPets();
   }, []);
+
   return (
     <View style={styles.mainContainer}>
       <SearchBar
@@ -106,6 +119,7 @@ export default function Selling_Page({ navigation, route }) {
               size={30}
               color="black"
               backgroundColor="#ffffff"
+              onPress={filterByType("Dog")}
             />
             <Text style={styles.categoryNames}>Dogs</Text>
           </View>
@@ -133,7 +147,7 @@ export default function Selling_Page({ navigation, route }) {
       </View>
       <ScrollView>
         <View>
-          {DATA.map((title, key) => {
+          {sellingPets.map((title, key) => {
             return (
               <View key={title.id}>
                 <View style={styles.container}>
@@ -148,7 +162,7 @@ export default function Selling_Page({ navigation, route }) {
                   <View style={styles.eachItemDetails}>
                     <View style={styles.itemFullDetails}>
                       <View>
-                        <Text style={styles.itemTitle}>{title.title}</Text>
+                        <Text style={styles.itemTitle}>{title.name}</Text>
                         <Text style={styles.itemTypePet}>Abyssinian</Text>
                         <Text>{title.age} Years old</Text>
                       </View>

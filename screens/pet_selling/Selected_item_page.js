@@ -10,21 +10,36 @@ import {
   Pressable,
   ScrollView,
 } from "react-native";
-import { React, useState } from "react";
+import { React, useState, useLayoutEffect } from "react";
 import { Foundation } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 
 export default function Selected_item_page({ navigation, route }) {
   const type = true;
   const [liked, setLiked] = useState(true);
+  const url_id = route.params?.id;
 
   function cliedLikeBtn() {
     setLiked(!liked);
   }
+  useLayoutEffect(() => {
+    const mountSellingPets = async () => {
+      const data_ = await get_pet_by_id(url_id);
+
+      console.log(
+        "===============data===================>>>>>>>>>>>>>>>>>>>>>>"
+      );
+      console.log(data_);
+    };
+    mountSellingPets();
+    // console.log(url_data);
+  });
   return (
     <SafeAreaView style={styles.mainContainer}>
       <ScrollView>
-        <View>{/* <Text>itemId: {route.params?.id}</Text> */}</View>
+        <View>
+          <Text>itemId: {route.params?.id}</Text>
+        </View>
 
         <View style={styles.imageStyling}>
           <Image

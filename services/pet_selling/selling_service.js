@@ -18,3 +18,6 @@ export async function Upload_image(image) {
 export async function get_all_pets() {
   return await getDocs(collection(fireDB, "sellingPets"));
 }
+export async function get_pet_by_id(id) {
+  return await getDocs(collection(fireDB, "sellingPets", id));
+}
