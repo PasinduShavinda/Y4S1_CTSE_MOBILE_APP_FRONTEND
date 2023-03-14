@@ -66,6 +66,24 @@ export function VetHome({ navigation }) {
                         color="blue"
                     />
                 </View>
+
+                <View style={styles.createNewBtnMain}>
+                    <Button
+                        title="Customer Home Page"
+                        onPress={() => navigation.navigate('CustHome')}
+                        style={styles.createNewBtn}
+                        color="blue"
+                    />
+                </View>
+
+                <View style={styles.createNewBtnMain}>
+                    <Button
+                        title="Snack Page"
+                        onPress={() => navigation.navigate('SnackSave')}
+                        style={styles.createNewBtn}
+                        color="blue"
+                    />
+                </View>
                 
             </View>
             </ScrollView>

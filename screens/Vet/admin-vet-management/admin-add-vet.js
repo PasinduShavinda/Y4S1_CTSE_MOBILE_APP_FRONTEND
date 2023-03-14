@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import {
     StyleSheet,
     Text,
@@ -19,9 +19,11 @@ import { collection, addDoc, updateDoc, doc } from "firebase/firestore";
 import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import InputField from '../../../components/Vet/InputField';
 import COLORS from '../../../utils/Vet/colors';
+import SnackBar from '../../../components/Vet/SnackBar';
+import { FancyAlert } from 'react-native-expo-fancy-alerts';
 
 
-export function AdminAddDoctor() {
+export function AdminAddDoctor({navigation}) {
 
     const [name, setName] = useState('');
     const [spec, setSpec] = useState('');
@@ -34,6 +36,11 @@ export function AdminAddDoctor() {
     const [profilePicture, setProfilePicture] = useState(null);
     const [loading, setLoading] = useState(false);
     const [errors, setErrors] = useState({});
+    const [visible, setVisible] = useState(false);
+
+    const _navigateToSnackSave = () => {
+        navigation.navigate('SnackSave')
+    }
 
     const handleSelectProfilePicture = async () => {
         try {
@@ -50,7 +57,6 @@ export function AdminAddDoctor() {
             console.error(error);
         }
     }
-
 
     const handleSave = async () => {
         try {
@@ -148,13 +154,14 @@ export function AdminAddDoctor() {
 
         if (isValid) {
             handleSave();
+            _navigateToSnackSave();
         }
     };
 
     const handleError = (error, input) => {
         setErrors(prevState => ({ ...prevState, [input]: error }));
     };
-
+ 
     return (
         <SafeAreaView style={{ backgroundColor: COLORS.white, flex: 1 }}>
             <View>
@@ -288,6 +295,7 @@ export function AdminAddDoctor() {
                             color="blue"
                         />
                     </View>
+
                 </View>
             </ScrollView>
         </SafeAreaView>
@@ -401,7 +409,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         paddingHorizontal: 15,
         marginTop: 20
-        
-      },
+
+    },
 });
 

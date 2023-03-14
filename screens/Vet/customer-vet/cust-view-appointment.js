@@ -3,13 +3,7 @@ import {
     StyleSheet,
     Text,
     View,
-    TouchableOpacity,
-    Image,
-    TextInput,
-    SafeAreaView,
-    ScrollView,
     FlatList,
-    Button,
     Alert,
     ActivityIndicator,
     ImageBackground

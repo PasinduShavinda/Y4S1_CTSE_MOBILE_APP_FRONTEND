@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, View, TouchableOpacity, Image } from 'react-native';
-import { Icon, FontAwesomeIcon } from 'react-native-elements'
+import { Icon } from 'react-native-elements'
 
 export function Couches(props) {
     return (

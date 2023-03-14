@@ -1,5 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Image, Alert, StyleSheet, SafeAreaView, ScrollView, Button } from 'react-native';
+import {
+  View,
+  Text,
+  TextInput, 
+  TouchableOpacity, 
+  Image, 
+  Alert, 
+  StyleSheet, 
+  SafeAreaView, 
+  ScrollView, 
+  Button,
+  Keyboard
+} from 'react-native';
 import { fireDB } from '../../../database/firebaseConfig';
 import { updateDoc, doc } from 'firebase/firestore';
 import * as ImagePicker from 'expo-image-picker';
@@ -23,11 +35,14 @@ export function AdminUpdateVet({ route, navigation }) {
   useEffect(() => {
     (async () => {
       if (profilePicture) {
-        // If the user already has a profile picture, set it as the initial image
         setImageUri(profilePicture);
       }
     })();
   }, [profilePicture]);
+
+  const _navigateToSnackSave = () => {
+    navigation.navigate('SnackSave')
+}
 
   const handleChooseImage = async () => {
     // Request permission to access the user's camera roll
@@ -57,14 +72,71 @@ export function AdminUpdateVet({ route, navigation }) {
       loc: newLoc,
       about: newAbout,
       profilePicture: newProfilePicture,
-    }).then(() => {
-      Alert.alert('Successfully Updated')
-      navigation.navigate('AdminViewDoc')
     }).catch((error) => {
       alert(error.message)
     })
   };
+  const FormValidate = () => {
+    Keyboard.dismiss();
+    let isValid = true;
 
+    if (!name) {
+      handleError('Please input name', 'name');
+      isValid = false;
+    }
+
+    if (!spec) {
+      handleError('Please input specialization', 'spec');
+      isValid = false;
+    }
+
+    if (!contact) {
+      handleError('Please input phone number', 'contact');
+      isValid = false;
+    }
+
+    if (!email) {
+      handleError('Please input email', 'email');
+      isValid = false;
+    } else if (!email.match(/\S+@\S+\.\S+/)) {
+      handleError('Please input a valid email', 'email');
+      isValid = false;
+    }
+
+    if (!charge) {
+      handleError('Please input charge', 'charge');
+      isValid = false;
+    }
+    //   else if (!inputs.email.match(/\S+@\S+\.\S+/)) {
+    //     handleError('Please input a valid email', 'email');
+    //     isValid = false;
+    //   }
+
+    if (!exp) {
+      handleError('Please input experience', 'exp');
+      isValid = false;
+    }
+
+    if (!loc) {
+      handleError('Please input location', 'loc');
+      isValid = false;
+    }
+
+    if (!about) {
+      handleError('Please input about', 'about');
+      isValid = false;
+    }
+
+    if (!profilePicture) {
+      handleError('Please input profilePicture', 'profilePicture');
+      isValid = false;
+    }
+
+    if (isValid) {
+      handleUpdate();
+      _navigateToSnackSave();
+    }
+  };
   return (
     <SafeAreaView style={{ backgroundColor: COLORS.white, flex: 1 }}>
       <View>
@@ -168,7 +240,7 @@ export function AdminUpdateVet({ route, navigation }) {
           <View style={styles.createNewBtnMain}>
             <Button
               title="UPDATE"
-              onPress={handleUpdate}
+              onPress={FormValidate}
               style={styles.createNewBtn}
               color="orange"
             />

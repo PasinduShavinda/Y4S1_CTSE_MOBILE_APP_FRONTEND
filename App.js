@@ -9,6 +9,9 @@ import {GetAppointment} from './screens/Vet/customer-vet/cust-get-appointment';
 import { ViewAppointment } from './screens/Vet/customer-vet/cust-view-appointment';
 import { UpdateAppointment } from './screens/Vet/customer-vet/cust-update_appointment';
 import { CustViewDoc } from './screens/Vet/customer-vet/cust-view-vet';
+import { CustHome } from './screens/Vet/customer-vet/cust-vet-home';
+import { CustDash } from './screens/Vet/customer-vet/cust-vet-dashboard';
+import SnackBar from './components/Vet/SnackBar';
 
 const Stack = createNativeStackNavigator();
 
@@ -27,6 +30,10 @@ export default function App() {
         <Stack.Screen name="ViewAppointment" component={ViewAppointment} />
         <Stack.Screen name="UpdateAppointment" component={UpdateAppointment} />
         <Stack.Screen name="CustViewDoc" component={CustViewDoc} />
+
+        <Stack.Screen name="CustHome" component={CustHome} />
+        <Stack.Screen name="CustDash" component={CustDash} />
+        <Stack.Screen name = "SnackSave" component={SnackBar}></Stack.Screen>
 
       </Stack.Navigator>
     </NavigationContainer>

@@ -71,7 +71,6 @@ export function AdminViewVets({ navigation }) {
     };
 
     const renderVetItem = ({ item }) => (
-        <TouchableOpacity>
             <View style={styles.headerContainer}>
                 <ImageBackground
                     style={styles.headerBackgroundImage}
@@ -129,7 +128,6 @@ export function AdminViewVets({ navigation }) {
                     </View>
                 </ImageBackground>
             </View>
-        </TouchableOpacity>
     );
 
     const handleUpdatePress = (item) => {

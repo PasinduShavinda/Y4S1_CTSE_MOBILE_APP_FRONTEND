@@ -63,17 +63,6 @@ export function CustViewDoc({ navigation }) {
             <ActivityIndicator size="large" />
         </View>;
     }
-    // const renderVetItem = ({ item }) => (
-    //     <View>
-    //         <Couches
-    //             src={{ uri: item.profilePicture }}
-    //             name={item.name}
-    //             spec={item.spec}
-    //             contact={item.contact}
-    //             onPress={() => this.props.navigation.navigate('')}
-    //         />
-    //     </View>
-    // );
 
     return (
         <ScrollView
