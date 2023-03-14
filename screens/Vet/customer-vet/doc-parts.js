@@ -2,10 +2,9 @@ import React from 'react';
 import { Text, View, TouchableOpacity, Image } from 'react-native';
 import { Icon } from 'react-native-elements'
 
-export function Couches(props) {
+export function DocParts(props) {
     return (
         <TouchableOpacity
-            // onPress={this.props.onPress}
             style={{
                 marginTop: 30,
                 backgroundColor: "#FFF",

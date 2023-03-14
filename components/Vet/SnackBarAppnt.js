@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Text, View, Button, Image } from 'react-native';
 import { FancyAlert } from 'react-native-expo-fancy-alerts';
 
-const SnackBarSave = ({ navigation }) => {
+const SnackBarAppnt = ({ navigation }) => {
     const [visible, setVisible] = useState(false);
     useEffect(() => {
         setVisible(true);
@@ -38,11 +38,11 @@ const SnackBarSave = ({ navigation }) => {
                     }}
                 />
                 </View>
-                <Text style={{ marginTop: 36, marginBottom: 42, fontSize:20 }}>Successfully Submitted !</Text>
+                <Text style={{ marginTop: 36, marginBottom: 42, fontSize:20 }}>Your Appointment Successfully Reserved!</Text>
                 <View style = {{marginBottom: 20,borderRadius: 20, width: 80, fontSize: 30}}>
                     <Button
                         title="OK"
-                        onPress={() => navigation.navigate('AdminViewDoc')}
+                        onPress={() => navigation.navigate('ViewAppointment')}
                         color="purple"
                         
                     />
@@ -51,4 +51,4 @@ const SnackBarSave = ({ navigation }) => {
         </View>
     )
 }
-export default SnackBarSave;
+export default SnackBarAppnt;

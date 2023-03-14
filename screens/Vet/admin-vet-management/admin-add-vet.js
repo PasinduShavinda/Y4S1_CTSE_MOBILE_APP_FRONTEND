@@ -1,16 +1,12 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import {
     StyleSheet,
     Text,
     View,
-    TouchableOpacity,
     Image,
-    TextInput,
     SafeAreaView,
     ScrollView,
-    FlatList,
     Button,
-    Alert,
     Keyboard
 } from 'react-native';
 import { fireDB, fireStorage } from '../../../database/firebaseConfig';
@@ -19,9 +15,6 @@ import { collection, addDoc, updateDoc, doc } from "firebase/firestore";
 import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import InputField from '../../../components/Vet/InputField';
 import COLORS from '../../../utils/Vet/colors';
-import SnackBar from '../../../components/Vet/SnackBar';
-import { FancyAlert } from 'react-native-expo-fancy-alerts';
-
 
 export function AdminAddDoctor({navigation}) {
 
@@ -36,7 +29,6 @@ export function AdminAddDoctor({navigation}) {
     const [profilePicture, setProfilePicture] = useState(null);
     const [loading, setLoading] = useState(false);
     const [errors, setErrors] = useState({});
-    const [visible, setVisible] = useState(false);
 
     const _navigateToSnackSave = () => {
         navigation.navigate('SnackSave')
@@ -192,7 +184,7 @@ export function AdminAddDoctor({navigation}) {
                         )}
 
                     </View>
-                    <View>
+                    <View style = {{marginBottom: 14}}>
                         <Button title="choose" onPress={handleSelectProfilePicture} />
                     </View>
                     {/* Specialization field */}
@@ -304,11 +296,11 @@ export function AdminAddDoctor({navigation}) {
 
 const styles = StyleSheet.create({
     createBogHeader: {
-        //   color: "blue",
         textAlign: "center",
         fontSize: 22,
         marginTop: 30,
         fontWeight: "bold",
+        marginBottom: 1
     },
     row: {
         flexDirection: "row",

@@ -22,7 +22,7 @@ export function VetHome({ navigation }) {
         <ScrollView>
             <View style={styles.bodySheet}>
                 
-                <View style={styles.createNewBtnMain}>
+                {/* <View style={styles.createNewBtnMain}>
                     <Button
                         title="Admin Add Doctor"
                         onPress={() => navigation.navigate('AdminAddDoc')}
@@ -65,7 +65,7 @@ export function VetHome({ navigation }) {
                         style={styles.createNewBtn}
                         color="blue"
                     />
-                </View>
+                </View> */}
 
                 <View style={styles.createNewBtnMain}>
                     <Button
@@ -78,8 +78,8 @@ export function VetHome({ navigation }) {
 
                 <View style={styles.createNewBtnMain}>
                     <Button
-                        title="Snack Page"
-                        onPress={() => navigation.navigate('SnackSave')}
+                        title="Admin Dashboard"
+                        onPress={() => navigation.navigate('AdminDash')}
                         style={styles.createNewBtn}
                         color="blue"
                     />

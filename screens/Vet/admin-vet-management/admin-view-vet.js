@@ -3,20 +3,21 @@ import {
     StyleSheet,
     Text,
     View,
-    FlatList,
-    TouchableOpacity,
     Alert,
     Image,
     ImageBackground,
-    Button,
-    ActivityIndicator
+    ActivityIndicator,
+    TextInput
 } from 'react-native';
 import { fireDB } from '../../../database/firebaseConfig';
 import { getDocs, collection, deleteDoc, doc } from "firebase/firestore";
 import { Icon } from 'react-native-elements'
+import { ScrollView } from 'react-native';
 
 export function AdminViewVets({ navigation }) {
     const [vets, setVets] = useState([]);
+    const [search, setSearch] = useState("");
+    const [filteredVets, setFilteredVets] = useState([]);
     const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
@@ -35,6 +36,18 @@ export function AdminViewVets({ navigation }) {
         };
         loadVets();
     }, []);
+
+    // Search
+    useEffect(() => {
+        setFilteredVets(
+            vets.filter(
+                (vet) =>
+                    vet.name.toLowerCase().includes(search.toLowerCase()) ||
+                    vet.spec.toLowerCase().includes(search.toLowerCase()) ||
+                    vet.contact.toLowerCase().includes(search.toLowerCase())
+            )
+        );
+    }, [search, vets]);
 
     if (isLoading) {
         return <View style={[styles.container, styles.horizontal]}>
@@ -70,66 +83,6 @@ export function AdminViewVets({ navigation }) {
         );
     };
 
-    const renderVetItem = ({ item }) => (
-            <View style={styles.headerContainer}>
-                <ImageBackground
-                    style={styles.headerBackgroundImage}
-                    blurRadius={10}
-                    source={{
-                        uri: 'https://png.pngtree.com/thumb_back/fh260/background/20190828/pngtree-high-tech-molecular-structure-hexagonal-link-medical-image_309769.jpg',
-                    }}
-                >
-                    <View style={styles.headerColumn}>
-                        <Image
-                            style={styles.userImage}
-                            source={{
-                                uri: item.profilePicture,
-                            }}
-                        />
-                        <Text style={styles.userNameText}>Name : {item.name}</Text>
-                        <Text style={styles.userNameText}>Specialization : {item.spec}</Text>
-                        <Text style={styles.userNameText}>Contact No : {item.contact}</Text>
-                        <Text style={styles.userNameText}>Email : {item.email}</Text>
-                        <Text style={styles.userNameText}>Experience : {item.exp}</Text>
-                        <Text style={styles.userNameText}>About : {item.about}</Text>
-                        <Text style={styles.userNameText}>LKR {item.charge}</Text>
-                        <View style={styles.userAddressRow}>
-                            <View>
-                                <Icon
-                                    name="place"
-                                    underlayColor="transparent"
-                                    iconStyle={styles.placeIcon}
-                                // onPress={this.onPressPlace}
-                                />
-                            </View>
-                            <View style={styles.userCityRow}>
-                                <Text style={styles.userCityText}>
-                                    {item.loc}
-                                </Text>
-                            </View>
-                        </View>
-                    </View>
-                    <View style={styles.editdelete}>
-                    <View style={styles.editbtn}>
-                        <Icon
-                            name='edit'
-                            color="#e6b800"
-                            onPress={() => handleUpdatePress(item)}
-                        />
-
-                        <View style={styles.deletebtn}>
-                            <Icon
-                                name='delete'
-                                color="#ff3300"
-                                onPress={() => showConfirmDialog(item)}
-                            />
-                        </View>
-                        </View>
-                    </View>
-                </ImageBackground>
-            </View>
-    );
-
     const handleUpdatePress = (item) => {
         // Navigate to the update form screen with the selected user's ID
         navigation.navigate('AdminUpdateDoc', {
@@ -148,11 +101,112 @@ export function AdminViewVets({ navigation }) {
 
     return (
         <View style={styles.mainSheet}>
-            <FlatList
-                data={vets}
-                renderItem={renderVetItem}
-                keyExtractor={(item) => item.id}
-            />
+            <View>
+                <View style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    width: "100%",
+                    marginVertical: 30
+                }}>
+                    <View style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                        elevation: 1,
+                        width: 378,
+                        backgroundColor: "#FFF",
+                        paddingHorizontal: 20,
+                        height: 45,
+                        borderRadius: 16,
+                        marginLeft: 1
+                    }}>
+                        <Icon name="search"
+                            size={35}
+                            color="#4f4a4a"
+                        />
+                        <View style={{
+                                
+                            }}>
+                        <TextInput
+                            placeholder="Search Vetrinaries"
+                            onChangeText={(text) => setSearch(text)}
+                            style={{
+                                paddingHorizontal: 60,
+                                fontSize: 16,
+                                marginRight: 29
+                            }}
+                        />
+                        </View>
+                    </View>
+                </View>
+            </View>
+            <ScrollView>
+                {filteredVets.map((v) => [
+                    <View style = {{
+                        marginLeft: 20,
+                        marginRight: 20,
+                        marginBottom: 100               
+                    }}>
+                        <View>
+                            <ImageBackground
+                                style={styles.headerBackgroundImage}
+                                blurRadius={10}
+                                source={{
+                                    uri: 'https://png.pngtree.com/thumb_back/fh260/background/20190828/pngtree-high-tech-molecular-structure-hexagonal-link-medical-image_309769.jpg',
+                                }}
+                            >
+                                <View style={styles.editdelete}>
+                                    <View style={styles.editbtn}>
+                                        <Icon
+                                            name='edit'
+                                            color="#e6b800"
+                                            onPress={() => handleUpdatePress(v)}
+                                        />
+
+                                        <View style={styles.deletebtn}>
+                                            <Icon
+                                                name='delete'
+                                                color="#ff3300"
+                                                onPress={() => showConfirmDialog(v)}
+                                            />
+                                        </View>
+                                    </View>
+                                </View>
+
+                                <View style = {{marginLeft: 12}}>
+                                    <Image
+                                        style={styles.userImage}
+                                        source={{
+                                            uri: v.profilePicture,
+                                        }}
+                                    />
+                                    <Text style={styles.userNameText}>Name : {v.name}</Text>
+                                    <Text style={styles.userNameText}>Specialization : {v.spec}</Text>
+                                    <Text style={styles.userNameText}>Contact No : {v.contact}</Text>
+                                    <Text style={styles.userNameText}>Email : {v.email}</Text>
+                                    <Text style={styles.userNameText}>Experience : {v.exp}</Text>
+                                    <Text style={styles.userNameText}>About : {v.about}</Text>
+                                    <Text style={styles.userNameText}>LKR {v.charge}</Text>
+                                    <View style={styles.userAddressRow}>
+                                        <View>
+                                            <Icon
+                                                name="place"
+                                                underlayColor="transparent"
+                                                iconStyle={styles.placeIcon}
+                                            // onPress={this.onPressPlace}
+                                            />
+                                        </View>
+                                        <View style={styles.userCityRow}>
+                                            <Text style={styles.userCityText}>
+                                                {v.loc}
+                                            </Text>
+                                        </View>
+                                    </View>
+                                </View>
+                            </ImageBackground>
+                        </View>
+                    </View>
+                ])}
+            </ScrollView>
         </View>
     );
 }
@@ -184,7 +238,7 @@ const styles = StyleSheet.create({
     headerBackgroundImage: {
         paddingBottom: 20,
         paddingTop: 45,
-        
+
     },
     headerContainer: {},
     headerColumn: {
@@ -199,7 +253,7 @@ const styles = StyleSheet.create({
             android: {
                 // alignItems: 'left',
                 paddingLeft: 20,
-            }, 
+            },
         }),
     },
     placeIcon: {
@@ -271,7 +325,8 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
         padding: 10,
     },
-    editdelete:{
-        alignItems:'center'
+    editdelete: {
+        marginLeft: 94,
+        height:20
     }
 })

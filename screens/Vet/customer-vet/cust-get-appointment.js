@@ -17,7 +17,7 @@ import { collection, addDoc } from "firebase/firestore";
 // import DropdownPicker from 'react-native-dropdown-picker';
 
 
-export function GetAppointment() {
+export function GetAppointment({navigation}) {
     const [fname, setFName] = useState('');
     const [lname, setLName] = useState('');
     const [email, setEmail] = useState('');
@@ -156,6 +156,7 @@ export function GetAppointment() {
         }
         if (isValid) {
             handleSaveAppointment();
+            _navigateToSnackAppnt()
         }
     };
 
@@ -163,6 +164,9 @@ export function GetAppointment() {
         setErrors(prevState => ({ ...prevState, [input]: error }));
     };
 
+    const _navigateToSnackAppnt = () => {
+        navigation.navigate('SnackSaveAppnt')
+    }
 
     return (
         <SafeAreaView style={{ backgroundColor: COLORS.white, flex: 1 }}>

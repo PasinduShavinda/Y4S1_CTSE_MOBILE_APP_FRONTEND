@@ -5,18 +5,13 @@ import {
     View,
     TouchableOpacity,
     Image,
-    ImageBackground,
     TextInput,
-    SafeAreaView,
     ScrollView,
-    FlatList,
-    Button,
-    Alert,
-    Sepe,
-    ActivityIndicator
+    ActivityIndicator,
+    Button
 } from 'react-native';
 import { Icon } from 'react-native-elements'
-import { Couches } from './Couches';
+import { DocParts } from './doc-parts';
 import { fireDB } from '../../../database/firebaseConfig';
 import { getDocs, collection } from "firebase/firestore";
 
@@ -95,12 +90,12 @@ export function CustViewDoc({ navigation }) {
                 <View style={{
                     flexDirection: "row",
                     alignItems: "center",
-                    elevation: 2,
-                    width: "85%",
+                    elevation: 1,
+                    width: 340,
                     backgroundColor: "#FFF",
                     paddingHorizontal: 20,
-                    height: 35,
-                    borderRadius: 10,
+                    height: 45,
+                    borderRadius: 16,
                     marginLeft: 1
                 }}>
                     <Icon name="search"
@@ -136,7 +131,7 @@ export function CustViewDoc({ navigation }) {
             >
                 {filteredVets.map((v) => [
                     <View>
-                        <Couches
+                        <DocParts
                             src={{ uri: v.profilePicture }}
                             name={v.name}
                             spec={v.spec}
@@ -150,99 +145,55 @@ export function CustViewDoc({ navigation }) {
                         />
                     </View>
                 ])}
-                {/* <FlatList
-                    data={vets}
-                    renderItem={renderVetItem}
-                    keyExtractor={(item) => item.id}
-                ></FlatList> */}
             </ScrollView>
-
-
-            <View style={{
-                marginTop: 50,
-                marginBottom: 50,
-                paddingBottom: 20,
-            }}>
-                <Button
-                    title="GET APPOINTEMENT"
-                    style={{
-                        marginTop: 50,
-                        marginBottom: 50,
-                        paddingBottom: 20,
-                    }}
-                    color="blue"
-                    onPress={() => navigation.navigate('GetAppointment')}
-                />
-            </View>
-
-
-
-            {/* <View style={{
-                flexDirection: "row",
-                marginTop: 30,
-                marginBottom: 10,
-                alignItems: "center"
-            }}>
-                <Text style={{
-                    //fontFamily:"Open Sans",
-                    color: "#4f4a4a",
-                    fontSize: 20
-                }}>
-                    New Arrivals
-                </Text>
-                <View style={{
-                    height: 5,
-                    width: 5,
-                    borderRadius: 5,
-                    backgroundColor: "#4f4a4a",
-                    marginHorizontal: 4
-                }}>
-                </View>
-                <Text style={{
-                    //fontFamily:"calibri",
-                    fontSize: 10,
-                    color: "#4f4a4a"
-                }}>
-                    Good Quality items
-                </Text>
-            </View> */}
-
-            {/* <ScrollView
+            <ScrollView
                 horizontal
-                showsHorizontalScrollIndicator={false}
-            >
-
+                showsHorizontalScrollIndicator={false}>
+                <TouchableOpacity
+                    onPress={() => navigation.navigate('GetAppointment')}
+                >
                 <Image style={{
-                    width: 170,
-                    height: 110,
-                    borderRadius: 10
+                    width: 330,
+                    height: 230,
+                    borderRadius: 10,
+                    marginTop: 90
                 }}
                     source={{
-                        uri: 'https://www.w3schools.com/howto/img_avatar2.png',
+                        uri: 'https://qph.cf2.quoracdn.net/main-qimg-b5069e7ffb6e3e7c4ad4de617936e9f1-pjlq',
                     }}
                 />
+                </TouchableOpacity>
+            </ScrollView>
+{/*             
+            <View style={styles.createNewBtnMain}>
+                    <Button
+                        title="Customer View Appointment"
+                        onPress={() => navigation.navigate('ViewAppointment')}
+                        style={styles.createNewBtn}
+                        color="blue"
+                    />
+                </View> */}
 
+                <ScrollView
+                horizontal
+                showsHorizontalScrollIndicator={false}>
+                <TouchableOpacity
+                    onPress={() => navigation.navigate('ViewAppointment')}
+                >
                 <Image style={{
-                    width: 170,
-                    height: 110,
-                    borderRadius: 10
+                    width: 320,
+                    height: 260,
+                    borderRadius: 10,
+                    marginTop: 50,
+                    marginBottom:30,
+                    marginLeft:11
                 }}
                     source={{
-                        uri: 'https://www.w3schools.com/howto/img_avatar2.png',
+                        uri: 'https://img.freepik.com/premium-vector/doctor-appointment-vector-icon-style-is-bicolor-flat-symbol-soft-blue-colors-rounded-angles_100456-10438.jpg?w=2000',
                     }}
                 />
-
-                <Image style={{
-                    width: 170,
-                    height: 110,
-                    borderRadius: 10
-                }}
-                    source={{
-                        uri: 'https://www.w3schools.com/howto/img_avatar2.png',
-                    }}
-                />
-
-            </ScrollView> */}
+                </TouchableOpacity>
+            </ScrollView>            
 
             {/* <Text style={{
                 marginTop: 20,
