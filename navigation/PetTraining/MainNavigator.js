@@ -1,9 +1,10 @@
 import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import React from "react";
-import HomeScreen from "../../screens/PetTraining/HomeScreen";
-import ProfileScreen from "../../screens/PetTraining/ProfileScreen";
+import React, { useEffect, useState } from "react";
 import Selling_Page from "../../screens/pet_selling/Selling_Page";
+import { AdminDash } from "../../screens/Vet/admin-vet-management/admin-dashboard";
+import { CustHome } from "../../screens/Vet/customer-vet/cust-vet-home";
+import { currentUser } from "../../services/PetTraining/userService";
 import colors from "../../utils/colors";
 import PetsittingNavigation from "../PetSitting/PetsittingNavigation";
 import HomeNavigator from "./HomeNavigator";
@@ -11,7 +12,20 @@ import ProfileNavigator from "./ProfileNavigator";
 
 const Tab = createBottomTabNavigator();
 export default function MainNavigator() {
-  return (
+  const [user, setuser] = useState(null);
+
+  useEffect(() => {
+    getUser()
+  },[])
+
+  const getUser = async () => {
+    await currentUser().then((res) => {
+      setuser(res.data());
+      console.log(res.data())
+    });
+  };
+
+  return user !== null ? (
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
@@ -61,8 +75,8 @@ export default function MainNavigator() {
         }}
       />
       <Tab.Screen
-        name="ProfileNav"
-        component={ProfileNavigator}
+        name="vet"
+        component={CustHome}
         options={{
           tabBarIcon: ({ focused, size, color }) => (
             <FontAwesome
@@ -74,6 +88,37 @@ export default function MainNavigator() {
           tabBarLabelStyle: { color: colors.secondary },
         }}
       />
+      {!user.isAdmin ? (
+        <Tab.Screen
+          name="ProfileNav"
+          component={ProfileNavigator}
+          options={{
+            tabBarIcon: ({ focused, size, color }) => (
+              <FontAwesome
+                name="user-circle-o"
+                size={40}
+                color={focused ? colors.secondary : colors.primary}
+              />
+            ),
+            tabBarLabelStyle: { color: colors.secondary },
+          }}
+        />
+      ) : (
+        <Tab.Screen
+          name="admin"
+          component={AdminDash}
+          options={{
+            tabBarIcon: ({ focused, size, color }) => (
+              <FontAwesome
+                name="user-circle-o"
+                size={40}
+                color={focused ? colors.secondary : colors.primary}
+              />
+            ),
+            tabBarLabelStyle: { color: colors.secondary },
+          }}
+        />
+      )}
     </Tab.Navigator>
-  );
+  ) : null;
 }

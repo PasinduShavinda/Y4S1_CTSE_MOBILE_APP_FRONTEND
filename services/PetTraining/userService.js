@@ -11,7 +11,8 @@ export async function loginUser(user) {
 export async function saveUser(user, uid) { 
   console.log(user.name, uid)
   return await setDoc(doc(fireDB,'users',uid),{
-    name: user.name
+    name: user.name,
+    isAdmin: false
   })
 }
 export async function currentUser() {
