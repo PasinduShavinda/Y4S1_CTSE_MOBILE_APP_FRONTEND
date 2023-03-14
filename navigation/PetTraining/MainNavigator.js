@@ -3,6 +3,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React from "react";
 import HomeScreen from "../../screens/PetTraining/HomeScreen";
 import ProfileScreen from "../../screens/PetTraining/ProfileScreen";
+import Selling_Page from "../../screens/pet_selling/Selling_Page";
 import colors from "../../utils/colors";
 import HomeNavigator from "./HomeNavigator";
 import ProfileNavigator from "./ProfileNavigator";
@@ -11,7 +12,6 @@ const Tab = createBottomTabNavigator();
 export default function MainNavigator() {
   return (
     <Tab.Navigator
-      
       screenOptions={{
         headerShown: false,
         tabBarStyle: { height: 60, backgroundColor: colors.lightPurple },
@@ -24,6 +24,20 @@ export default function MainNavigator() {
           tabBarIcon: ({ focused, size, color }) => (
             <MaterialCommunityIcons
               name="home"
+              size={40}
+              color={focused ? colors.secondary : colors.primary}
+            />
+          ),
+          tabBarLabelStyle: { color: colors.secondary },
+        }}
+      />
+      <Tab.Screen
+        name={"buy"}
+        component={Selling_Page}
+        options={{
+          tabBarIcon: ({ focused, size, color }) => (
+            <FontAwesome
+              name="user-circle-o"
               size={40}
               color={focused ? colors.secondary : colors.primary}
             />

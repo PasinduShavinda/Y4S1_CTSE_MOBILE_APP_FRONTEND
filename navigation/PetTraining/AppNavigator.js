@@ -5,7 +5,7 @@ import LoginScreen from '../../screens/PetTraining/LoginScreen';
 import RegistrationScreen from '../../screens/PetTraining/RegistrationScreen';
 import colors from '../../utils/colors';
 import ActionBarImage from '../../utils/headerImage';
-import HomeNavigator from './MainNavigator';
+import MainNavigator from './MainNavigator';
 
 const Stack = createNativeStackNavigator();
 
@@ -25,7 +25,7 @@ export default function AppNavigator() {
       />
       <Stack.Screen
         name="HomeNav"
-        component={HomeNavigator}
+        component={MainNavigator}
         options={{
           headerTitle: "PetCare",
           headerLeft: () => <ActionBarImage />,

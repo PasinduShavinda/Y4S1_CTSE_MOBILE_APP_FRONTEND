@@ -7,6 +7,7 @@ import {
   ScrollView,
   TouchableHighlight,
   RefreshControl,
+  Button,
 } from "react-native";
 import React, { useCallback, useEffect, useState } from "react";
 import Screen from "../../components/PetTraining/common/Screen";
@@ -121,7 +122,10 @@ export default function ProfileScreen({ navigation }) {
                 <Text style={styles.itemText}>Sitting</Text>
               </View>
             </TouchableHighlight>
-            <TouchableHighlight>
+            <TouchableHighlight
+              underlayColor={colors.lightPurple}
+              onPress={() => navigation.navigate("new-pets")}
+            >
               <View style={styles.itemwithText}>
                 <Image style={styles.item} />
                 <Text style={styles.itemText}>Selling</Text>
@@ -139,6 +143,9 @@ export default function ProfileScreen({ navigation }) {
           <Text style={styles.secHeading}>My Listings</Text>
           <ItemsRow listings={listings} navigation={navigation} />
         </View>
+        <Button title="owner items" onPress={() => {
+          navigation.navigate("owner-items");
+        }} />
       </ScrollView>
     </Screen>
   );
