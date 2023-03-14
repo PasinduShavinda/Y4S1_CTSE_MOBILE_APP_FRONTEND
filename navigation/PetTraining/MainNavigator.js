@@ -5,6 +5,7 @@ import HomeScreen from "../../screens/PetTraining/HomeScreen";
 import ProfileScreen from "../../screens/PetTraining/ProfileScreen";
 import Selling_Page from "../../screens/pet_selling/Selling_Page";
 import colors from "../../utils/colors";
+import PetsittingNavigation from "../PetSitting/PetsittingNavigation";
 import HomeNavigator from "./HomeNavigator";
 import ProfileNavigator from "./ProfileNavigator";
 
@@ -34,6 +35,20 @@ export default function MainNavigator() {
       <Tab.Screen
         name={"buy"}
         component={Selling_Page}
+        options={{
+          tabBarIcon: ({ focused, size, color }) => (
+            <FontAwesome
+              name="user-circle-o"
+              size={40}
+              color={focused ? colors.secondary : colors.primary}
+            />
+          ),
+          tabBarLabelStyle: { color: colors.secondary },
+        }}
+      />
+      <Tab.Screen
+        name="sitter"
+        component={PetsittingNavigation}
         options={{
           tabBarIcon: ({ focused, size, color }) => (
             <FontAwesome
