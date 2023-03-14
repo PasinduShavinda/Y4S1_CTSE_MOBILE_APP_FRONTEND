@@ -28,6 +28,7 @@
     "react-native-image-slider-banner": "^1.0.3",
     "react-native-maps": "^1.4.0",
     "react-native-paper": "^5.3.1",
+    "react-native-super-grid": "^5.0.0",
     "yup": "^1.0.2"
   },
   "devDependencies": {

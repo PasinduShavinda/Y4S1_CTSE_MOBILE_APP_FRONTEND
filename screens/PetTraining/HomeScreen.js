@@ -14,6 +14,7 @@ import Screen from "../../components/PetTraining/common/Screen";
 import colors from "../../utils/colors";
 import { ImageSlider } from "react-native-image-slider-banner";
 import ImageSliderCon from "../../components/PetTraining/ImageSlider";
+import routes from "../../navigation/PetTraining/routes";
 
 export default function HomeScreen({ navigation }) {
   const [listings, setListings] = useState([]);
@@ -50,10 +51,13 @@ export default function HomeScreen({ navigation }) {
       >
         <View style={{ paddingBottom: 20 }}>
           <View style={styles.home}>
-            <ImageSliderCon/>
+            <ImageSliderCon />
           </View>
           <View style={styles.myListings}>
-            <Text style={styles.secHeading}>Train Your Pet</Text>
+            <View style={{flexDirection:"row", justifyContent:"space-between", paddingRight:10}} >
+              <Text style={styles.secHeading}>Train Your Pet</Text>
+              <Text style={styles.secHeading} onPress={()=>{navigation.navigate(routes.ALLTRAININGS)}} >See All</Text>
+            </View>
             <ItemsRow listings={listings} navigation={navigation} />
           </View>
         </View>
