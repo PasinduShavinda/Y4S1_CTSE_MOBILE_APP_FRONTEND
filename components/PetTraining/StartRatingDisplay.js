@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
 
-export default function StarRating({ rating }){
+export default function StarRating({ rating, text=true }){
 
   const renderStar = (index) => {
     if (index <= Math.floor(rating)) {
@@ -29,7 +29,7 @@ export default function StarRating({ rating }){
       {[1, 2, 3, 4, 5].map((index) => (
         <View key={index}>{renderStar(index)}</View>
       ))}
-      <Text style={styles.ratingText}>({rating.toFixed(1)})</Text>
+      {text && <Text style={styles.ratingText}>({rating.toFixed(1)})</Text>}
     </View>
   );
 };

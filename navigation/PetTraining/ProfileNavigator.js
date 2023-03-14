@@ -1,7 +1,6 @@
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import ProfileScreen from "../../screens/PetTraining/ProfileScreen";
-import TrainingItemScreen from "../../screens/PetTraining/TrainingItemScreen";
 import ItemTopNavigator from "./ItemTopNavigator";
 import AddTrainingScreen from "../../screens/PetTraining/AddTrainingScreen";
 import EditTrainingScreen from "../../screens/PetTraining/EditTrainingScreen";
