@@ -67,7 +67,7 @@ useEffect(()=>{
   const ReadData=async()=>{
    
 
-const docRef = doc(fireDB, "petsitters","jki");
+const docRef = doc(fireDB, "petsitters","jpp");
 
   const docSnap = await getDoc(docRef);
   if(docSnap.exists()){
@@ -163,7 +163,7 @@ const handleSubmit=async()=>{
   } else if (/^\d+$/.test(phone) === false || phone.length !== 10) {
       ToastAndroid.show("Please fill a valid mobile number", ToastAndroid.SHORT);
   } else {
-  const docRef = await setDoc(doc(fireDB,"petsitters","jki"),{
+  const docRef = await setDoc(doc(fireDB,"petsitters","jk"),{
     Name:name,
     Phone:phone,
     Adress:adress,
@@ -209,10 +209,22 @@ const data = [
     <ScrollView>
     <View className="p-4">
     <View className="flex-row items-center justify-between px-9 mt-8">
+   
 
-      <View className="w-[640px] h-[640px] bg-[#CF9FFF] rounded-full absolute -bottom-36 -left-36"></View>
+<View className="w-[640px] h-[640px] bg-[#9787b5] rounded-full absolute -bottom-36 -left-36"></View>
 
-              <Text  className="text-[40px] text-[#36454F] font-bold">Be a Pet Sitter</Text>
+{profile ==null &&(
+     <Text className="text-[#000000] text-[30px] font-bold">Created Pet sitter account </Text>
+     
+       
+)}
+{profile !==null &&(
+  <View>
+     <Text className="text-[#000000] text-[35px] font-bold px-2"> Your Pet Sitter</Text>
+     <Text className="text-[#000000] text-[35px] font-bold px-20"> Profile</Text> 
+     </View>
+)}
+         
              </View>
      <View style={styles.container}>
    
