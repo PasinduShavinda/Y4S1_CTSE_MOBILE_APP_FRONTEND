@@ -8,7 +8,7 @@ import { currentUser } from "../../services/PetTraining/userService";
 import colors from "../../utils/colors";
 import PetsittingNavigation from "../PetSitting/PetsittingNavigation";
 import VetAdminNavigator from "../Vet/adminNavigator";
-import VetCustNavigator from "../Vet/CustomerNavigator";
+import VetCustNavigator  from "../Vet/customerNavigator"
 import HomeNavigator from "./HomeNavigator";
 import ProfileNavigator from "./ProfileNavigator";
 

@@ -9,7 +9,7 @@ const Stack = createNativeStackNavigator()
 
 export default function VetAdminNavigator() {
   return (
-    <Stack.Navigator initialRouteName="AdminDash">
+    <Stack.Navigator initialRouteName="AdminDash" screenOptions={{ headerShown: false }}>
       <Stack.Screen name="VetHome" component={VetHome} />
       <Stack.Screen name="AdminAddDoc" component={AdminAddDoctor} />
       <Stack.Screen name="AdminViewDoc" component={AdminViewVets} />

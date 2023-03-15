@@ -1,6 +1,6 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import SnackBarSave from "../../components/Vet/SnackBar";
-import SnackBarAppnt from "../../components/Vet/SnackBarAppnt";
+import SnackBarSave  from "../../components/Vet/SnackBar";
+import SnackBarAppnt  from "../../components/Vet/SnackBarAppnt";
 import { GetAppointment } from "../../screens/Vet/customer-vet/cust-get-appointment";
 import { UpdateAppointment } from "../../screens/Vet/customer-vet/cust-update_appointment";
 import { CustDash } from "../../screens/Vet/customer-vet/cust-vet-dashboard";
@@ -12,7 +12,7 @@ const Stack = createNativeStackNavigator();
 
 export default function VetCustNavigator() {
   return (
-    <Stack.Navigator initialRouteName="CustHome">
+    <Stack.Navigator initialRouteName="CustHome" screenOptions={{ headerShown: false }}>
       <Stack.Screen name="GetAppointment" component={GetAppointment} />
       <Stack.Screen name="ViewAppointment" component={ViewAppointment} />
       <Stack.Screen name="UpdateAppointment" component={UpdateAppointment} />

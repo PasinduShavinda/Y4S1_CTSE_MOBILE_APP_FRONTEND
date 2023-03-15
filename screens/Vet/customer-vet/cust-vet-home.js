@@ -1,11 +1,11 @@
 import React from "react";
-import { StyleSheet, Image, Text, View, TouchableOpacity } from "react-native";
+import { StyleSheet, Image, Text, View, TouchableOpacity, ScrollView } from "react-native";
 
 export function CustHome({navigation}){
   
       return (
+        <ScrollView>
         <View style={styles.container}>
-            <Text style={styles.title}>Vetrinary</Text>
           <Image source={{uri :'https://st.depositphotos.com/1905901/1880/i/450/depositphotos_18802201-stock-photo-young-female-veterinarian.jpg'}}  style={styles.img} />
           
           <Text style={styles.detail}>
@@ -19,6 +19,7 @@ export function CustHome({navigation}){
             <Text style={styles.text}>Next</Text>
           </TouchableOpacity>
         </View>
+        </ScrollView>
       );
     };
     
@@ -30,9 +31,8 @@ export function CustHome({navigation}){
         backgroundColor: "white",
       },
       img: {
-        height: "50%",
+        height: 450,
         width: "100%",
-        marginTop: 20
         // resizeMode: "contain",
       },
       title: {
@@ -51,7 +51,7 @@ export function CustHome({navigation}){
         marginTop: 30,
       },
       btn: {
-        marginTop: 40,
+        marginTop: 20,
         backgroundColor: "purple",
         paddingHorizontal: 140,
         paddingVertical: 10,

@@ -13,11 +13,13 @@ import InputField from '../../../components/Vet/InputField';
 import COLORS from '../../../utils/Vet/colors';
 import { fireDB } from '../../../database/firebaseConfig';
 import { collection, addDoc } from "firebase/firestore";
+import MyDatePicker from '../../../components/Vet/MyDatePicker';
+import MyTimePicker from '../../../components/Vet/MyTimePicker';
 // import DatePicker from '@react-native-community/datetimepicker';
 // import DropdownPicker from 'react-native-dropdown-picker';
 
 
-export function GetAppointment({navigation}) {
+export function GetAppointment({ navigation }) {
     const [fname, setFName] = useState('');
     const [lname, setLName] = useState('');
     const [email, setEmail] = useState('');
@@ -28,60 +30,8 @@ export function GetAppointment({navigation}) {
     const [appntTime, setAppntTime] = useState('');
     const [loading, setLoading] = useState(false);
     const [errors, setErrors] = useState({});
-    // const [showDatePicker, setShowDatePicker] = useState(false);
-    // const [mode, setMode] = useState('date')
-    // const [show, setShow] = useState(false);
-
-    // const [vetOptions, setVetOptions] = useState([]);
-    // const [value, setValue] = useState(null);
-    // const [open, setOpen] = useState(false);
-    // const [selectedValue, setSelectedValue] = useState('')
-
-    // useEffect(() => {
-    //     const drp = onSnapshot(collection(fireDB, 'vets'), (snapshot) => {
-
-    //         const data = snapshot.docs.map((doc) => {
-    //             return {
-    //                 label: doc.get('name'),
-    //                 value: doc.id,
-    //             }
-    //         });
-    //         setVetOptions(data.map((item) => { return { label: item.label, value: item.value } }));
-    //     });
-    //     return drp;
-    // }, []);
-
-    // const onChange = (event, selectedDate) => {
-    //     setShow(Platform.OS === 'ios');
-    //     if (mode == 'date') {
-    //         const currentDate = selectedDate || new Date();
-    //         setAppntDate(currentDate);
-
-    //         // let tempDate = new Date(currentDate);
-    //         // let fDate = tempDate.getDate() + '/' + (tempDate.getMonth() + 1) + '/' + tempDate.getFullYear();
-    //         // setAppntDate(fDate)
-    //     }
-    // };
-    // const convert = (currentDate) => {
-    //   let tempDate = new Date(currentDate);
-    //   let fDate = tempDate.getDate() + '/' + (tempDate.getMonth() + 1) + '/' + tempDate.getFullYear();
-    //   setAppntDate(fDate)
-    // }
-
-    // const showMode = currentMode => {
-    //     setShow(true);
-    //     setMode(currentMode);
-    // };
-
-    // const getDate = () => {
-    //     if (appntDate !== '') {
-    //       let tempDate = appntDate.toString().split(' ');
-    //       return `${tempDate[0]} ${tempDate[1]} ${tempDate[2]} ${tempDate[3]}`;
-    //     } else {
-    //       return '';
-    //     }
-    //   };
-    
+    const [showAppntDate, setShowAppntDate] = useState(false);
+    const [showAppntTime, setShowAppntTime] = useState(false);
 
     const handleSaveAppointment = async () => {
         try {
@@ -167,6 +117,16 @@ export function GetAppointment({navigation}) {
     const _navigateToSnackAppnt = () => {
         navigation.navigate('SnackSaveAppnt')
     }
+
+    const getDate = (date) => {
+        setAppntDate(date);
+        setShowAppntDate(false);
+    };
+
+    const getTime = (time) => {
+        setAppntTime(time);
+        setShowAppntTime(false);
+    };
 
     return (
         <SafeAreaView style={{ backgroundColor: COLORS.white, flex: 1 }}>
@@ -266,9 +226,7 @@ export function GetAppointment({navigation}) {
                     {/* Appointment Date field */}
                     <View>
                         <Text style={styles.titleStyle}>Appointment Date</Text>
-
                         <InputField
-                            onChangeText = {setAppntDate}
                             value={appntDate}
                             placeholder="Select date"
                             // editable={false}
@@ -276,31 +234,28 @@ export function GetAppointment({navigation}) {
                             error={errors.appntDate}
                         />
                         <View style={{ margin: 20 }}>
-                        <Button onPress={''} title="Pick date" />
+                            <Button onPress={() => {
+                                setShowAppntDate(true);
+                            }} title="Pick date" />
                         </View>
-{/*                 
-                        <DatePicker
-                            // testID='dateTimePicker'
-                            // value={appntDate}
-                            // minimumDate={Date.parse(new Date())}
-                            // mode={mode}
-                            // is24Hour={true}
-                            // display='default'
-                            // onChange={onChange}
-                        ></DatePicker> */}
+                        {showAppntDate && <MyDatePicker mode={"date"} getDate={getDate} />}
                     </View>
 
                     {/* Appointment Time field */}
                     <View>
                         <Text style={styles.titleStyle}>Appointment Time</Text>
-
                         <InputField
-                            onChangeText={setAppntTime}
                             value={appntTime}
                             placeholder="time"
                             onFocus={() => handleError(null, 'appntTime')}
                             error={errors.appntTime}
                         />
+                        <View style={{ margin: 20 }}>
+                            <Button onPress={() => {
+                                setShowAppntTime(true);
+                            }} title="Pick Time" />
+                        </View>
+                        {showAppntTime && <MyTimePicker mode={"time"} getTime={getTime} />}
 
                     </View>
 
@@ -422,6 +377,12 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 4,
         elevation: 5,
-    }
+    },
+    dateText: {
+        width: "85%",
+        height: 25,
+        marginLeft: 15,
+        fontSize: 18,
+      },
 });
 

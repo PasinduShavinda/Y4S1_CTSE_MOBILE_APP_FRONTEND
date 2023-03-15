@@ -18,7 +18,7 @@ const Stack = createNativeStackNavigator();
 
 export default function VetNavigation() {
   return (
-      <Stack.Navigator>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
         {/* ADMIN */}
         <Stack.Screen name="VetHome" component={VetHome} />
         <Stack.Screen name="AdminAddDoc" component={AdminAddDoctor} /> 
