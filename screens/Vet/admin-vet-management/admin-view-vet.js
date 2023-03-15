@@ -67,17 +67,17 @@ export function AdminViewVets({ navigation }) {
 
     const showConfirmDialog = (vet) => {
         Alert.alert(
-            "Are you sure?",
-            "Are you sure you want to delete this user? This action cannot be undone!",
+            "Alert !!",
+            "Are you sure you want to delete ?",
             [
+                {
+                    text: "No",
+                },
                 {
                     text: "Yes",
                     onPress: () => {
                         handleDelete(vet.id)
                     },
-                },
-                {
-                    text: "No",
                 },
             ]
         );
@@ -238,7 +238,8 @@ const styles = StyleSheet.create({
     headerBackgroundImage: {
         paddingBottom: 20,
         paddingTop: 45,
-
+        borderRadius: 6,
+        overflow: 'hidden'
     },
     headerContainer: {},
     headerColumn: {
@@ -327,6 +328,6 @@ const styles = StyleSheet.create({
     },
     editdelete: {
         marginLeft: 94,
-        height:20
+        height:30
     }
 })

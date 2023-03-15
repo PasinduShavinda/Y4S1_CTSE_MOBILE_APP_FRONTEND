@@ -129,12 +129,14 @@ export function GetAppointment({ navigation }) {
     };
 
     return (
+        
         <SafeAreaView style={{ backgroundColor: COLORS.white, flex: 1 }}>
+            <ScrollView
+                contentContainerStyle={{ paddingTop: 50, paddingHorizontal: 20 }}>
             <View>
                 <Text style={styles.createBogHeader}>Veterinarian Appointment</Text>
             </View>
-            <ScrollView
-                contentContainerStyle={{ paddingTop: 50, paddingHorizontal: 20 }}>
+            
                 <View style={{ marginVertical: 20 }}>
 
                     {/* Name field */}
@@ -229,7 +231,7 @@ export function GetAppointment({ navigation }) {
                         <InputField
                             value={appntDate}
                             placeholder="Select date"
-                            // editable={false}
+                            editable={false}
                             onFocus={() => handleError(null, 'appntDate')}
                             error={errors.appntDate}
                         />
@@ -247,6 +249,7 @@ export function GetAppointment({ navigation }) {
                         <InputField
                             value={appntTime}
                             placeholder="time"
+                            editable={false}
                             onFocus={() => handleError(null, 'appntTime')}
                             error={errors.appntTime}
                         />

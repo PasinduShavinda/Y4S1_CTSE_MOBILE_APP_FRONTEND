@@ -8,12 +8,11 @@ import {
     ActivityIndicator,
     ImageBackground
 } from 'react-native';
-// import Icon from "react-native-vector-icons/FontAwesome";
 import { fireDB } from '../../../database/firebaseConfig';
 import { getDocs, collection, deleteDoc, doc } from "firebase/firestore";
 import { Icon } from 'react-native-elements'
 
-export function ViewAppointment({navigation}) {
+export function ViewAppointment({ navigation }) {
     const [appnts, setAppnts] = useState([]);
     const [isLoading, setIsLoading] = useState(true)
 
@@ -74,31 +73,6 @@ export function ViewAppointment({navigation}) {
                     uri: 'https://media.istockphoto.com/id/1191969117/video/abstract-blocks-background.jpg?s=640x640&k=20&c=DG2JuVrgPbqCiToIRIgrXseSwvdCzByBmkf3HhG3rIM=',
                 }}
             >
-                <View style={styles.headerColumn}>
-                    <Text style={styles.userNameText}>First Name : {item.fname}</Text>
-                    <Text style={styles.userNameText}>Last Name : {item.lname}</Text>
-                    <Text style={styles.userNameText}>Email : {item.email}</Text>
-                    <Text style={styles.userNameText}>Contact No : {item.contact}</Text>
-                    <Text style={styles.userNameText}>Doctor : {item.vetName}</Text>
-                    <Text style={styles.userNameText}>Reason : {item.reason}</Text>
-                    <Text style={styles.userNameText}>Appointement Date : {item.appntDate}</Text>
-                    <Text style={styles.userNameText}>Appointement Time {item.appntTime}</Text>
-                    <View style={styles.userAddressRow}>
-                        {/* <View>
-                                <Icon
-                                    name="place"
-                                    underlayColor="transparent"
-                                    iconStyle={styles.placeIcon}
-                                // onPress={this.onPressPlace}
-                                />
-                            </View> */}
-                        {/* <View style={styles.userCityRow}>
-                                <Text style={styles.userCityText}>
-                                    {item.loc}
-                                </Text>
-                            </View> */}
-                    </View>
-                </View>
                 <View style={styles.editdelete}>
                     <View style={styles.editbtn}>
                         <Icon
@@ -115,6 +89,16 @@ export function ViewAppointment({navigation}) {
                             />
                         </View>
                     </View>
+                </View>
+                <View style={styles.headerColumn}>
+                    <Text style={styles.userNameText}>First Name : {item.fname}</Text>
+                    <Text style={styles.userNameText}>Last Name : {item.lname}</Text>
+                    <Text style={styles.userNameText}>Email : {item.email}</Text>
+                    <Text style={styles.userNameText}>Contact No : {item.contact}</Text>
+                    <Text style={styles.userNameText}>Doctor : {item.vetName}</Text>
+                    <Text style={styles.userNameText}>Reason : {item.reason}</Text>
+                    <Text style={styles.userNameText}>Appointement Date : {item.appntDate}</Text>
+                    <Text style={styles.userNameText}>Appointement Time {item.appntTime}</Text>
                 </View>
             </ImageBackground>
         </View>
@@ -142,24 +126,31 @@ export function ViewAppointment({navigation}) {
     return (
         <View style={styles.mainSheet}>
             <View>
-                <Text> Appointement Details</Text>
+                <Text style={styles.createHeader}> Appointement Details</Text>
             </View>
-            <FlatList
-                data={appnts}
-                renderItem={renderAppointmentItem}
-                keyExtractor={(item) => item.id}
-            />
+            <View style={{
+                marginLeft: 20,
+                marginRight: 20,
+                marginBottom: 100
+            }}>
+                <FlatList
+                    data={appnts}
+                    renderItem={renderAppointmentItem}
+                    keyExtractor={(item) => item.id}
+                />
+            </View>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-    createBogHeader: {
+    createHeader: {
         //   color: "blue",
         textAlign: "center",
         fontSize: 22,
         marginTop: 30,
         fontWeight: "bold",
+        marginBottom: 15
     },
     row: {
         flexDirection: "row",
@@ -245,12 +236,12 @@ const styles = StyleSheet.create({
         fontSize: 22,
         fontWeight: 'bold',
         paddingBottom: 8,
-        textAlign: 'justify'
+        textAlign: 'justify',
+        paddingTop:11
     },
     headerBackgroundImage: {
-        paddingBottom: 20,
-        paddingTop: 45,
-
+        paddingBottom: 50,
+        paddingTop: 25
     },
     headerContainer: {},
     headerColumn: {
@@ -283,5 +274,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'flex-start'
     },
+    editdelete: {
+        marginLeft: 100,
+        height: 30
+    }
 });
 

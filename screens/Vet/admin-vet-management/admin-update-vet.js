@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
-  TextInput, 
-  TouchableOpacity, 
-  Image, 
-  StyleSheet, 
-  SafeAreaView, 
-  ScrollView, 
+  TextInput,
+  TouchableOpacity,
+  Image,
+  StyleSheet,
+  SafeAreaView,
+  ScrollView,
   Button,
   Keyboard
 } from 'react-native';
@@ -41,7 +41,7 @@ export function AdminUpdateVet({ route, navigation }) {
 
   const _navigateToSnackSave = () => {
     navigation.navigate('SnackSave')
-}
+  }
 
   const handleChooseImage = async () => {
     // Request permission to access the user's camera roll
@@ -138,16 +138,16 @@ export function AdminUpdateVet({ route, navigation }) {
   };
   return (
     <SafeAreaView style={{ backgroundColor: COLORS.white, flex: 1 }}>
-      <View>
-        <Text style={styles.createBogHeader}>Admin Update Doctor</Text>
-      </View>
       <ScrollView
-        contentContainerStyle={{ paddingTop: 50, paddingHorizontal: 20 }}>
+        contentContainerStyle={{ paddingHorizontal: 20 }}>
+        <View>
+          <Text style={styles.createBogHeader}>Admin Update Doctor</Text>
+        </View>
         <View style={{ marginVertical: 20 }}>
           {imageUri && <Image source={{ uri: imageUri }} style={{ width: 200, height: 200 }} />}
-          <TouchableOpacity onPress={handleChooseImage}>
-            <Text>Choose Image</Text>
-          </TouchableOpacity>
+          <View style={{ margin: 20 }}>
+            <Button title="Choose Image" onPress={handleChooseImage} />
+          </View>
 
           {/* Name field */}
           <View>
@@ -244,7 +244,6 @@ export function AdminUpdateVet({ route, navigation }) {
               color="orange"
             />
           </View>
-
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -258,6 +257,7 @@ const styles = StyleSheet.create({
     fontSize: 22,
     marginTop: 80,
     fontWeight: "bold",
+    marginBottom: 32
   },
   row: {
     flexDirection: "row",
