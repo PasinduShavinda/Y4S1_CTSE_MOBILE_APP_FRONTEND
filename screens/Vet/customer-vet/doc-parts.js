@@ -7,8 +7,8 @@ export function DocParts(props) {
         <TouchableOpacity
             style={{
                 marginTop: 30,
-                backgroundColor: "#FFF",
-                height: 550,
+                backgroundColor: "#dfddea",
+                height: 580,
                 width: 260,
                 elevation: 2,
                 borderRadius: 10,
@@ -23,7 +23,7 @@ export function DocParts(props) {
                 style={{
                     width: 230,
                     height: 250,
-                    borderRadius: 10
+                    borderRadius: 50,
                 }}
             />
             <View style={{
@@ -34,31 +34,17 @@ export function DocParts(props) {
                 <Text style={{
                     // fontFamily: "Bold",
                     color: "#4f4a4a",
-                    fontSize: 17
+                    fontSize: 17,
+                    marginTop: 5,
+                    fontWeight: 'bold'
                 }}>
                     {props.name}
                 </Text>
-                <View style={{
-                    height: 4,
-                    width: 4,
-                    borderRadius: 4,
-                    backgroundColor: "red",
-                    marginHorizontal: 4
-                }}>
-
-                </View>
-                {/* <Text style={{
-                    color: "red",
-                    fontSize: 9,
-                    // fontFamily: "Bold"
-                }}>
-                    New
-                </Text> */}
-
             </View>
             <Text style={{
                 color: "red",
                 fontSize: 18,
+                marginTop: 5,
                 // fontFamily: "Bold"
             }}>
                 {props.spec}
@@ -66,7 +52,7 @@ export function DocParts(props) {
 
             <View style={{
                 flexDirection: "row",
-                marginTop: 5,
+                marginTop: 7,
                 alignItems: "center",
                 width: "100%"
             }}>
@@ -78,6 +64,7 @@ export function DocParts(props) {
                 <View>
                     <Text style={{
                         fontSize: 15,
+                        
                         // fontFamily: "Bold"
                     }}>{props.contact}</Text>
                 </View>
@@ -156,7 +143,7 @@ export function DocParts(props) {
                 }}>
                 </View>
             </View>
-            
+
             <View style={{
                 flexDirection: "row",
                 marginTop: 5,

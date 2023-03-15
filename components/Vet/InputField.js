@@ -54,14 +54,15 @@ const InputField = ({
     label: {
       marginVertical: 5,
       fontSize: 24,
-      color: COLORS.grey,
+      color: 'COLORS.grey',
     },
     inputContainer: {
       height: 55,
-      backgroundColor: COLORS.light,
+      backgroundColor: "#dfddea",
       flexDirection: 'row',
       paddingHorizontal: 15,
       borderWidth: 0.5,
+      marginTop:-23
     },
   });
   

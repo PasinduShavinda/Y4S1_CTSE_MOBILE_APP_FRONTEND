@@ -59,7 +59,7 @@ export function AdminViewVets({ navigation }) {
         const vetRef = doc(fireDB, 'vets', vetId)
         await deleteDoc(vetRef)
             .then(() => {
-                navigation.navigate('VetHome');
+                navigation.navigate('AdminDash');
             }).catch((error) => {
                 alert(error.message)
             })
@@ -151,7 +151,7 @@ export function AdminViewVets({ navigation }) {
                                 style={styles.headerBackgroundImage}
                                 blurRadius={10}
                                 source={{
-                                    uri: 'https://png.pngtree.com/thumb_back/fh260/background/20190828/pngtree-high-tech-molecular-structure-hexagonal-link-medical-image_309769.jpg',
+                                    uri: 'https://img.freepik.com/premium-photo/purple-velvet-fabric-texture-used-as-background-empty-purple-fabric-background_661047-766.jpg',
                                 }}
                             >
                                 <View style={styles.editdelete}>

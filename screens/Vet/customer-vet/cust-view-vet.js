@@ -92,7 +92,7 @@ export function CustViewDoc({ navigation }) {
                     alignItems: "center",
                     elevation: 1,
                     width: 340,
-                    backgroundColor: "#FFF",
+                    backgroundColor: "#dfddea",
                     paddingHorizontal: 20,
                     height: 45,
                     borderRadius: 16,
@@ -107,7 +107,7 @@ export function CustViewDoc({ navigation }) {
                         onChangeText={(text) => setSearch(text)}
                         style={{
                             paddingHorizontal: 20,
-                            fontSize: 12
+                            fontSize: 12,
                         }}
                     />
                 </View>
@@ -140,7 +140,7 @@ export function CustViewDoc({ navigation }) {
                             charge={v.charge}
                             exp={v.exp}
                             about={v.about}
-                            loc = {v.loc}
+                            loc={v.loc}
                             onPress={() => this.props.navigation.navigate('')}
                         />
                     </View>
@@ -150,21 +150,33 @@ export function CustViewDoc({ navigation }) {
                 horizontal
                 showsHorizontalScrollIndicator={false}>
                 <TouchableOpacity
+                    style={{
+                        marginTop: 30,
+                        backgroundColor: "#dfddea",
+                        height: 200,
+                        width: 310,
+                        elevation: 2,
+                        borderRadius: 10,
+                        padding: 15,
+                        marginRight: 30,
+                        marginLeft: 20,
+                        marginBottom: 5
+                    }}
                     onPress={() => navigation.navigate('GetAppointment')}
                 >
-                <Image style={{
-                    width: 330,
-                    height: 230,
-                    borderRadius: 10,
-                    marginTop: 90
-                }}
-                    source={{
-                        uri: 'https://qph.cf2.quoracdn.net/main-qimg-b5069e7ffb6e3e7c4ad4de617936e9f1-pjlq',
+                    <Image style={{
+                        width: 280,
+                        height: 160,
+                        borderRadius: 10,
+                        marginTop: 4
                     }}
-                />
+                        source={{
+                            uri: 'https://qph.cf2.quoracdn.net/main-qimg-b5069e7ffb6e3e7c4ad4de617936e9f1-pjlq',
+                        }}
+                    />
                 </TouchableOpacity>
             </ScrollView>
-{/*             
+            {/*             
             <View style={styles.createNewBtnMain}>
                     <Button
                         title="Customer View Appointment"
@@ -174,26 +186,38 @@ export function CustViewDoc({ navigation }) {
                     />
                 </View> */}
 
-                <ScrollView
+            <ScrollView
                 horizontal
                 showsHorizontalScrollIndicator={false}>
                 <TouchableOpacity
+                    style={{
+                        marginTop: 30,
+                        backgroundColor: "#dfddea",
+                        height: 220,
+                        width: 310,
+                        elevation: 2,
+                        borderRadius: 10,
+                        padding: 15,
+                        marginRight: 30,
+                        marginLeft: 20,
+                        marginBottom: 5
+                    }}
                     onPress={() => navigation.navigate('ViewAppointment')}
                 >
-                <Image style={{
-                    width: 320,
-                    height: 260,
-                    borderRadius: 10,
-                    marginTop: 50,
-                    marginBottom:30,
-                    marginLeft:11
-                }}
-                    source={{
-                        uri: 'https://img.freepik.com/premium-vector/doctor-appointment-vector-icon-style-is-bicolor-flat-symbol-soft-blue-colors-rounded-angles_100456-10438.jpg?w=2000',
+                    <Image style={{
+                        width: 260,
+                        height: 180,
+                        borderRadius: 10,
+                        marginTop: 4,
+                        marginLeft:12
+
                     }}
-                />
+                        source={{
+                            uri: 'https://img.freepik.com/premium-vector/doctor-appointment-vector-icon-style-is-bicolor-flat-symbol-soft-blue-colors-rounded-angles_100456-10438.jpg?w=2000',
+                        }}
+                    />
                 </TouchableOpacity>
-            </ScrollView>            
+            </ScrollView>
 
             {/* <Text style={{
                 marginTop: 20,

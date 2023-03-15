@@ -268,7 +268,7 @@ export function GetAppointment({ navigation }) {
                             title="Proceed"
                             onPress={FormValidate}
                             style={styles.createNewBtn}
-                            color="blue"
+                            color="red"
                         />
                     </View>
                 </View>
@@ -325,8 +325,9 @@ const styles = StyleSheet.create({
     },
     titleStyle: {
         //   color: "blue",
-        fontSize: 16,
-        marginBottom: 15
+        fontSize: 18,
+        marginBottom: 10,
+        fontStyle:'italic'
     },
     input: {
         height: 40,

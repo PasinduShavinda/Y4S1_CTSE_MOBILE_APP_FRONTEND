@@ -42,7 +42,7 @@ const SnackBarSave = ({ navigation }) => {
                 <View style = {{marginBottom: 20,borderRadius: 20, width: 80, fontSize: 30}}>
                     <Button
                         title="OK"
-                        onPress={() => navigation.navigate('AdminViewDoc')}
+                        onPress={() => navigation.navigate('AdminDash')}
                         color="purple"
                         
                     />

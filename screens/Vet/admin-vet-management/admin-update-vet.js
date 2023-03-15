@@ -302,6 +302,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 15,
     marginTop: 32,
+    fontStyle:'italic'
   },
   input: {
     height: 40,
