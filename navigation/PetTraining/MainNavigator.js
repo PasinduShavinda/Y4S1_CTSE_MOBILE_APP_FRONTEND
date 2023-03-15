@@ -7,8 +7,8 @@ import { CustHome } from "../../screens/Vet/customer-vet/cust-vet-home";
 import { currentUser } from "../../services/PetTraining/userService";
 import colors from "../../utils/colors";
 import PetsittingNavigation from "../PetSitting/PetsittingNavigation";
-import vetAdminNavigator from "../Vet/adminNavigator";
-import vetCustNavigator from "../Vet/customerNavigator";
+import VetAdminNavigator from "../Vet/adminNavigator";
+import VetCustNavigator from "../Vet/CustomerNavigator";
 import HomeNavigator from "./HomeNavigator";
 import ProfileNavigator from "./ProfileNavigator";
 
@@ -78,7 +78,7 @@ export default function MainNavigator() {
       />
       <Tab.Screen
         name="vet"
-        component={vetCustNavigator}
+        component={VetCustNavigator}
         options={{
           tabBarIcon: ({ focused, size, color }) => (
             <FontAwesome
@@ -108,7 +108,7 @@ export default function MainNavigator() {
       ) : (
         <Tab.Screen
           name="admin"
-          component={vetAdminNavigator}
+          component={VetAdminNavigator}
           options={{
             tabBarIcon: ({ focused, size, color }) => (
               <FontAwesome

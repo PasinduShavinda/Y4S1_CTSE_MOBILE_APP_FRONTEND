@@ -10,7 +10,7 @@ import { CustViewDoc } from "../../screens/Vet/customer-vet/cust-view-vet";
 
 const Stack = createNativeStackNavigator();
 
-export default function vetCustNavigator() {
+export default function VetCustNavigator() {
   return (
     <Stack.Navigator initialRouteName="CustHome">
       <Stack.Screen name="GetAppointment" component={GetAppointment} />

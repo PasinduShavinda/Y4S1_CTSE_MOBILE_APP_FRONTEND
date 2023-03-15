@@ -7,7 +7,7 @@ import { VetHome } from "../../screens/Vet/VetHome";
 
 const Stack = createNativeStackNavigator()
 
-export default function vetAdminNavigator() {
+export default function VetAdminNavigator() {
   return (
     <Stack.Navigator initialRouteName="AdminDash">
       <Stack.Screen name="VetHome" component={VetHome} />
