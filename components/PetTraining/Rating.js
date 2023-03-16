@@ -3,11 +3,12 @@ import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import colors from "../../utils/colors";
 
-export default function Rating(){
+export default function Rating({onRate}){
   const [rating, setRating] = useState(0);
 
   const handleRating = (value) => {
     setRating(value);
+    onRate(value);
   };
 
   return (
@@ -30,19 +31,13 @@ export default function Rating(){
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    margin:10
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-    marginBottom: 20,
+    margin: 10,
+    marginLeft: 0,
+    marginBottom:0,
+    flexDirection: "row",
   },
   stars: {
     flexDirection: "row",
-    justifyContent: "center",
-    marginBottom: 20,
   },
   rating: {
     fontSize: 18,

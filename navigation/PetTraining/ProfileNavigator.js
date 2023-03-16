@@ -11,6 +11,7 @@ import Google_map from "../../screens/pet_selling/Google_map";
 import AdoptionPage from "../../screens/pet_selling/AdoptionPage";
 import Owner_items from "../../screens/pet_selling/Owner_items";
 import EditPage from "../../screens/pet_selling/EditPage";
+import AddReviewScreen from "../../screens/PetTraining/AddReviewScreen";
 
 const Stack = createNativeStackNavigator();
 export default function ProfileNavigator() {
@@ -20,6 +21,7 @@ export default function ProfileNavigator() {
       <Stack.Screen name="EditTraining" component={EditTrainingScreen} />
       <Stack.Screen name="ItemTopNav" component={ItemTopNavigator} />
       <Stack.Screen name="AddTraining" component={AddTrainingScreen} />
+      <Stack.Screen name ="AddReview" component={AddReviewScreen} />
       {/* kavindu */}
       <Stack.Screen name="add-pets" component={Tempo_file} />
       <Stack.Screen name="new-pets" component={Add_new_pets} />

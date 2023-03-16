@@ -1,3 +1,4 @@
+import { onValue, ref, remove, set, update } from "firebase/database";
 import {
   addDoc,
   collection,
@@ -8,22 +9,35 @@ import {
   setDoc,
   updateDoc,
 } from "firebase/firestore";
-import { auth, fireDB } from "../../database/firebaseConfig";
+import { auth, db, fireDB } from "../../database/firebaseConfig";
 const userId = auth.currentUser?.uid;
 
 export async function addTraining(data) {
-  const docRef = doc(collection(fireDB, "trainings"))
-  return await setDoc(docRef, {...data, id:docRef.id});
+  const id = Date.now();
+  const dbRef = ref(db, `trainings/${id}`);
+  return await set(dbRef, { ...data, id: id });
 }
 
-export async function getAllTrainings() {
-  return await getDocs(collection(fireDB, "trainings"));
+export function getAllTrainings() {
+  const Ref = ref(db, "trainings/");
+  let list =[]
+  onValue(Ref, (snapshot) => {
+    const data = snapshot.val();
+    const listings = Object.keys(data).map((key) => ({
+      id: key,
+      ...data[key],
+    }));
+    list = [...listings]
+  });
+  return list;
 }
 
-export async function updateTraining(data,id) {
-  return await updateDoc(doc(fireDB, "trainings", id), data);
+export async function updateTraining(data, id) {
+  const dbRef = ref(db, `trainings/${id}`);
+  return await update(dbRef, data);
 }
 
 export async function deleteTraining(id) {
-  return await deleteDoc(doc(fireDB, "trainings", id));
+  const dbRef = ref(db, `trainings/${id}`);
+  return await remove(dbRef);
 }

@@ -26,11 +26,9 @@ export default function TrainingItemScreen({ item, navigation }) {
   console.log(item);
   const [user, setUser] = useState({});
   const [refreshing, setRefreshing] = useState(false);
-  async function getCurrentUser() {
-    await currentUser().then((res) => {
-      setUser(res.data());
-      setRefreshing(false);
-    });
+  function getCurrentUser() {
+    const cUser = currentUser();
+    setUser(cUser);
   }
   const imageData = [];
   const images = [...item.images];
@@ -123,7 +121,7 @@ export default function TrainingItemScreen({ item, navigation }) {
                           .then(() => {
                             setTimeout(() => {
                               navigation.navigate(routes.PROFILE);
-                            }, 2500);
+                            }, 1000);
                           })
                           .catch((err) => console.log(err));
                       },

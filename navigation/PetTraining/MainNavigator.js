@@ -8,7 +8,7 @@ import { currentUser } from "../../services/PetTraining/userService";
 import colors from "../../utils/colors";
 import PetsittingNavigation from "../PetSitting/PetsittingNavigation";
 import VetAdminNavigator from "../Vet/adminNavigator";
-import VetCustNavigator  from "../Vet/customerNavigator"
+import VetCustNavigator from "../Vet/customerNavigator";
 import HomeNavigator from "./HomeNavigator";
 import ProfileNavigator from "./ProfileNavigator";
 
@@ -17,14 +17,12 @@ export default function MainNavigator() {
   const [user, setuser] = useState(null);
 
   useEffect(() => {
-    getUser()
-  },[])
+    getUser();
+  }, []);
 
-  const getUser = async () => {
-    await currentUser().then((res) => {
-      setuser(res.data());
-      console.log(res.data())
-    });
+  const getUser = () => {
+    const cUser = currentUser();
+    setuser(cUser);
   };
 
   return user !== null ? (

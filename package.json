@@ -43,6 +43,7 @@
     "react-native-search-filter": "^0.1.5",
     "react-native-snackbar": "^2.4.0",
     "react-native-super-grid": "^5.0.0",
+    "strftime": "^0.10.1",
     "tailwindcss-react-native": "^1.7.10",
     "yup": "^1.0.2"
   },

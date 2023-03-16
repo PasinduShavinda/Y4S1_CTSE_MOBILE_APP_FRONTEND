@@ -14,6 +14,8 @@ import { FlatGrid } from "react-native-super-grid";
 import colors from "../../utils/colors";
 import StarRating from "../../components/PetTraining/StartRatingDisplay";
 import routes from "../../navigation/PetTraining/routes";
+import { onValue, ref } from "firebase/database";
+import { db } from "../../database/firebaseConfig";
 
 export default function AllTrainings({ navigation }) {
   const [listings, setListings] = useState([]);
@@ -27,19 +29,17 @@ export default function AllTrainings({ navigation }) {
     getAll();
   }, []);
   const getAll = async () => {
-    const listings = [];
-    await getAllTrainings()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((snapshot, index) => {
-          listings.push(snapshot.data());
-        });
-        setRefreshing(false);
-      })
-      .catch((error) => {
-        console.log("Error: ", error);
-        setRefreshing(false);
-      });
-    setListings(listings);
+    const Ref = ref(db, "trainings/");
+
+    onValue(Ref, (snapshot) => {
+      const data = snapshot.val();
+      const listings = Object.keys(data).map((key) => ({
+        id: key,
+        ...data[key],
+      }));
+      setListings(listings);
+      setRefreshing(false);
+    });
   };
   return (
     <Screen>

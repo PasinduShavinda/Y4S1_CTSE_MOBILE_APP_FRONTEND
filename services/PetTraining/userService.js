@@ -1,21 +1,32 @@
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
-import { doc, getDoc, setDoc, } from "firebase/firestore";
-import { auth, fireDB } from "../../database/firebaseConfig";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import { doc, getDoc, setDoc } from "firebase/firestore";
+import { auth, db, fireDB } from "../../database/firebaseConfig";
+import { onValue, ref, set } from "firebase/database";
 
 export async function registerUser(user) {
-  return await createUserWithEmailAndPassword(auth,user.email, user.password);
+  return await createUserWithEmailAndPassword(auth, user.email, user.password);
 }
 export async function loginUser(user) {
-  return await signInWithEmailAndPassword(auth,user.email, user.password);
+  return await signInWithEmailAndPassword(auth, user.email, user.password);
 }
-export async function saveUser(user, uid) { 
-  console.log(user.name, uid)
-  return await setDoc(doc(fireDB,'users',uid),{
-    name: user.name,
-    isAdmin: false
-  })
+export async function saveUser(user, uid) {
+  const Ref = ref(db, `users/${uid}`);
+  return await set(Ref, { name: user.name, isAdmin: false, id: uid });
 }
-export async function currentUser() {
-  const user = auth.currentUser
-  return await getDoc(doc(fireDB, "users",user?.uid));
+export function currentUser() {
+  const user = auth.currentUser;
+  let cuser = null;
+  const Ref = ref(db, `users/${user.uid}`);
+  onValue(Ref, (snapshot) => {
+    const data = snapshot.val();
+    if (data) {
+     cuser=data
+    }
+
+    
+  });
+  return cuser;
 }

@@ -13,5 +13,6 @@ export default Object.freeze({
   TRAININGITEMNAV: "TrainingItemNav",
   TRAININGITEM: "TrainingItem",
   MAIN: "Main",
-  ALLTRAININGS:"AllTraining"
+  ALLTRAININGS: "AllTraining",
+  ADDREVIEW: "AddReview",
 });

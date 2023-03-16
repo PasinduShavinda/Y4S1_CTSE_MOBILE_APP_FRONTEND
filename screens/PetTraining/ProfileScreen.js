@@ -11,39 +11,41 @@ import {
 } from "react-native";
 import React, { useCallback, useEffect, useState } from "react";
 import Screen from "../../components/PetTraining/common/Screen";
-import { auth } from "../../database/firebaseConfig";
+import { auth, db } from "../../database/firebaseConfig";
 import { currentUser } from "../../services/PetTraining/userService";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import routes from "../../navigation/PetTraining/routes";
 import colors from "../../utils/colors";
 import { getAllTrainings } from "../../services/PetTraining/trainingService";
 import ItemsRow from "../../components/PetTraining/ItemsRow";
+import { onValue, ref } from "firebase/database";
 
 export default function ProfileScreen({ navigation }) {
   const [user, setUser] = useState({});
   const [listings, setListings] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
-
+  useEffect(() => {
+    getCurrentUser();
+    getAll();
+  }, []);
   async function getCurrentUser() {
-    await currentUser().then(async (res) => {
-      setUser(res.data());
-    });
+    const cUser = currentUser();
+    setUser(cUser);
   }
   const getAll = async () => {
-    const listings = [];
-    await getAllTrainings()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((snapshot) => {
-          if (auth.currentUser.uid == snapshot.data().userId) {
-            listings.push(snapshot.data());
-          }
-        });
-        setRefreshing(false);
-      })
-      .catch((error) => {
-        console.log("Error: ", error);
-      });
-    setListings(listings);
+    const Ref = ref(db, "trainings/");
+
+    onValue(Ref, (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        const listings = Object.keys(data).map((key) => ({
+          id: key,
+          ...data[key],
+        }));
+        setListings(listings);
+      }
+      setRefreshing(false);
+    });
   };
 
   const signOut = async () => {
@@ -58,10 +60,7 @@ export default function ProfileScreen({ navigation }) {
         console.log(err);
       });
   };
-  useEffect(() => {
-    getCurrentUser();
-    getAll();
-  }, []);
+
   const onRefresh = useCallback(() => {
     setRefreshing(true);
     getCurrentUser();
@@ -143,9 +142,12 @@ export default function ProfileScreen({ navigation }) {
           <Text style={styles.secHeading}>My Listings</Text>
           <ItemsRow listings={listings} navigation={navigation} />
         </View>
-        <Button title="owner items" onPress={() => {
-          navigation.navigate("owner-items");
-        }} />
+        <Button
+          title="owner items"
+          onPress={() => {
+            navigation.navigate("owner-items");
+          }}
+        />
       </ScrollView>
     </Screen>
   );

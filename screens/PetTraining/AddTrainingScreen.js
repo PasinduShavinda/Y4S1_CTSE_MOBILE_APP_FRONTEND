@@ -31,9 +31,15 @@ export default function AddTrainingScreen() {
       .min(1, "Please select atleast one image")
       .required()
       .label("Images"),
-    description: Yup.string().required().label("Description"),
-    experience: Yup.string().required().label("Experience"),
-    locationDetails: Yup.string().required().label("Location Details"),
+    description: Yup.string()
+      .required()
+      .label("Description"),
+    experience: Yup.string()
+      .required()
+      .label("Experience"),
+    locationDetails: Yup.string()
+      .required()
+      .label("Location Details"),
   });
 
   const [typeCheckboxes, setTypeCheckboxes] = useState([

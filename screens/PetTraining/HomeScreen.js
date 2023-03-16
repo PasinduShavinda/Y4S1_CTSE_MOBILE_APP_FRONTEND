@@ -15,6 +15,8 @@ import colors from "../../utils/colors";
 import { ImageSlider } from "react-native-image-slider-banner";
 import ImageSliderCon from "../../components/PetTraining/ImageSlider";
 import routes from "../../navigation/PetTraining/routes";
+import { onValue, ref } from "firebase/database";
+import { db } from "../../database/firebaseConfig";
 
 export default function HomeScreen({ navigation }) {
   const [listings, setListings] = useState([]);
@@ -28,19 +30,17 @@ export default function HomeScreen({ navigation }) {
     getAll();
   }, []);
   const getAll = async () => {
-    const listings = [];
-    await getAllTrainings()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((snapshot, index) => {
-          listings.push(snapshot.data());
-        });
-        setRefreshing(false);
-      })
-      .catch((error) => {
-        console.log("Error: ", error);
-        setRefreshing(false);
-      });
-    setListings(listings);
+    const Ref = ref(db, "trainings/");
+
+    onValue(Ref, (snapshot) => {
+      const data = snapshot.val();
+      const listings = Object.keys(data).map((key) => ({
+        id: key,
+        ...data[key],
+      }));
+      setListings(listings);
+      setRefreshing(false);
+    });
   };
   return (
     <Screen>
@@ -54,9 +54,22 @@ export default function HomeScreen({ navigation }) {
             <ImageSliderCon />
           </View>
           <View style={styles.myListings}>
-            <View style={{flexDirection:"row", justifyContent:"space-between", paddingRight:10}} >
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                paddingRight: 10,
+              }}
+            >
               <Text style={styles.secHeading}>Train Your Pet</Text>
-              <Text style={styles.secHeading} onPress={()=>{navigation.navigate(routes.ALLTRAININGS)}} >See All</Text>
+              <Text
+                style={styles.secHeading}
+                onPress={() => {
+                  navigation.navigate(routes.ALLTRAININGS);
+                }}
+              >
+                See All
+              </Text>
             </View>
             <ItemsRow listings={listings} navigation={navigation} />
           </View>

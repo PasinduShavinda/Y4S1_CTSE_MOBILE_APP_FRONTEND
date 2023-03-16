@@ -22,8 +22,9 @@ import {
 import { Snackbar } from "react-native-paper";
 import { auth } from "../../database/firebaseConfig";
 import MapScreen from "./SelectLocationScreen";
+import routes from "../../navigation/PetTraining/routes";
 
-export default function EditTrainingScreen({ item }) {
+export default function EditTrainingScreen({ item, navigation }) {
   const [isLoading, setIsLoding] = useState(false);
   const [isSnackbarVisible, setIsSnackbarVisible] = useState(false);
   const [location, setLocation] = useState(null);
@@ -57,11 +58,16 @@ export default function EditTrainingScreen({ item }) {
   const validationSchema = Yup.object().shape({
     images: Yup.array()
       .min(1, "Please select atleast one image")
-      .required()
       .label("Images"),
-    description: Yup.string().required().label("Description"),
-    experience: Yup.string().required().label("Experience"),
-    locationDetails: Yup.string().required().label("Location Details"),
+    description: Yup.string()
+      .required()
+      .label("Description"),
+    experience: Yup.string()
+      .required()
+      .label("Experience"),
+    locationDetails: Yup.string()
+      .required()
+      .label("Location Details"),
   });
 
   const [typeCheckboxes, setTypeCheckboxes] = useState([
@@ -143,7 +149,7 @@ export default function EditTrainingScreen({ item }) {
       .map((c) => type.push({ lable: c.label, icon: c.icon }));
     ageCheckboxes
       .filter((t) => t.checked)
-      .map((c) => age.push({ lable: c.label }));
+      .map((c) => age.push({ lable: c.label, icon: c.icon }));
     sizeCheckboxes
       .filter((t) => t.checked)
       .map((c) => size.push({ lable: c.label, icon: c.icon, size: c.size }));
@@ -158,13 +164,16 @@ export default function EditTrainingScreen({ item }) {
           petType: type,
           petAge: age,
           petSize: size,
-          location: location,
+          location: location !== null ? location: item.location,
           locationDetails: values.locationDetails,
         };
         await updateTraining(data, item.id)
           .then(() => {
             setIsLoding(false);
             setIsSnackbarVisible(true);
+            setTimeout(() => {
+              navigation.navigate(routes.PROFILE);
+            }, 2500);
           })
           .catch((error) => {
             setIsLoding(false);
