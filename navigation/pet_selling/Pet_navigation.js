@@ -11,7 +11,7 @@ import Google_map from "../../screens/pet_selling/Google_map";
 import AdoptionPage from "../../screens/pet_selling/AdoptionPage";
 import Owner_items from "../../screens/pet_selling/Owner_items";
 import EditPage from "../../screens/pet_selling/EditPage";
-//IT20122614
+
 export default function Pet_navigation() {
   return (
     // <NavigationContainer>
