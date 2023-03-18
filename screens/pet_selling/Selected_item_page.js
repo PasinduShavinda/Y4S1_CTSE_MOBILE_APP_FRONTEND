@@ -13,6 +13,7 @@ import {
 import { React, useState, useLayoutEffect } from "react";
 import { Foundation } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
+import { get_pet_by_id } from "../../services/pet_selling/selling_service";
 
 export default function Selected_item_page({ navigation, route }) {
   const type = true;
@@ -24,6 +25,7 @@ export default function Selected_item_page({ navigation, route }) {
   }
   useLayoutEffect(() => {
     const mountSellingPets = async () => {
+      console.log("================hhhhhhhhhhhhhh===================");
       const data_ = await get_pet_by_id(url_id);
 
       console.log(
@@ -45,7 +47,8 @@ export default function Selected_item_page({ navigation, route }) {
           <Image
             style={styles.tinyLogo}
             source={{
-              uri: "https://kb.rspca.org.au/wp-content/uploads/2018/11/golder-retriever-puppy.jpeg",
+              uri:
+                "https://kb.rspca.org.au/wp-content/uploads/2018/11/golder-retriever-puppy.jpeg",
             }}
           />
         </View>
@@ -72,7 +75,8 @@ export default function Selected_item_page({ navigation, route }) {
                 <View style={styles.profileBox}>
                   <Image
                     source={{
-                      uri: "https://kb.rspca.org.au/wp-content/uploads/2018/11/golder-retriever-puppy.jpeg",
+                      uri:
+                        "https://kb.rspca.org.au/wp-content/uploads/2018/11/golder-retriever-puppy.jpeg",
                     }}
                     style={styles.profileImage}
                   />

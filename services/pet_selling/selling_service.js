@@ -27,7 +27,7 @@ export async function get_all_pets() {
   return await getDocs(collection(fireDB, "sellingPets"));
 }
 export async function get_pet_by_id(id) {
-  return await getDocs(collection(fireDB, "sellingPets", id));
+  return await getDocs(collection(fireDB, "sellingPets"), id);
 }
 export async function update_selling_pet_by_id(request, id) {
   const get_ref = ref(db, `sellingPets/${id}`);
