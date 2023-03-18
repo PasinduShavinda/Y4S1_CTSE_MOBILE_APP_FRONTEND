@@ -38,6 +38,10 @@ export default function Add_new_pets({ navigation }) {
   const [age, setage] = useState(0);
   const [description, setdescription] = useState("");
   const [contactNumber, setcontactNumber] = useState(0);
+  var date = new Date();
+  var today_date =
+    date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate(); //To get the Current Date
+
   const user = "bf734bc34r74vb";
 
   const Add_new_pets = async () => {
@@ -47,6 +51,8 @@ export default function Add_new_pets({ navigation }) {
 
       // alert("");
     } else {
+      console.log("date");
+      console.log(today_date);
       let url = await Upload_image(image_r);
       data = {
         user_id: user,
@@ -60,6 +66,7 @@ export default function Add_new_pets({ navigation }) {
         latitudePass: latitudePass,
         longitudePass: longitudePass,
         img: url,
+        date: today_date,
       };
 
       let data = await Add_new_pets_to_db(data);

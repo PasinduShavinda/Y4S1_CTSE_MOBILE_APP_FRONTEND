@@ -18,45 +18,53 @@ import { get_pet_by_id } from "../../services/pet_selling/selling_service";
 export default function Selected_item_page({ navigation, route }) {
   const type = true;
   const [liked, setLiked] = useState(true);
-  const url_id = route.params?.id;
+  // const url_id = route.params?.id;
+  const {
+    petId,
+    name,
+    age1,
+    gender1,
+    latitudePass1,
+    longitudePass1,
+    price1,
+    category1,
+    description1,
+    contactNumber1,
+    img1,
+    date,
+  } = route.params;
 
   function cliedLikeBtn() {
     setLiked(!liked);
   }
-  useLayoutEffect(() => {
-    const mountSellingPets = async () => {
-      console.log("================hhhhhhhhhhhhhh===================");
-      const data_ = await get_pet_by_id(url_id);
+  // useLayoutEffect(() => {
+  //   const mountSellingPets = async () => {
+  //     console.log("================hhhhhhhhhhhhhh===================");
+  //     const data_ = await get_pet_by_id(url_id);
 
-      console.log(
-        "===============data===================>>>>>>>>>>>>>>>>>>>>>>"
-      );
-      console.log(data_);
-    };
-    mountSellingPets();
-    // console.log(url_data);
-  });
+  //     console.log(
+  //       "===============data===================>>>>>>>>>>>>>>>>>>>>>>"
+  //     );
+  //     console.log(data_.data());
+  //   };
+  //   mountSellingPets();
+  //   // console.log(url_data);
+  // });
   return (
     <SafeAreaView style={styles.mainContainer}>
       <ScrollView>
-        <View>
-          <Text>itemId: {route.params?.id}</Text>
-        </View>
-
         <View style={styles.imageStyling}>
           <Image
             style={styles.tinyLogo}
             source={{
-              uri:
-                "https://kb.rspca.org.au/wp-content/uploads/2018/11/golder-retriever-puppy.jpeg",
+              uri: img1,
             }}
           />
         </View>
         <View style={styles.contentStyling}>
           <View style={styles.summeryStyling}>
             <View style={styles.leftTopStyling}>
-              <Text style={styles.itemTitle}>Solo</Text>
-              <Text style={styles.itemTypePet}>Abyssinian</Text>
+              <Text style={styles.itemTitle}>{name}</Text>
             </View>
             <View style={styles.contentStyle}>
               <View>
@@ -66,7 +74,7 @@ export default function Selected_item_page({ navigation, route }) {
                   <Foundation name="female-symbol" size={30} color="pink" />
                 )}
               </View>
-              <Text style={styles.genderStyling}>2 Years old</Text>
+              <Text style={styles.genderStyling}>{age1} Years old</Text>
             </View>
           </View>
           <View style={styles.fullDetails}>
@@ -86,14 +94,12 @@ export default function Selected_item_page({ navigation, route }) {
                   <Text>Owner</Text>
                 </View>
                 <View style={styles.dateStyle}>
-                  <Text style={styles.priceStyle}>8000 LKR</Text>
-                  <Text>20/02/2023</Text>
+                  <Text style={styles.priceStyle}>{price1} LKR</Text>
+                  <Text>{date}</Text>
                 </View>
               </View>
               <View style={styles.description}>
-                <Text>
-                  vnsdjvnvnsdjvnvnsdjvnvnsdjvnvnsdjvnvnsdjvnvnsdjvnvnsdjvnvnsdjvnvnsdjvnvnsdjvn
-                </Text>
+                <Text>{description1}</Text>
               </View>
               <View style={styles.bottomBtns}>
                 <View style={styles.likeBtn}>
