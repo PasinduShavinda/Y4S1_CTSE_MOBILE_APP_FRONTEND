@@ -10,6 +10,7 @@ import {
   FlatList,
   StatusBar,
   ScrollView,
+  Pressable,
 } from "react-native";
 import { React, useState, useLayoutEffect } from "react";
 // import { ListItem, Overlay, SearchBar } from "react-native-elements";
@@ -18,6 +19,8 @@ import { React, useState, useLayoutEffect } from "react";
 // import { MaterialCommunityIcons } from "@expo/vector-icons";
 // import Item from "../Components/Item";
 import { Foundation } from "@expo/vector-icons";
+import { Feather } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
 import { get_all_pets } from "../../services/pet_selling/selling_service";
 
 export default function Owner_items({ navigation, route }) {
@@ -72,7 +75,7 @@ export default function Owner_items({ navigation, route }) {
                         <Text>{title.age} Years old</Text>
                       </View>
                       <View>
-                        <View>
+                        {/* <View>
                           {title.gender == 1 ? (
                             <Foundation
                               name="male-symbol"
@@ -86,8 +89,8 @@ export default function Owner_items({ navigation, route }) {
                               color="pink"
                             />
                           )}
-                        </View>
-                        <View>
+                        </View> */}
+                        {/* <View>
                           <Button
                             title="Edit"
                             onPress={() => {
@@ -108,6 +111,36 @@ export default function Owner_items({ navigation, route }) {
                               });
                             }}
                           />
+                        </View> */}
+                        <View>
+                          <Pressable
+                            onPress={() => {
+                              // Pass and merge params back to home screen
+                              navigation.navigate("Edit", {
+                                petId: title.id,
+                                name: title.name,
+                                age1: title.age,
+                                gender1: title.gender,
+                                latitudePass1: title.latitudePass,
+                                longitudePass1: title.longitudePass,
+                                price1: title.price,
+                                category1: title.category,
+                                description1: title.description,
+                                contactNumber1: title.contactNumber,
+                                img1: title.img,
+                                date: title.date,
+                              });
+                            }}
+                          >
+                            <Feather name="edit" size={24} color="black" />
+                          </Pressable>
+                          <Pressable style={styles.epdate_btn}>
+                            <MaterialIcons
+                              name="delete-sweep"
+                              size={24}
+                              color="black"
+                            />
+                          </Pressable>
                         </View>
                       </View>
                     </View>
@@ -201,5 +234,8 @@ const styles = StyleSheet.create({
   itemTypePet: {
     color: "#5F5F61",
     paddingBottom: 5,
+  },
+  epdate_btn: {
+    marginTop: 24,
   },
 });
