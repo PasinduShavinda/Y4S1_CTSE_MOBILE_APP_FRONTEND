@@ -18,8 +18,15 @@ import { get_all_pets } from "../../services/pet_selling/selling_service";
 //   import ImageViewer from "../../components/pet_selling/ImageViewer";
 
 export default function EditPage({ navigation, route }) {
-  const { petId, name, age1, gender1, latitudePass1, longitudePass1, price1 } =
-    route.params;
+  const {
+    petId,
+    name,
+    age1,
+    gender1,
+    latitudePass1,
+    longitudePass1,
+    price1,
+  } = route.params;
   const [number, onChangeNumber] = useState("");
   const [latitudePass, setlatitudePass] = useState(latitudePass1);
   const [longitudePass, setlongitudePass] = useState(longitudePass1);
@@ -93,7 +100,8 @@ export default function EditPage({ navigation, route }) {
               <View style={[styles.formDataBox, styles.shadowProp]}>
                 <Image
                   source={{
-                    uri: "https://irishtherapydogs.ie/wp-content/uploads/2021/09/Lucy-Sharon-scaled-600x579.jpg",
+                    uri:
+                      "https://irishtherapydogs.ie/wp-content/uploads/2021/09/Lucy-Sharon-scaled-600x579.jpg",
                   }}
                   style={styles.tinyLogo}
                 />
@@ -105,13 +113,13 @@ export default function EditPage({ navigation, route }) {
                 <TextInput
                   style={styles.input}
                   onChangeText={setnames}
-                  value={sellingPets.name}
+                  value={names}
                   placeholder="useless placeholder"
                   keyboardType="text"
                 />
               </View>
               <View style={[styles.formDataBox, styles.shadowProp]}>
-                <Text>Price</Text>
+                <Text>Price{price}</Text>
                 <TextInput
                   style={styles.input}
                   onChangeText={setprice}

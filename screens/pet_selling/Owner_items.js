@@ -23,7 +23,8 @@ const DATA = [
   {
     id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
     title: "First Item",
-    img: "https://kb.rspca.org.au/wp-content/uploads/2018/11/golder-retriever-puppy.jpeg",
+    img:
+      "https://kb.rspca.org.au/wp-content/uploads/2018/11/golder-retriever-puppy.jpeg",
     address: "No 2, Road Galle",
     age: 2,
     gender: 1,
@@ -31,7 +32,8 @@ const DATA = [
   {
     id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
     title: "Second Item",
-    img: "https://guidedogs.com.au/wp-content/uploads/2021/01/Two-Gold-St-Kilda-610x525-lqip.jpg",
+    img:
+      "https://guidedogs.com.au/wp-content/uploads/2021/01/Two-Gold-St-Kilda-610x525-lqip.jpg",
     address: "No 2, Road Galle",
     age: 2,
     gender: 0,
@@ -39,7 +41,8 @@ const DATA = [
   {
     id: "58694a0f-3da1-471f-bd96-145571e29d72",
     title: "Third Item",
-    img: "https://media.npr.org/assets/img/2017/10/12/gettyimages-742252833_custom-fe7325ac21c8d2cdf29b8e079c246c8c70847137-s1100-c50.jpg",
+    img:
+      "https://media.npr.org/assets/img/2017/10/12/gettyimages-742252833_custom-fe7325ac21c8d2cdf29b8e079c246c8c70847137-s1100-c50.jpg",
     address: "No 2, Road Galle",
     age: 2,
     gender: 0,
@@ -47,7 +50,8 @@ const DATA = [
   {
     id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28bh",
     title: "First Item",
-    img: "https://cdn.britannica.com/16/234216-050-C66F8665/beagle-hound-dog.jpg",
+    img:
+      "https://cdn.britannica.com/16/234216-050-C66F8665/beagle-hound-dog.jpg",
     address: "No 2, Road Galle",
     age: 2,
     gender: 1,
@@ -55,7 +59,8 @@ const DATA = [
   {
     id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f64",
     title: "Second Item",
-    img: "https://d2kl333iheywy2.cloudfront.net/assets/main/lab-hero-square-1fe2f13fa943105fe2c521df43eeb11c.jpg",
+    img:
+      "https://d2kl333iheywy2.cloudfront.net/assets/main/lab-hero-square-1fe2f13fa943105fe2c521df43eeb11c.jpg",
     address: "No 2, Road Galle",
     age: 2,
     gender: 1,
@@ -63,7 +68,8 @@ const DATA = [
   {
     id: "58694a0f-3da1-471f-bd96-145571e29d75",
     title: "Third Item",
-    img: "https://irishtherapydogs.ie/wp-content/uploads/2021/09/Lucy-Sharon-scaled-600x579.jpg",
+    img:
+      "https://irishtherapydogs.ie/wp-content/uploads/2021/09/Lucy-Sharon-scaled-600x579.jpg",
     address: "No 2, Road Galle",
     age: 2,
     gender: 1,
@@ -81,7 +87,7 @@ export default function Owner_items({ navigation, route }) {
       data_.forEach((response) => {
         array_data.push({ id: response.id, ...response.data() });
       });
-      const data = array_data.filter(function (item) {
+      const data = array_data.filter(function(item) {
         return item.user_id == u_id;
       });
       setsellingPets(data);
@@ -145,11 +151,11 @@ export default function Owner_items({ navigation, route }) {
                               navigation.navigate("Edit", {
                                 petId: title.id,
                                 name: title.name,
-                                age: title.age,
-                                gender: title.gender,
-                                latitudePass: title.latitudePass,
-                                longitudePass: title.longitudePass,
-                                price: title.price,
+                                age1: title.age,
+                                gender1: title.gender,
+                                latitudePass1: title.latitudePass,
+                                longitudePass1: title.longitudePass,
+                                price1: title.price,
                               });
                             }}
                           />
