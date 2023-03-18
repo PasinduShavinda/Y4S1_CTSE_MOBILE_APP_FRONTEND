@@ -15,10 +15,8 @@ import Google_map from "./Google_map";
 import { Picker } from "@react-native-picker/picker";
 import * as ImagePicker from "expo-image-picker";
 import ImageViewer from "../../components/pet_selling/ImageViewer";
-import {
-  Add_new_pets_to_db,
-  Upload_image,
-} from "../../services/pet_selling/selling_service";
+import { Add_new_pets_to_db } from "../../services/pet_selling/selling_service";
+import { Upload_image } from "../../services/pet_selling/Upload_image";
 import { Snackbar } from "react-native-paper";
 
 export default function Add_new_pets({ navigation }) {

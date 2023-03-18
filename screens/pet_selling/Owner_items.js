@@ -156,6 +156,10 @@ export default function Owner_items({ navigation, route }) {
                                 latitudePass1: title.latitudePass,
                                 longitudePass1: title.longitudePass,
                                 price1: title.price,
+                                category1: title.category,
+                                description1: title.description,
+                                contactNumber1: title.contactNumber,
+                                img1: title.img,
                               });
                             }}
                           />
