@@ -6,6 +6,7 @@ import {
   onSnapshot,
   updateDoc,
   doc,
+  deleteDoc,
 } from "firebase/firestore";
 import { getDownloadURL, uploadBytes } from "firebase/storage";
 import { onValue, ref, remove, set, update } from "firebase/database";
@@ -41,4 +42,8 @@ export async function update_selling_pet(request, id) {
   console.log("get_ref");
   console.log(vetRef);
   return await updateDoc(vetRef, request);
+}
+
+export async function delete_selling_pet(id) {
+  return await updateDoc(fireDB, "sellingPets", id);
 }

@@ -21,7 +21,10 @@ import { React, useState, useLayoutEffect } from "react";
 import { Foundation } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
-import { get_all_pets } from "../../services/pet_selling/selling_service";
+import {
+  get_all_pets,
+  delete_selling_pet,
+} from "../../services/pet_selling/selling_service";
 import { async } from "@firebase/util";
 
 export default function Owner_items({ navigation, route }) {
@@ -47,7 +50,7 @@ export default function Owner_items({ navigation, route }) {
   const deleteItem = async (data_id) => {};
   return (
     <View style={styles.containerStyle}>
-      <Text>hi</Text>
+      {/* <Text>hi</Text> */}
       {/* <View>
         <View>
           <Text>fgvgv</Text>
