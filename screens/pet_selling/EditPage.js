@@ -19,6 +19,7 @@ import {
   update_selling_pet,
 } from "../../services/pet_selling/selling_service";
 //   import ImageViewer from "../../components/pet_selling/ImageViewer";
+import { Snackbar } from "react-native-paper";
 
 export default function EditPage({ navigation, route }) {
   const {
@@ -40,6 +41,7 @@ export default function EditPage({ navigation, route }) {
   const [selectedLanguage, setSelectedLanguage] = useState();
   const url_id = route.params?.id;
   const [sellingPets, setsellingPets] = useState([]);
+  const [snakVisible, SetSnackVisible] = useState(false);
 
   // form Data
   const [names, setnames] = useState(name);
@@ -81,6 +83,7 @@ export default function EditPage({ navigation, route }) {
     await update_selling_pet(request_obj, petId)
       .then((result) => {
         console.log(result);
+        SetSnackVisible(true);
       })
       .catch((error) => {
         console.log(error);
@@ -187,6 +190,23 @@ export default function EditPage({ navigation, route }) {
           </View>
         </View>
       </ScrollView>
+      <Snackbar
+        visible={snakVisible}
+        onDismiss={() => SetSnackVisible(false)}
+        duration={2000}
+        action={{
+          label: "OK",
+          labelStyle: { color: "white", fontSize: 18 },
+          onPress: () => {
+            SetSnackVisible(false);
+          },
+        }}
+        style={{ backgroundColor: "#B32AD8" }}
+      >
+        <View>
+          <Text>Successfully Updated</Text>
+        </View>
+      </Snackbar>
     </SafeAreaView>
   );
 }

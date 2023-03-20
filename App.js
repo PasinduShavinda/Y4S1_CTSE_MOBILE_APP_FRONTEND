@@ -7,7 +7,7 @@ import Pet_navigation from "./navigation/pet_selling/Pet_navigation";
 export default function App() {
   return (
     <NavigationContainer>
-      <Pet_navigation />
+      <AppNavigator />
     </NavigationContainer>
   );
 }
