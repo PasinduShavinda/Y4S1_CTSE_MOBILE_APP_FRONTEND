@@ -29,6 +29,7 @@ export default function Add_new_pets({ navigation }) {
   const [isVisible, setVisible] = useState(false);
   const [snackbarMsg, setsnackbarMsg] = useState("");
   const [image_r, setImage_r] = useState("");
+  const [snakVisible, SetSnackVisible] = useState(false);
 
   // form Data
   const [names, setnames] = useState("");
@@ -70,6 +71,7 @@ export default function Add_new_pets({ navigation }) {
       };
 
       let data = await Add_new_pets_to_db(data);
+      SetSnackVisible(true);
     }
   };
   function showAlert() {
@@ -214,6 +216,23 @@ export default function Add_new_pets({ navigation }) {
           </View>
         </View>
       </ScrollView>
+      <Snackbar
+        visible={snakVisible}
+        onDismiss={() => SetSnackVisible(false)}
+        duration={2000}
+        action={{
+          label: "OK",
+          labelStyle: { color: "white", fontSize: 18 },
+          onPress: () => {
+            SetSnackVisible(false);
+          },
+        }}
+        style={{ backgroundColor: "#B32AD8" }}
+      >
+        <View>
+          <Text>Successfully Added</Text>
+        </View>
+      </Snackbar>
     </SafeAreaView>
   );
 }
