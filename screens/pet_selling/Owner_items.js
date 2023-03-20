@@ -47,7 +47,18 @@ export default function Owner_items({ navigation, route }) {
     };
     mountSellingPets();
   }, []);
-  const deleteItem = async (data_id) => {};
+  async function deleteItem(data_id) {
+    await delete_selling_pet(data_id);
+    const data_ = await get_all_pets();
+    const array_data = [];
+    data_.forEach((response) => {
+      array_data.push({ id: response.id, ...response.data() });
+    });
+    const data = array_data.filter(function(item) {
+      return item.user_id == u_id;
+    });
+    setsellingPets(data);
+  }
   return (
     <View style={styles.containerStyle}>
       {/* <Text>hi</Text> */}

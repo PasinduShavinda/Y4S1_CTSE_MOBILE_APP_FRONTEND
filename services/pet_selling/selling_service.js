@@ -45,5 +45,5 @@ export async function update_selling_pet(request, id) {
 }
 
 export async function delete_selling_pet(id) {
-  return await updateDoc(fireDB, "sellingPets", id);
+  return await deleteDoc(doc(fireDB, "sellingPets", id));
 }
