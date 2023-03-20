@@ -38,9 +38,7 @@ export default function Owner_items({ navigation, route }) {
         return item.user_id == u_id;
       });
       setsellingPets(data);
-      console.log(
-        "===============data===================>>>>>>>>>>>>>>>>>>>>>>"
-      );
+
       console.log(sellingPets);
     };
     mountSellingPets();
