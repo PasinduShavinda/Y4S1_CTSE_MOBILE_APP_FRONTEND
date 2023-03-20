@@ -22,6 +22,7 @@ import { Foundation } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { get_all_pets } from "../../services/pet_selling/selling_service";
+import { async } from "@firebase/util";
 
 export default function Owner_items({ navigation, route }) {
   const [sellingPets, setsellingPets] = useState([]);
@@ -43,6 +44,7 @@ export default function Owner_items({ navigation, route }) {
     };
     mountSellingPets();
   }, []);
+  const deleteItem = async (data_id) => {};
   return (
     <View style={styles.containerStyle}>
       <Text>hi</Text>
@@ -132,7 +134,10 @@ export default function Owner_items({ navigation, route }) {
                           >
                             <Feather name="edit" size={24} color="black" />
                           </Pressable>
-                          <Pressable style={styles.epdate_btn}>
+                          <Pressable
+                            style={styles.epdate_btn}
+                            onPress={() => deleteItem(title.id)}
+                          >
                             <MaterialIcons
                               name="delete-sweep"
                               size={24}
