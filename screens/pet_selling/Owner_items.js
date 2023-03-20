@@ -13,11 +13,13 @@ import {
   Pressable,
 } from "react-native";
 import { React, useState, useLayoutEffect } from "react";
+// import Snackbar from "react-native-snackbar";
 // import { ListItem, Overlay, SearchBar } from "react-native-elements";
 // import Ionicons from "@expo/vector-icons/Ionicons";
 // import { FontAwesome5 } from "@expo/vector-icons";
 // import { MaterialCommunityIcons } from "@expo/vector-icons";
 // import Item from "../Components/Item";
+import { Snackbar } from "react-native-paper";
 import { Foundation } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -29,6 +31,7 @@ import { async } from "@firebase/util";
 
 export default function Owner_items({ navigation, route }) {
   const [sellingPets, setsellingPets] = useState([]);
+  const [snakVisible, SetSnackVisible] = useState(false);
   const u_id = "bf734bc34r74vb";
 
   useLayoutEffect(() => {
@@ -58,6 +61,7 @@ export default function Owner_items({ navigation, route }) {
       return item.user_id == u_id;
     });
     setsellingPets(data);
+    SetSnackVisible(true);
   }
   return (
     <View style={styles.containerStyle}>
@@ -168,6 +172,23 @@ export default function Owner_items({ navigation, route }) {
           })}
         </View>
       </ScrollView>
+      <Snackbar
+        visible={snakVisible}
+        onDismiss={() => SetSnackVisible(false)}
+        duration={2000}
+        action={{
+          label: "OK",
+          labelStyle: { color: "white", fontSize: 18 },
+          onPress: () => {
+            SetSnackVisible(false);
+          },
+        }}
+        style={{ backgroundColor: "#B32AD8" }}
+      >
+        <View>
+          <Text>Successfully Deleted</Text>
+        </View>
+      </Snackbar>
     </View>
   );
 }
