@@ -238,7 +238,7 @@ const styles = StyleSheet.create({
     headerBackgroundImage: {
         paddingBottom: 20,
         paddingTop: 45,
-        borderRadius: 6,
+        borderRadius: 15,
         overflow: 'hidden'
     },
     headerContainer: {},
@@ -292,8 +292,7 @@ const styles = StyleSheet.create({
     },
     userNameText: {
         color: '#FFF',
-        fontSize: 22,
-        fontWeight: 'bold',
+        fontSize: 18,
         paddingBottom: 8,
         textAlign: 'justify'
     },
@@ -328,6 +327,6 @@ const styles = StyleSheet.create({
     },
     editdelete: {
         marginLeft: 94,
-        height:30
+        height:30,
     }
 })

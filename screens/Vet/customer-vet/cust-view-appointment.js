@@ -70,7 +70,7 @@ export function ViewAppointment({ navigation }) {
                 style={styles.headerBackgroundImage}
                 blurRadius={10}
                 source={{
-                    uri: 'https://media.istockphoto.com/id/1191969117/video/abstract-blocks-background.jpg?s=640x640&k=20&c=DG2JuVrgPbqCiToIRIgrXseSwvdCzByBmkf3HhG3rIM=',
+                    uri: 'https://img.freepik.com/free-vector/gradient-purple-striped-background_23-2149583760.jpg',
                 }}
             >
                 <View style={styles.editdelete}>
@@ -91,6 +91,7 @@ export function ViewAppointment({ navigation }) {
                     </View>
                 </View>
                 <View style={styles.headerColumn}>
+                    <Text style={styles.userNameText}>Appointment Number : 12</Text>
                     <Text style={styles.userNameText}>First Name : {item.fname}</Text>
                     <Text style={styles.userNameText}>Last Name : {item.lname}</Text>
                     <Text style={styles.userNameText}>Email : {item.email}</Text>
@@ -107,8 +108,8 @@ export function ViewAppointment({ navigation }) {
 
     const showConfirmDialog = (appnt) => {
         Alert.alert(
-            "Are you sure?",
-            "Are you sure you want to Cancel this appointement? This action cannot be undone!",
+            "Are You Sure Want To Cancel Appointement?",
+            "This Action Cannot Be Undone!",
             [
                 {
                     text: "Yes",
@@ -233,15 +234,16 @@ const styles = StyleSheet.create({
     },
     userNameText: {
         color: '#FFF',
-        fontSize: 22,
-        fontWeight: 'bold',
+        fontSize: 18,
+        // fontWeight: 'bold',
         paddingBottom: 8,
         textAlign: 'justify',
         paddingTop:11
     },
     headerBackgroundImage: {
         paddingBottom: 50,
-        paddingTop: 25
+        paddingTop: 25,
+        borderRadius: 15,
     },
     headerContainer: {},
     headerColumn: {
