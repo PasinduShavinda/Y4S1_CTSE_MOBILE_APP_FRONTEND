@@ -19,7 +19,7 @@ const PetSittingHomeScreen = () => {
       <SafeAreaView className="bg-white flex-1 relative">
         {/* First Section */}
   
-        <View className="flex-row px-6 mt-12 items-center space-x-2">
+        <View className="flex-row px-6 mt-2 items-center space-x-2">
           <View className="w-20 h-16 bg-black rounded-full items-center justify-center">
             <Text className="text-[#9787b5] text-3xl font-semibold">Find</Text>
           </View>
@@ -28,19 +28,16 @@ const PetSittingHomeScreen = () => {
         </View>
   
         {/* Second Section */}
-        <View className="px-6 mt-6 space-y-1">
+        <View className="px-6 mt-2 space-y-1">
           <Text className="text-[#3C6072] text-[30px] ">Let your dog stay with us</Text>
           <Text className="text-[#9787b5] text-[36px] font-bold">
           while you're away
           </Text>
   
-          <Text className="text-[#3C6072] text-base">
-          Are you traveling, spending the day out or need help taking care of your pet?
-          </Text>
         </View>
   
         {/* Circle Section */}
-        <View className="w-[390px] h-[390px] bg-[#614e8c] rounded-full absolute bottom-36 -right-36"></View>
+        <View className="w-[390px] h-[390px] bg-[#614e8c] rounded-full absolute bottom-20 -right-36"></View>
         <View className="w-[450px] h-[450px] bg-[#9787b5] rounded-full absolute -bottom-32 -left-36"></View>
   
         {/* Image container */}

@@ -1,26 +1,41 @@
-import { View, Text, StyleSheet, ScrollView, Modal } from 'react-native'
-import React, { useState } from 'react'
-import Screen from '../../components/PetTraining/common/Screen'
-import AppButton from '../../components/PetTraining/common/AppButton'
-import ReviewCard from '../../components/PetTraining/ReviewCard'
-import routes from '../../navigation/PetTraining/routes'
-import { TouchableOpacity } from 'react-native'
-import ReviewBody from '../../components/PetTraining/ReviewBody';
+import { View, Text, StyleSheet, ScrollView, Modal } from "react-native";
+import React, { useEffect, useState } from "react";
+import Screen from "../../components/PetTraining/common/Screen";
+import AppButton from "../../components/PetTraining/common/AppButton";
+import ReviewCard from "../../components/PetTraining/ReviewCard";
+import routes from "../../navigation/PetTraining/routes";
+import { TouchableOpacity } from "react-native";
+import ReviewBody from "../../components/PetTraining/ReviewBody";
+import { onValue, ref } from "firebase/database";
+import { db } from "../../database/firebaseConfig";
+import { getAllReviewsByItemSub } from "../../services/PetTraining/reviewService";
 
-export default function ReviewScreen({ navigation }) {
+export default function ReviewScreen({ item }) {
   const [modalVisible, setModalVisible] = useState(false);
+  const [reviews, setReviews] = useState([]);
+
+  useEffect(() => {
+    getReviews();
+  }, []);
+
+  const getReviews = () => {
+    getAllReviewsByItemSub(setReviews, item.id);
+  };
 
   const openDialog = () => {
     setModalVisible(true);
   };
-
   const closeDialog = () => {
     setModalVisible(false);
   };
   return (
     <Screen>
       <ScrollView>
-        <ReviewCard />
+        {reviews.map((review, index) => {
+          if (review.trainingId === item.id) {
+            return <ReviewCard key={index} item={review} />;
+          }
+        })}
       </ScrollView>
       <AppButton
         title={"Review"}
@@ -34,7 +49,7 @@ export default function ReviewScreen({ navigation }) {
         transparent={true}
         onRequestClose={closeDialog}
       >
-        <ReviewBody onClose={closeDialog} />
+        <ReviewBody onClose={closeDialog} item={item} />
       </Modal>
     </Screen>
   );

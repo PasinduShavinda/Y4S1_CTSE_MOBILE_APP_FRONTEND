@@ -3,32 +3,30 @@ import React from "react";
 import colors from "../../utils/colors";
 import StarRating from "./StartRatingDisplay";
 
-export default function ReviewCard() {
+export default function ReviewCard({item}) {
   return (
     <View style={styles.container}>
       <View style={styles.img}>
         <Image
           style={styles.avatar}
-          source={require("../../assets/avatar.png")}
+          source={item.dp ? {uri:item.dp} : require("../../assets/avatar.png")}
         />
       </View>
       <View style={styles.reviewContainer}>
         <View style={styles.reviewDetails}>
           <View style={styles.reviewDetailsTop}>
             <Text style={{ fontWeight: "bold", fontSize: 15 }}>
-              Chamath Kavindya
+              {item.userName}
             </Text>
             <Text style={{ fontWeight: "bold", color:colors.secondary }}>
-              Novermber 14 2023
+              {item.date}
             </Text>
           </View>
-          <StarRating rating={2} text={false} />
+          <StarRating rating={item.rating} text={false} />
         </View>
         <View style={styles.reviewText}>
           <Text>
-            In English, the phrase can be translated to mean: "I am a monk who
-            experiences the suffering of all, and I am mindful and
-            concentrated."
+            {item.review}
           </Text>
         </View>
       </View>
@@ -51,9 +49,12 @@ const styles = StyleSheet.create({
     flex:0.7,
   },
   avatar: {
-    width: 50,
-    height: 50,
+    width: 60,
+    height: 60,
     margin: 10,
+    borderRadius: 30,
+    borderColor: colors.secondary,
+    borderWidth:3
   },
   reviewContainer: {
     flex: 3,

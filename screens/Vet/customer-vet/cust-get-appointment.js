@@ -6,8 +6,7 @@ import {
     SafeAreaView,
     ScrollView,
     Button,
-    Keyboard,
-    Platform
+    Keyboard
 } from 'react-native';
 import InputField from '../../../components/Vet/InputField';
 import COLORS from '../../../utils/Vet/colors';
@@ -15,16 +14,15 @@ import { fireDB } from '../../../database/firebaseConfig';
 import { collection, addDoc } from "firebase/firestore";
 import MyDatePicker from '../../../components/Vet/MyDatePicker';
 import MyTimePicker from '../../../components/Vet/MyTimePicker';
-// import DatePicker from '@react-native-community/datetimepicker';
-// import DropdownPicker from 'react-native-dropdown-picker';
-
+// import DropDownPicker from 'react-native-dropdown-picker';
+import { Picker } from "@react-native-picker/picker";
 
 export function GetAppointment({ navigation }) {
     const [fname, setFName] = useState('');
     const [lname, setLName] = useState('');
     const [email, setEmail] = useState('');
     const [contact, setContact] = useState('');
-    const [vetName, setVetName] = useState('');
+    // const [vetName, setVetName] = useState('');
     const [reason, setReason] = useState('');
     const [appntDate, setAppntDate] = useState('');
     const [appntTime, setAppntTime] = useState('');
@@ -32,6 +30,13 @@ export function GetAppointment({ navigation }) {
     const [errors, setErrors] = useState({});
     const [showAppntDate, setShowAppntDate] = useState(false);
     const [showAppntTime, setShowAppntTime] = useState(false);
+
+    const [open, setOpen] = useState(false);
+    const [value, setValue] = useState(null);
+    const [vetName, setVetName] = useState([
+        { label: 'Apple', value: 'apple' },
+        { label: 'Banana', value: 'banana' }
+    ]);
 
     const handleSaveAppointment = async () => {
         try {
@@ -129,14 +134,14 @@ export function GetAppointment({ navigation }) {
     };
 
     return (
-        
+
         <SafeAreaView style={{ backgroundColor: COLORS.white, flex: 1 }}>
-            <ScrollView
-                contentContainerStyle={{ paddingTop: 50, paddingHorizontal: 20 }}>
-            <View>
-                <Text style={styles.createBogHeader}>Veterinarian Appointment</Text>
-            </View>
-            
+            <ScrollView nestedScrollEnabled={true}
+                contentContainerStyle={{ paddingTop: 50, paddingHorizontal: 20, flexGrow: 1 }}>
+                <View>
+                    <Text style={styles.createBogHeader}>Veterinarian Appointment</Text>
+                </View>
+
                 <View style={{ marginVertical: 20 }}>
 
                     {/* Name field */}
@@ -187,30 +192,21 @@ export function GetAppointment({ navigation }) {
                     {/* Select Veterinarian field */}
                     <View>
                         <Text style={styles.titleStyle}>Select Veterinarian</Text>
-                        <InputField
-                            onChangeText={setVetName}
-                            value={vetName}
-                            placeholder="dropdown"
-                            onFocus={() => handleError(null, 'vetName')}
-                            error={errors.vetName}
-                        />
-                        {/* <DropdownPicker
-                            items={vetOptions}
-                            setItems={setVetOptions}
-                            open={open}
-                            value={selectedValue}
-                            setOpen={setOpen}
-                            defaultValue={selectedValue}
-                            placeholder="Select Doctor"
-                            containerStyle={{ height: 40 }}
-                            style={{ backgroundColor: '#fafafa' }}
-                            dropDownStyle={{ backgroundColor: '#fafafa' }}
-
-                            // onChangeItem={(item) => {
-                               
-                            // }}
-                        /> */}
-
+                        <View style={styles.formDataBox}>
+                            <Text>Veterinarian</Text>
+                            <Picker
+                                selectedValue={vetName}
+                                onValueChange={(itemValue, itemIndex) => setVetName(itemValue)}
+                            >
+                                <Picker.Item label="Dr.John Willium" value="Dr.John Willium" />
+                                <Picker.Item label="Dr.Marien Smith" value="Dr.Marien Smith" />
+                                <Picker.Item label="Dr.Shane Perera" value="Dr.Shane Perera" />
+                                <Picker.Item label="Dr.Minuja Ashmika" value="Dr.Minuja Ashmika" />
+                                <Picker.Item label="Dr.Kamal Herath" value="Dr.Kamal Herath" />
+                                <Picker.Item label="Dr.Willium Brent" value="Dr.Willium Brent" />
+                                <Picker.Item label="Dr.Bob Westen" value="Dr.Bob Westen" />
+                            </Picker>
+                        </View>
                     </View>
 
                     {/* Reason of Appointment */}
@@ -327,7 +323,7 @@ const styles = StyleSheet.create({
         //   color: "blue",
         fontSize: 18,
         marginBottom: 10,
-        fontStyle:'italic'
+        fontStyle: 'italic'
     },
     input: {
         height: 40,
@@ -387,6 +383,13 @@ const styles = StyleSheet.create({
         height: 25,
         marginLeft: 15,
         fontSize: 18,
+    },
+    formDataBox: {
+        backgroundColor: "white",
+        padding: 5,
+        marginBottom: 5,
+        borderRadius: 10,
+        marginRight: 10,
       },
 });
 

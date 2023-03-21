@@ -4,7 +4,7 @@ import {
 } from "firebase/auth";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { auth, db, fireDB } from "../../database/firebaseConfig";
-import { onValue, ref, set } from "firebase/database";
+import { onValue, ref, set, update } from "firebase/database";
 
 export async function registerUser(user) {
   return await createUserWithEmailAndPassword(auth, user.email, user.password);
@@ -14,7 +14,7 @@ export async function loginUser(user) {
 }
 export async function saveUser(user, uid) {
   const Ref = ref(db, `users/${uid}`);
-  return await set(Ref, { name: user.name, isAdmin: false, id: uid });
+  return await set(Ref, { name: user.name, isAdmin: false, id: uid, dp: "null" });
 }
 export function currentUser() {
   const user = auth.currentUser;
@@ -23,10 +23,13 @@ export function currentUser() {
   onValue(Ref, (snapshot) => {
     const data = snapshot.val();
     if (data) {
-     cuser=data
+      cuser = data;
     }
-
-    
   });
   return cuser;
+}
+
+export async function updateUser(user) {
+  const Ref = ref(db, `users/${user.id}`);
+  return await update(Ref, { ...user });
 }

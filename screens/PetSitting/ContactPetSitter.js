@@ -39,18 +39,11 @@ const ContactPetSitter = ({route}) => {
   
       <SafeAreaView className="flex-1 bg-white relative">
         
-      <View className="mt-8">
-      <View className=" flex-row inset-x-0 top-5 justify-between px-6">
-      <TouchableOpacity
-              onPress={() => navigation.navigate("PetSittingHomeScreen")}
-              className="w-10 h-10  items-center justify-center bg-white"
-            >
-              <FontAwesome5 name="arrow-left" size={24} color="#CF9FFF" />
-            </TouchableOpacity>
-            </View>
-      <View className="px-6 mt-4 space-y-1">
-          <Text className="text-[#3C6072] text-[36px] ">Contact</Text>
-          <Text className="text-[#CF9FFF] text-[38px] font-bold">
+      <View>
+     
+      <View className="px-6 mt-2 space-y-1">
+          <Text className="text-[#3C6072] text-[34px] ">Contact</Text>
+          <Text className="text-[#CF9FFF] text-[36px] font-bold">
           {data.Name}
           </Text>
           
@@ -59,12 +52,12 @@ const ContactPetSitter = ({route}) => {
               
   
               
-        <View className='flex-1 mt-8 items-center'>
+        <View className='flex-1 mt-6 items-center'>
          
         <View className='w-5/6'>
-        <Text className="text-[#3C6072] text-[26px] ">Message</Text>
+        <Text className="text-[#3C6072] text-[24px] ">Message</Text>
           <TextInput
-            className='w-full bg-white border border-[#CF9FFF] p-2 mb-2 h-60 mt-3'
+            className='w-full bg-white border border-[#CF9FFF] p-2 mb-2 h-60 mt-2'
             onChangeText={setMessage}
             value={message}
             
@@ -73,7 +66,7 @@ const ContactPetSitter = ({route}) => {
           />
           <TouchableOpacity
            onPress={()=>openEmail()}
-            className="py-2 px-4 bg-[#000000] text-white font-semibold rounded-full items-center justify-center flex-row mt-4"
+            className="py-2 px-2 bg-[#000000] text-white font-semibold rounded-full items-center justify-center flex-row mt-3"
           >
              <FontAwesome5 name="envelope" size={35} color="#CF9FFF" />
           <Text className="text-[#CF9FFF] text-[25px] px-5 ">Send Mail</Text>
@@ -82,7 +75,7 @@ const ContactPetSitter = ({route}) => {
   
           <TouchableOpacity
            onPress={()=>openSMS()}
-            className="py-2 px-4 bg-[#000000] text-[#CF9FFF] font-semibold rounded-full items-center justify-center flex-row mt-4 "
+            className="py-2 px-4 bg-[#000000] text-[#CF9FFF] font-semibold rounded-full items-center justify-center flex-row mt-3 "
           > 
            <FontAwesome5 name="sms" size={35} color="#CF9FFF" />
           <Text className="text-[#CF9FFF] text-[25px] px-5">Send SMS</Text>
@@ -97,16 +90,16 @@ const ContactPetSitter = ({route}) => {
   
       <TouchableOpacity
             onPress={()=>makePhoneCall()}
-            className="absolute bottom-6 right-10 w-24 h-24 border-l-2 border-r-2 border-t-4 border-[#CF9FFF] rounded-full items-center justify-center"
+            className="absolute bottom-2 right-10 w-20 h-20 border-l-2 border-r-2 border-t-4 border-[#CF9FFF] rounded-full items-center justify-center"
           >
              
             <Animatable.View
               animation={"pulse"}
               easing="ease-in-out"
               iterationCount={"infinite"}
-              className="w-20 h-20 items-center justify-center rounded-full bg-[#CF9FFF]"
+              className="w-16 h-16 items-center justify-center rounded-full bg-[#CF9FFF]"
             >
-              <Feather name="phone-call" size={45}></Feather>
+              <Feather name="phone-call" size={40}></Feather>
             </Animatable.View>
           </TouchableOpacity>
   

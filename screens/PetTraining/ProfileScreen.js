@@ -8,6 +8,8 @@ import {
   TouchableHighlight,
   RefreshControl,
   Button,
+  Modal,
+  TouchableOpacity,
 } from "react-native";
 import React, { useCallback, useEffect, useState } from "react";
 import Screen from "../../components/PetTraining/common/Screen";
@@ -16,36 +18,29 @@ import { currentUser } from "../../services/PetTraining/userService";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import routes from "../../navigation/PetTraining/routes";
 import colors from "../../utils/colors";
-import { getAllTrainings } from "../../services/PetTraining/trainingService";
+import { getAllTrainings, getAllTrainingsByUserSub, getAllTrainingsSub } from "../../services/PetTraining/trainingService";
 import ItemsRow from "../../components/PetTraining/ItemsRow";
 import { onValue, ref } from "firebase/database";
+import ProflePicUploadDialogBody from "../../components/PetTraining/ProflePicUploadDialogBody";
 
 export default function ProfileScreen({ navigation }) {
   const [user, setUser] = useState({});
   const [listings, setListings] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+
   useEffect(() => {
     getCurrentUser();
     getAll();
   }, []);
   async function getCurrentUser() {
     const cUser = currentUser();
+    console.log(cUser)
     setUser(cUser);
   }
   const getAll = async () => {
-    const Ref = ref(db, "trainings/");
-
-    onValue(Ref, (snapshot) => {
-      const data = snapshot.val();
-      if (data) {
-        const listings = Object.keys(data).map((key) => ({
-          id: key,
-          ...data[key],
-        }));
-        setListings(listings);
-      }
-      setRefreshing(false);
-    });
+    getAllTrainingsByUserSub(setListings)
+    setRefreshing(false);
   };
 
   const signOut = async () => {
@@ -66,6 +61,14 @@ export default function ProfileScreen({ navigation }) {
     getCurrentUser();
     getAll();
   }, []);
+
+  const openDialog = () => {
+    setModalVisible(true);
+  };
+
+  const closeDialog = () => {
+    setModalVisible(false);
+  };
   return (
     <Screen>
       <ScrollView
@@ -74,10 +77,12 @@ export default function ProfileScreen({ navigation }) {
         }
       >
         <View style={styles.user}>
-          <Image
-            style={styles.avatar}
-            source={require("../../assets/avatar.png")}
-          />
+          <TouchableOpacity onPress={openDialog}>
+            <Image
+              style={styles.avatar}
+              source={user.dp !== "null" ? {uri:user.dp}: require("../../assets/avatar.png")}
+            />
+          </TouchableOpacity>
           <View style={{ flex: 1 }}>
             <Text style={styles.name}>{user.name}</Text>
             <Text>Edit </Text>
@@ -99,6 +104,14 @@ export default function ProfileScreen({ navigation }) {
             }}
           />
         </View>
+        <Modal
+          visible={modalVisible}
+          animationType="slide"
+          transparent={true}
+          onRequestClose={closeDialog}
+        >
+          <ProflePicUploadDialogBody onClose={closeDialog} user={user} />
+        </Modal>
         {/* end of upper section */}
         <View style={styles.addListings}>
           <Text style={styles.secHeading}>Add New Listings</Text>
@@ -171,6 +184,9 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     margin: 10,
+    borderRadius: 50,
+    borderWidth: 3,
+    borderColor:colors.secondary
   },
   name: {
     fontSize: 20,

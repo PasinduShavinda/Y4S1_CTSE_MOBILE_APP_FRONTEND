@@ -8,8 +8,11 @@ import AppButton from "./common/AppButton";
 import * as Yup from "yup";
 import strftime from "strftime";
 import { currentUser } from "../../services/PetTraining/userService";
+import { addReview } from "../../services/PetTraining/reviewService";
+import SubmitButton from "./common/SubmitBUtton";
+import { updateTraining } from "../../services/PetTraining/trainingService";
 
-export default function ReviewBody({ onClose }) {
+export default function ReviewBody({ onClose, item }) {
   const [rate, setRate] = useState(0);
   const currentDate = new Date();
   const formattedDate = strftime("%B %e %Y", currentDate);
@@ -30,10 +33,25 @@ export default function ReviewBody({ onClose }) {
       date: formattedDate,
       review: values.review,
       rating: rate,
-      trainingId: "",
-      userName:user.name,
-      
+      trainingId: item.id,
+      userName: user.name,
+      dp: user.dp,
     };
+    console.log(data);
+    await addReview(data)
+      .then(async () => {
+        const training = item;
+        const rating = item.rating;
+        const totRate = item.ratingCount;
+        training.ratingCount += 1;
+        console.log(rating, totRate);
+        training.rating =
+          (rating * totRate + rate) / (training.ratingCount);
+        await updateTraining(training, item.id).then(() => {
+          onClose();
+        });
+      })
+      .catch((error) => console.log(error));
   };
   return (
     <View style={styles.modalContainer}>
@@ -44,27 +62,25 @@ export default function ReviewBody({ onClose }) {
         </View>
         <AppForm
           initialValues={{ review: "" }}
-          onSubmit={(values) => {
-            handleSubmit(values);
-          }}
+          onSubmit={(values) => handleSubmit(values)}
           validationSchema={validationSchema}
         >
           <View style={styles.fields}>
             <Text style={styles.text}>Review</Text>
             <AppFormField
               maxLength={255}
-              name="experience"
+              name="review"
               multiline
               numberOfLines={4}
               height={90}
-              placeholder="Enter your training experience"
+              placeholder="Enter your review"
             />
           </View>
+          <View style={styles.buttons}>
+            <AppButton title={"Back"} style={styles.btn} onPress={onClose} />
+            <SubmitButton title={"Add"} style={styles.btn} />
+          </View>
         </AppForm>
-        <View style={styles.buttons}>
-          <AppButton title={"Back"} style={styles.btn} onPress={onClose} />
-          <AppButton title={"Add"} style={styles.btn} />
-        </View>
       </View>
     </View>
   );
@@ -78,8 +94,8 @@ const styles = StyleSheet.create({
   },
   popup: {
     backgroundColor: "white",
-    width: "90%", // adjust the width of the popup container
-    height: "auto", // adjust the height of the popup container
+    width: "90%",
+    height: "auto",
     padding: 20,
     borderRadius: 10,
   },
