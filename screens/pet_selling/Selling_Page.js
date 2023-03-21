@@ -93,7 +93,6 @@ export default function Selling_Page({ navigation, route }) {
         autoCorrect={false}
       />
       <View>
-        <Text>{petsType}</Text>
         <View style={styles.container}>
           <View style={styles.topBtn}>
             <FontAwesome5.Button
@@ -129,7 +128,6 @@ export default function Selling_Page({ navigation, route }) {
           </View>
         </View>
       </View>
-      <Text>{petsType}</Text>
       <ScrollView>
         <View>
           {sellingPets.map((title, key) => {
