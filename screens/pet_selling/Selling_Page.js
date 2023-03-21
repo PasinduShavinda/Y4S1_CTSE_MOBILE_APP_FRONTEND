@@ -20,56 +20,6 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Foundation } from "@expo/vector-icons";
 import { get_all_pets } from "../../services/pet_selling/selling_service";
 
-const DATA = [
-  {
-    id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-    title: "First Item",
-    img: "https://kb.rspca.org.au/wp-content/uploads/2018/11/golder-retriever-puppy.jpeg",
-    address: "No 2, Road Galle",
-    age: 2,
-    gender: 1,
-  },
-  {
-    id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
-    title: "Second Item",
-    img: "https://guidedogs.com.au/wp-content/uploads/2021/01/Two-Gold-St-Kilda-610x525-lqip.jpg",
-    address: "No 2, Road Galle",
-    age: 2,
-    gender: 0,
-  },
-  {
-    id: "58694a0f-3da1-471f-bd96-145571e29d72",
-    title: "Third Item",
-    img: "https://media.npr.org/assets/img/2017/10/12/gettyimages-742252833_custom-fe7325ac21c8d2cdf29b8e079c246c8c70847137-s1100-c50.jpg",
-    address: "No 2, Road Galle",
-    age: 2,
-    gender: 0,
-  },
-  {
-    id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28bh",
-    title: "First Item",
-    img: "https://cdn.britannica.com/16/234216-050-C66F8665/beagle-hound-dog.jpg",
-    address: "No 2, Road Galle",
-    age: 2,
-    gender: 1,
-  },
-  {
-    id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f64",
-    title: "Second Item",
-    img: "https://d2kl333iheywy2.cloudfront.net/assets/main/lab-hero-square-1fe2f13fa943105fe2c521df43eeb11c.jpg",
-    address: "No 2, Road Galle",
-    age: 2,
-    gender: 1,
-  },
-  {
-    id: "58694a0f-3da1-471f-bd96-145571e29d75",
-    title: "Third Item",
-    img: "https://irishtherapydogs.ie/wp-content/uploads/2021/09/Lucy-Sharon-scaled-600x579.jpg",
-    address: "No 2, Road Galle",
-    age: 2,
-    gender: 1,
-  },
-];
 var petsType = "Cats";
 
 export default function Selling_Page({ navigation, route }) {
@@ -101,7 +51,7 @@ export default function Selling_Page({ navigation, route }) {
       array_data.push({ id: response.id, ...response.data() });
     });
     setsellingPets(array_data);
-    const data = sellingPets.filter(function (item) {
+    const data = sellingPets.filter(function(item) {
       return item.category == "Dog";
     });
     // alert("");
@@ -124,7 +74,7 @@ export default function Selling_Page({ navigation, route }) {
       array_data.push({ id: response.id, ...response.data() });
     });
     setsellingPets(array_data);
-    const data = sellingPets.filter(function (item) {
+    const data = sellingPets.filter(function(item) {
       return item.category == "Cats";
     });
     // alert("");
@@ -222,10 +172,19 @@ export default function Selling_Page({ navigation, route }) {
                             title="more"
                             onPress={() => {
                               // Pass and merge params back to home screen
-                              navigation.navigate({
-                                name: "selected-item",
-                                params: { id: title.id },
-                                merge: true,
+                              navigation.navigate("selected-item", {
+                                petId: title.id,
+                                name: title.name,
+                                age1: title.age,
+                                gender1: title.gender,
+                                latitudePass1: title.latitudePass,
+                                longitudePass1: title.longitudePass,
+                                price1: title.price,
+                                category1: title.category,
+                                description1: title.description,
+                                contactNumber1: title.contactNumber,
+                                img1: title.img,
+                                date: title.date,
                               });
                             }}
                           />

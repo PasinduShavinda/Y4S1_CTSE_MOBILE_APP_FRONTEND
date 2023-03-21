@@ -15,10 +15,8 @@ import Google_map from "./Google_map";
 import { Picker } from "@react-native-picker/picker";
 import * as ImagePicker from "expo-image-picker";
 import ImageViewer from "../../components/pet_selling/ImageViewer";
-import {
-  Add_new_pets_to_db,
-  Upload_image,
-} from "../../services/pet_selling/selling_service";
+import { Add_new_pets_to_db } from "../../services/pet_selling/selling_service";
+import { Upload_image } from "../../services/pet_selling/Upload_image";
 import { Snackbar } from "react-native-paper";
 
 export default function Add_new_pets({ navigation }) {
@@ -31,6 +29,7 @@ export default function Add_new_pets({ navigation }) {
   const [isVisible, setVisible] = useState(false);
   const [snackbarMsg, setsnackbarMsg] = useState("");
   const [image_r, setImage_r] = useState("");
+  const [snakVisible, SetSnackVisible] = useState(false);
 
   // form Data
   const [names, setnames] = useState("");
@@ -40,6 +39,10 @@ export default function Add_new_pets({ navigation }) {
   const [age, setage] = useState(0);
   const [description, setdescription] = useState("");
   const [contactNumber, setcontactNumber] = useState(0);
+  var date = new Date();
+  var today_date =
+    date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate(); //To get the Current Date
+
   const user = "bf734bc34r74vb";
 
   const Add_new_pets = async () => {
@@ -49,6 +52,8 @@ export default function Add_new_pets({ navigation }) {
 
       // alert("");
     } else {
+      console.log("date");
+      console.log(today_date);
       let url = await Upload_image(image_r);
       data = {
         user_id: user,
@@ -62,9 +67,11 @@ export default function Add_new_pets({ navigation }) {
         latitudePass: latitudePass,
         longitudePass: longitudePass,
         img: url,
+        date: today_date,
       };
 
       let data = await Add_new_pets_to_db(data);
+      SetSnackVisible(true);
     }
   };
   function showAlert() {
@@ -209,6 +216,23 @@ export default function Add_new_pets({ navigation }) {
           </View>
         </View>
       </ScrollView>
+      <Snackbar
+        visible={snakVisible}
+        onDismiss={() => SetSnackVisible(false)}
+        duration={2000}
+        action={{
+          label: "OK",
+          labelStyle: { color: "white", fontSize: 18 },
+          onPress: () => {
+            SetSnackVisible(false);
+          },
+        }}
+        style={{ backgroundColor: "#B32AD8" }}
+      >
+        <View>
+          <Text>Successfully Added</Text>
+        </View>
+      </Snackbar>
     </SafeAreaView>
   );
 }

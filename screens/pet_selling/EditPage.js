@@ -14,72 +14,81 @@ import { React, useState, useLayoutEffect } from "react";
 import Google_map from "./Google_map";
 import { Picker } from "@react-native-picker/picker";
 import * as ImagePicker from "expo-image-picker";
-import { get_all_pets } from "../../services/pet_selling/selling_service";
+import {
+  update_selling_pet_by_id,
+  update_selling_pet,
+} from "../../services/pet_selling/selling_service";
 //   import ImageViewer from "../../components/pet_selling/ImageViewer";
+import { Snackbar } from "react-native-paper";
 
 export default function EditPage({ navigation, route }) {
-  const { petId, name, age1, gender1, latitudePass1, longitudePass1, price1 } =
-    route.params;
+  const {
+    petId,
+    name,
+    age1,
+    gender1,
+    latitudePass1,
+    longitudePass1,
+    price1,
+    category1,
+    description1,
+    contactNumber1,
+    img1,
+  } = route.params;
   const [number, onChangeNumber] = useState("");
   const [latitudePass, setlatitudePass] = useState(latitudePass1);
   const [longitudePass, setlongitudePass] = useState(longitudePass1);
   const [selectedLanguage, setSelectedLanguage] = useState();
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [image, setImage] = useState(null);
   const url_id = route.params?.id;
   const [sellingPets, setsellingPets] = useState([]);
+  const [snakVisible, SetSnackVisible] = useState(false);
 
   // form Data
   const [names, setnames] = useState(name);
   const [gender, setgender] = useState(gender1);
   const [price, setprice] = useState(price1);
-  const [category, setcategory] = useState("");
+  const [category, setcategory] = useState(category1);
   const [age, setage] = useState(age1);
-  const [description, setdescription] = useState("");
-  const [contactNumber, setcontactNumber] = useState(0);
+  const [description, setdescription] = useState(description1);
+  const [contactNumber, setcontactNumber] = useState(contactNumber1);
+  const user = "bf734bc34r74vb";
 
   function handleChoosePhoto() {}
   function showAlert() {
     navigation.navigate("google-map");
   }
-  function getLocation(latitudePass, longitudePass) {
-    setlatitudePass(latitudePass);
-    setlongitudePass(longitudePass);
-  }
-  const pickImage = async () => {
-    // No permissions request is necessary for launching the image library
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
+  // function getLocation(latitudePass, longitudePass) {
+  //   setlatitudePass(latitudePass);
+  //   setlongitudePass(longitudePass);
+  // }
 
-    console.log(result);
+  const update_pets_by_id = async () => {
+    console.log("====================================================");
+    const request_obj = {
+      user_id: user,
+      name: names,
+      gender: gender,
+      price: price,
+      category: category,
+      age: age,
+      description: description,
+      contactNumber: contactNumber,
+      latitudePass: latitudePass,
+      longitudePass: longitudePass,
+      img: img1,
+    };
+    console.log(petId);
+    console.log(request_obj);
 
-    if (!result.canceled) {
-      setImage(result.assets[0].uri);
-    }
+    await update_selling_pet(request_obj, petId)
+      .then((result) => {
+        console.log(result);
+        SetSnackVisible(true);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
-  // useLayoutEffect(() => {
-  //   console.log(url_id);
-  //   const mountSellingPets = async () => {
-  //     const data_ = await get_all_pets();
-  //     const array_data = [];
-  //     data_.forEach((response) => {
-  //       array_data.push({ id: response.id, ...response.data() });
-  //     });
-  //     const data = array_data.filter(function (item) {
-  //       return item.id == url_id;
-  //     });
-  //     setsellingPets(data);
-  //     console.log(
-  //       "===============data===================>>>>>>>>>>>>>>>>>>>>>>"
-  //     );
-  //     console.log(sellingPets);
-  //   };
-  //   mountSellingPets();
-  // }, []);
 
   return (
     <SafeAreaView>
@@ -93,7 +102,7 @@ export default function EditPage({ navigation, route }) {
               <View style={[styles.formDataBox, styles.shadowProp]}>
                 <Image
                   source={{
-                    uri: "https://irishtherapydogs.ie/wp-content/uploads/2021/09/Lucy-Sharon-scaled-600x579.jpg",
+                    uri: img1,
                   }}
                   style={styles.tinyLogo}
                 />
@@ -105,13 +114,13 @@ export default function EditPage({ navigation, route }) {
                 <TextInput
                   style={styles.input}
                   onChangeText={setnames}
-                  value={sellingPets.name}
+                  value={names}
                   placeholder="useless placeholder"
                   keyboardType="text"
                 />
               </View>
               <View style={[styles.formDataBox, styles.shadowProp]}>
-                <Text>Price</Text>
+                <Text>Price{price}</Text>
                 <TextInput
                   style={styles.input}
                   onChangeText={setprice}
@@ -170,17 +179,34 @@ export default function EditPage({ navigation, route }) {
                 />
               </View>
             </View>
-            <View style={styles.mapStyle}>
+            {/* <View style={styles.mapStyle}>
               <Google_map getLocation={getLocation} />
-            </View>
+            </View> */}
           </View>
           <View style={styles.btnStyling}>
-            <Pressable style={styles.button}>
+            <Pressable style={styles.button} onPress={update_pets_by_id}>
               <Text style={styles.text}>Save</Text>
             </Pressable>
           </View>
         </View>
       </ScrollView>
+      <Snackbar
+        visible={snakVisible}
+        onDismiss={() => SetSnackVisible(false)}
+        duration={2000}
+        action={{
+          label: "OK",
+          labelStyle: { color: "white", fontSize: 18 },
+          onPress: () => {
+            SetSnackVisible(false);
+          },
+        }}
+        style={{ backgroundColor: "#B32AD8" }}
+      >
+        <View>
+          <Text>Successfully Updated</Text>
+        </View>
+      </Snackbar>
     </SafeAreaView>
   );
 }
