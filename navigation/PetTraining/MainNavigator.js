@@ -36,7 +36,7 @@ export default function MainNavigator({ route }) {
   if (user === null) {
     return (
       <Screen key={user}>
-        <LoadingScreen/>
+        <LoadingScreen />
       </Screen>
     );
   }
@@ -68,8 +68,8 @@ export default function MainNavigator({ route }) {
         options={{
           tabBarIcon: ({ focused, size, color }) => (
             <FontAwesome
-              name="user-circle-o"
-              size={40}
+              name="shopping-basket"
+              size={30}
               color={focused ? colors.secondary : colors.primary}
             />
           ),
