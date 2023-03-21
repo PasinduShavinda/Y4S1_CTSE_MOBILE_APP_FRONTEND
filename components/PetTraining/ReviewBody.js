@@ -9,9 +9,10 @@ import * as Yup from "yup";
 import strftime from "strftime";
 import { currentUser } from "../../services/PetTraining/userService";
 import { addReview } from "../../services/PetTraining/reviewService";
-import SubmitButton from './common/SubmitBUtton';
+import SubmitButton from "./common/SubmitBUtton";
+import { updateTraining } from "../../services/PetTraining/trainingService";
 
-export default function ReviewBody({ onClose , itmeId}) {
+export default function ReviewBody({ onClose, item }) {
   const [rate, setRate] = useState(0);
   const currentDate = new Date();
   const formattedDate = strftime("%B %e %Y", currentDate);
@@ -32,15 +33,25 @@ export default function ReviewBody({ onClose , itmeId}) {
       date: formattedDate,
       review: values.review,
       rating: rate,
-      trainingId: itmeId,
+      trainingId: item.id,
       userName: user.name,
-      dp:user.dp
-      
+      dp: user.dp,
     };
-    console.log(data)
-    await addReview(data).then(() => {
-      onClose()
-    }).catch((error)=> console.log(error))
+    console.log(data);
+    await addReview(data)
+      .then(async () => {
+        const training = item;
+        const rating = item.rating;
+        const totRate = item.ratingCount;
+        training.ratingCount += 1;
+        console.log(rating, totRate);
+        training.rating =
+          (rating * totRate + rate) / (training.ratingCount);
+        await updateTraining(training, item.id).then(() => {
+          onClose();
+        });
+      })
+      .catch((error) => console.log(error));
   };
   return (
     <View style={styles.modalContainer}>
@@ -67,7 +78,7 @@ export default function ReviewBody({ onClose , itmeId}) {
           </View>
           <View style={styles.buttons}>
             <AppButton title={"Back"} style={styles.btn} onPress={onClose} />
-            <SubmitButton title={"Add"} style={styles.btn}  />
+            <SubmitButton title={"Add"} style={styles.btn} />
           </View>
         </AppForm>
       </View>

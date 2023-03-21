@@ -19,8 +19,10 @@ import { addTraining } from "../../services/PetTraining/trainingService";
 import { Snackbar } from "react-native-paper";
 import { auth } from "../../database/firebaseConfig";
 import MapScreen from "./SelectLocationScreen";
+import routes from "../../navigation/PetTraining/routes";
+import LoadingScreen from "../../components/PetTraining/LoadingScreen";
 
-export default function AddTrainingScreen() {
+export default function AddTrainingScreen({navigation}) {
   const [isLoading, setIsLoding] = useState(false);
   const [isSnackbarVisible, setIsSnackbarVisible] = useState(false);
   const [location, setLocation] = useState(null);
@@ -115,6 +117,9 @@ export default function AddTrainingScreen() {
           .then(() => {
             setIsLoding(false);
             setIsSnackbarVisible(true);
+            setTimeout(() => {
+              navigation.navigate(routes.PROFILE)
+            }, 2500);
           })
           .catch((error) => {
             setIsLoding(false);
@@ -137,14 +142,8 @@ export default function AddTrainingScreen() {
 
   return (
     <Screen>
+      {isLoading && <LoadingScreen />}
       <ScrollView>
-        {isLoading ? (
-          <ActivityIndicator
-            style={styles.loading}
-            size={40}
-            color={colors.primary}
-          />
-        ) : null}
         <View style={styles.form}>
           <AppForm
             initialValues={{
@@ -265,8 +264,8 @@ const styles = StyleSheet.create({
   loading: {
     display: "flex",
     alignSelf: "center",
-    position: "absolute",
-    marginTop: "50%",
+    position:"absolute",
+    marginTop: "150%",
   },
   form: {
     margin: 10,

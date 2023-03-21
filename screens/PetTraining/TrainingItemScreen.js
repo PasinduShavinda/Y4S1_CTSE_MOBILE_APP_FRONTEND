@@ -79,7 +79,7 @@ export default function TrainingItemScreen({ item, navigation }) {
                 marginLeft:25
               }}
             >
-              <StarRating rating={2} />
+              <StarRating rating={item.rating} />
             </View>
           </View>
           {auth.currentUser.uid == item.userId && (
