@@ -5,6 +5,7 @@ import {
   Image,
   Text,
   Button,
+  Dimensions,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { getAllTrainingsSub } from "../../services/PetTraining/trainingService";
@@ -16,6 +17,7 @@ import routes from "../../navigation/PetTraining/routes";
 import * as Location from "expo-location";
 import { getNearByPlaces } from "../../services/PetTraining/locationsNearBy";
 import AppButton from "../../components/PetTraining/common/AppButton";
+import AppTextInput from '../../components/PetTraining/common/AppTextInput';
 export default function AllTrainings({ navigation }) {
   const [listings, setListings] = useState([]);
   const [location, setLocation] = useState(null);
@@ -57,6 +59,12 @@ export default function AllTrainings({ navigation }) {
           getNearBy();
         }}
       />
+      <View style={styles.search}>
+        <AppTextInput
+          width={Dimensions.get("window").width - 20}
+          icon={"text-search"}
+        />
+      </View>
       <FlatGrid
         itemDimension={130}
         data={listings}
@@ -104,4 +112,7 @@ const styles = StyleSheet.create({
     zIndex: 999,
     alignSelf: "flex-end",
   },
+  search: {
+    alignSelf:"center"
+  }
 });
