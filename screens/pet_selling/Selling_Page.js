@@ -26,7 +26,7 @@ export default function Selling_Page({ navigation, route }) {
   const [sellingPets, setsellingPets] = useState([]);
   const [petType, setPetType] = useState("Dog");
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const mountSellingPets = async () => {
       const data_ = await get_all_pets();
       const array_data = [];
