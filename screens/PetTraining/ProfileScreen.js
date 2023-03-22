@@ -154,7 +154,9 @@ export default function ProfileScreen({ navigation }) {
                 <Text style={styles.itemText}>Selling</Text>
               </View>
             </TouchableHighlight>
-            <TouchableHighlight>
+            <TouchableHighlight
+             underlayColor={colors.lightPurple}
+             onPress={() => navigation.navigate("CustHome")}>
               <View style={styles.itemwithText}>
               <Image
                   style={styles.item}
