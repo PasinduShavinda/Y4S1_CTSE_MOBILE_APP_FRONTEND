@@ -193,11 +193,11 @@ export function GetAppointment({ navigation }) {
                     <View>
                         <Text style={styles.titleStyle}>Select Veterinarian</Text>
                         <View style={styles.formDataBox}>
-                            <Text>Veterinarian</Text>
-                            <Picker
+                            <Picker style = {{backgroundColor:'#dfddea'}}
                                 selectedValue={vetName}
                                 onValueChange={(itemValue, itemIndex) => setVetName(itemValue)}
-                            >
+                            >   
+                                <Picker.Item label="Select Vet" value="" />
                                 <Picker.Item label="Dr.John Willium" value="Dr.John Willium" />
                                 <Picker.Item label="Dr.Marien Smith" value="Dr.Marien Smith" />
                                 <Picker.Item label="Dr.Shane Perera" value="Dr.Shane Perera" />
