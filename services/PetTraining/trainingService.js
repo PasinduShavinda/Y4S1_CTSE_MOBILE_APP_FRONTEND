@@ -15,7 +15,13 @@ const userId = auth.currentUser?.uid;
 export async function addTraining(data) {
   const id = Date.now();
   const dbRef = ref(db, `trainings/${id}`);
-  return await set(dbRef, { ...data, id: id, rating: 0, ratingCount: 0 });
+  return await set(dbRef, {
+    ...data,
+    id: id,
+    rating: 0,
+    ratingCount: 0,
+    created: new Date().toString(),
+  });
 }
 
 export function getAllTrainingsSub(setListings) {

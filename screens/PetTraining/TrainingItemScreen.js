@@ -21,14 +21,15 @@ import { auth } from "../../database/firebaseConfig";
 import { deleteTraining } from "../../services/PetTraining/trainingService";
 import routes from "../../navigation/PetTraining/routes";
 import StarRating from "../../components/PetTraining/StartRatingDisplay";
+import timeSince from "../../services/PetTraining/TimeSinceCalc";
 
 export default function TrainingItemScreen({ item, navigation }) {
-  console.log(item);
   const [user, setUser] = useState({});
   const [refreshing, setRefreshing] = useState(false);
   function getCurrentUser() {
     const cUser = currentUser();
     setUser(cUser);
+    setRefreshing(false);
   }
   const imageData = [];
   const images = [...item.images];
