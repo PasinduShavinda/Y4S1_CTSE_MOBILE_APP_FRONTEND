@@ -12,14 +12,25 @@ import { Snackbar } from "react-native-paper";
 
 export default function RegistrationScreen({ route, navigation }) {
   const validationSchema = Yup.object().shape({
-    name: Yup.string().min(5).label("Name"),
-    email: Yup.string().email().label("Email"),
-    password: Yup.string().min(5).label("Password"),
-    confirmPassword: Yup.string().min(5).label("Confirm Password"),
+    name: Yup.string()
+      .min(5)
+      .required()
+      .label("Name"),
+    email: Yup.string()
+      .email()
+      .required()
+      .label("Email"),
+    password: Yup.string()
+      .min(5)
+      .required()
+      .label("Password"),
+    confirmPassword: Yup.string()
+      .min(5)
+      .required()
+      .label("Confirm Password"),
   });
-  const [error, setError] = useState({});
+  const [errorMessage, setErrorMessage] = useState(null);
   const [snakVisible, SetSnackVisible] = useState(false);
-  const [errorSnakVisible, SetErrorSnackVisible] = useState(false);
   const handleSubmit = async (value, { resetForm }) => {
     const data = {
       name: value.name,
@@ -27,35 +38,29 @@ export default function RegistrationScreen({ route, navigation }) {
       password: value.password,
     };
     if (value.password !== value.confirmPassword) {
-      setError({ password: "Password dosen't match." });
-      SetErrorSnackVisible(true);
+      setErrorMessage("Password dosn't match");
+      SetSnackVisible(true);
       return;
     }
 
     await registerUser(data)
-      .then(async function (response) {
-        await saveUser(data,response.user.uid).then((response) => {
-          SetSnackVisible(true)
+      .then(async function(response) {
+        await saveUser(data, response.user.uid).then((response) => {
+          SetSnackVisible(true);
           setTimeout(() => {
             navigation.navigate(routes.LOGIN);
           }, 2500);
         });
       })
       .catch((error) => {
-        console.log(error);
+        if (error.code === "auth/email-already-in-use") {
+          setErrorMessage("User already exists");
+          SetSnackVisible(true);
+        } else if (error.code === "auth/invalid-email") {
+          setErrorMessage("Invalid email");
+          SetSnackVisible(true);
+        }
       });
-
-    // await saveUser(data)
-    //   .then(() => {
-    //     SetSnackVisible(true);
-    //     setTimeout(() => {
-    //      // navigation.navigate(routes.LOGIN);
-    //     }, 2500);
-    //   })
-    //   .catch((error) => {
-    //     SetErrorSnackVisible(true);
-    //     setError({ email: error.response.data });
-    //   });
     resetForm();
   };
   return (
@@ -127,44 +132,36 @@ export default function RegistrationScreen({ route, navigation }) {
             </View>
           </AppForm>
         </View>
-        <Snackbar
-          visible={snakVisible}
-          onDismiss={() => SetSnackVisible(false)}
-          duration={2000}
-          action={{
-            label: "OK",
-            labelStyle: { color: colors.limeGreen, fontSize: 18 },
-            onPress: () => {
-              SetSnackVisible(false);
-            },
-          }}
-          style={{ backgroundColor: colors.black }}
-        >
-          <View>
-            <Text style={styles.snackbar}>Registered Successfully.</Text>
-          </View>
-        </Snackbar>
       </ScrollView>
       <Snackbar
-        visible={errorSnakVisible}
-        onDismiss={() => SetErrorSnackVisible(false)}
+        visible={snakVisible}
+        onDismiss={() => {
+          SetSnackVisible(false)
+        }}
         duration={2000}
         action={{
           label: "OK",
-          labelStyle: { color: colors.red, fontSize: 18 },
+          labelStyle: {
+            color: errorMessage === null ? colors.secondary  : colors.red,
+            fontSize: 18,
+          },
           onPress: () => {
-            SetErrorSnackVisible(false);
+            SetSnackVisible(false);
           },
         }}
-        style={{ backgroundColor: colors.black }}
+        style={{
+          backgroundColor: colors.lightPurple,
+        }}
       >
         <View>
-          {(error.email && (
-            <Text style={styles.errsnackbar}>{error.email}</Text>
-          )) ||
-            (error.password && (
-              <Text style={styles.errsnackbar}>{error.password}</Text>
-            ))}
+          <Text
+            style={{
+              ...styles.snackbar,
+              color: errorMessage === null ? colors.secondary : colors.red,
+            }}
+          >
+            {errorMessage === null ? "Registered Successfully" : errorMessage}
+          </Text>
         </View>
       </Snackbar>
     </Screen>
