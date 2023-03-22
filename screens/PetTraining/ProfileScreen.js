@@ -156,8 +156,11 @@ export default function ProfileScreen({ navigation }) {
             </TouchableHighlight>
             <TouchableHighlight>
               <View style={styles.itemwithText}>
-                <Image style={styles.item} />
-                <Text style={styles.itemText}>Vat</Text>
+              <Image
+                  style={styles.item}
+                  source={require("../../assets/vet.jpg")}
+                />
+                <Text style={styles.itemText}>VET</Text>
               </View>
             </TouchableHighlight>
           </View>
@@ -211,7 +214,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     elevation: 8,
     shadowColor: colors.secondary,
-    paddingBottom: 10,
+    paddingBottom: 20,
   },
   secHeading: {
     fontSize: 18,
@@ -221,7 +224,7 @@ const styles = StyleSheet.create({
   },
   itemRow: {
     flexDirection: "row",
-    marginTop: 5,
+    marginTop: 7,
   },
   itemwithText: {
     flexDirection: "column",
@@ -239,7 +242,7 @@ const styles = StyleSheet.create({
     borderColor: colors.primary,
     borderWidth: 3,
     borderRadius: 50,
-    margin: 10,
+    margin: 8,
   },
   myListings: {
     borderColor: colors.white,
