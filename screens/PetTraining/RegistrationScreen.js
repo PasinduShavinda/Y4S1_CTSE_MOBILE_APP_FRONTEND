@@ -97,6 +97,7 @@ export default function RegistrationScreen({ route, navigation }) {
                 maxLength={255}
                 name="email"
                 placeholder="Enter Email"
+                icon={"email"}
               />
               <Text style={styles.text}>PASSWORD</Text>
               <AppFormField
@@ -105,6 +106,7 @@ export default function RegistrationScreen({ route, navigation }) {
                 name="password"
                 placeholder="Enter Password"
                 secureTextEntry
+                icon={"key"}
               />
               <Text style={styles.text}>CONFIRM PASSWORD</Text>
               <AppFormField
@@ -113,6 +115,7 @@ export default function RegistrationScreen({ route, navigation }) {
                 name="confirmPassword"
                 placeholder="Enter Confirm Password"
                 secureTextEntry
+                icon={"key"}
               />
             </View>
             <View style={styles.login}>
@@ -136,13 +139,13 @@ export default function RegistrationScreen({ route, navigation }) {
       <Snackbar
         visible={snakVisible}
         onDismiss={() => {
-          SetSnackVisible(false)
+          SetSnackVisible(false);
         }}
         duration={2000}
         action={{
           label: "OK",
           labelStyle: {
-            color: errorMessage === null ? colors.secondary  : colors.red,
+            color: errorMessage === null ? colors.secondary : colors.red,
             fontSize: 18,
           },
           onPress: () => {

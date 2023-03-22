@@ -9,6 +9,7 @@ import SubmitButton from "../../components/PetTraining/common/SubmitBUtton";
 import { loginUser } from "../../services/PetTraining/userService";
 import routes from "../../navigation/PetTraining/routes";
 import { Snackbar } from "react-native-paper";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 export default function LoginScreen({ navigation }) {
   const [snakVisible, SetSnackVisible] = useState(false);
@@ -75,6 +76,7 @@ export default function LoginScreen({ navigation }) {
                 maxLength={255}
                 name="email"
                 placeholder="Enter Email"
+                icon={"email"}
               />
               <Text style={styles.text}>Password</Text>
               <AppFormField
@@ -82,6 +84,7 @@ export default function LoginScreen({ navigation }) {
                 maxLength={255}
                 name="password"
                 placeholder="Enter Password"
+                icon={"key"}
                 secureTextEntry
               />
             </View>
