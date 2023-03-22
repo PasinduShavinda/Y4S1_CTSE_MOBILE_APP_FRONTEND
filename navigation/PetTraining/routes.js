@@ -6,6 +6,7 @@ export default Object.freeze({
   PROFILE: "Profile",
   PROFILENAV: "ProfileNav",
   ITEMTOPNAV: "ItemTopNav",
+  ITEM:"Item",
   DETAILS: "Details",
   REVIEW: "Review",
   ADDTRAINING: "AddTraining",

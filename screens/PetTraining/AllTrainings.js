@@ -15,44 +15,43 @@ import StarRating from "../../components/PetTraining/StartRatingDisplay";
 import routes from "../../navigation/PetTraining/routes";
 import * as Location from "expo-location";
 import { getNearByPlaces } from "../../services/PetTraining/locationsNearBy";
+import AppButton from "../../components/PetTraining/common/AppButton";
 export default function AllTrainings({ navigation }) {
   const [listings, setListings] = useState([]);
   const [location, setLocation] = useState(null);
-  const [locations, setLocations] = useState([]);
   useEffect(() => {
+    getCurrentLocation();
     getAll();
-    if (listings.length !== 0) {
-      async function getCurrentLocation() {
-        const { status } = await Location.requestForegroundPermissionsAsync();
-        if (status !== "granted") {
-          return;
-        }
-
-        const { coords } = await Location.getCurrentPositionAsync({});
-        setLocation(coords);
-      }
-      getCurrentLocation();
-    }
   }, []);
+
+  const getCurrentLocation = async () => {
+    const { status } = await Location.requestForegroundPermissionsAsync();
+    if (status !== "granted") {
+      return;
+    }
+    const { coords } = await Location.getCurrentPositionAsync({});
+    setLocation(coords);
+  };
 
   const getNearBy = () => {
     const list = [];
-    listings.forEach((item) => {
-      list.push(item.location);
-    });
-    //console.log(location)
 
-    const places = getNearByPlaces(list, location);
-    console.log(places);
+    const places = getNearByPlaces(listings, location);
+
+    console.log("plc", places);
+    const data = {
+      nearbyLocations: places,
+      currentLocation: location,
+    };
+    navigation.navigate("NearBy", { data });
   };
-
   const getAll = () => {
     getAllTrainingsSub(setListings);
   };
   return (
     <Screen>
       <Text>Training Available</Text>
-      <Button
+      <AppButton
         title="Near by"
         onPress={() => {
           getNearBy();
