@@ -29,7 +29,7 @@ export default function AllTrainings({ navigation }) {
           >
             <View style={{ margin: 10 }}>
               <Image style={styles.item} source={{ uri: item.images[0] }} />
-              <StarRating rating={1} />
+              <StarRating rating={item.rating} />
               <Image
                 style={styles.itemIcon}
                 source={require("../../assets/training.png")}

@@ -1,25 +1,22 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
+import colors from "../../utils/colors";
 
 export default function StarRating({ rating, text=true }){
 
   const renderStar = (index) => {
     if (index <= Math.floor(rating)) {
       return (
-        <MaterialCommunityIcons
-          name="star"
-          size={24}
-          color="gold"
-        />
+        <MaterialCommunityIcons name="star" size={24} color={colors.primary} />
       );
     } else if (index === (Math.floor(rating)) + 1 && (rating % 1 !== 0)) {
       return (
-        <MaterialCommunityIcons name="star-half-full" size={24} color="gold" />
+        <MaterialCommunityIcons name="star-half-full" size={24} color={colors.primary} />
       );
     } else {
       return (
-        <MaterialCommunityIcons name="star-outline" size={24} color="gold" />
+        <MaterialCommunityIcons name="star-outline" size={24} color={colors.primary} />
       );
     }
   };
