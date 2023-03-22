@@ -139,7 +139,7 @@ export default function EditTrainingScreen({ item, navigation }) {
     setSizeCheckboxes(newCheckboxes);
   };
 
-  const handleSubmit = async (values) => {
+  const handleSubmit = async (values, { resetForm }) => {
     setIsLoding(true);
     const type = [];
     const age = [];
@@ -164,7 +164,7 @@ export default function EditTrainingScreen({ item, navigation }) {
           petType: type,
           petAge: age,
           petSize: size,
-          location: location !== null ? location: item.location,
+          location: location !== null ? location : item.location,
           locationDetails: values.locationDetails,
         };
         await updateTraining(data, item.id)
@@ -184,6 +184,7 @@ export default function EditTrainingScreen({ item, navigation }) {
         setIsLoding(false);
         console.log("Error", error);
       });
+    resetForm();
   };
   const saveLocation = (marker) => {
     const newMarker = {
@@ -212,7 +213,9 @@ export default function EditTrainingScreen({ item, navigation }) {
               experience: item.experience,
               locationDetails: item.locationDetails,
             }}
-            onSubmit={(values) => handleSubmit(values)}
+            onSubmit={(values, { resetForm }) =>
+              handleSubmit(values, { resetForm })
+            }
             validationSchema={validationSchema}
           >
             <View style={{ marginLeft: 15 }}>

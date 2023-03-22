@@ -22,7 +22,7 @@ import MapScreen from "./SelectLocationScreen";
 import routes from "../../navigation/PetTraining/routes";
 import LoadingScreen from "../../components/PetTraining/LoadingScreen";
 
-export default function AddTrainingScreen({navigation}) {
+export default function AddTrainingScreen({ navigation }) {
   const [isLoading, setIsLoding] = useState(false);
   const [isSnackbarVisible, setIsSnackbarVisible] = useState(false);
   const [location, setLocation] = useState(null);
@@ -84,7 +84,7 @@ export default function AddTrainingScreen({navigation}) {
     setSizeCheckboxes(newCheckboxes);
   };
 
-  const handleSubmit = async (values) => {
+  const handleSubmit = async (values, { resetForm }) => {
     setIsLoding(true);
     const type = [];
     const age = [];
@@ -118,7 +118,7 @@ export default function AddTrainingScreen({navigation}) {
             setIsLoding(false);
             setIsSnackbarVisible(true);
             setTimeout(() => {
-              navigation.navigate(routes.PROFILE)
+              navigation.navigate(routes.PROFILE);
             }, 2500);
           })
           .catch((error) => {
@@ -130,6 +130,7 @@ export default function AddTrainingScreen({navigation}) {
         setIsLoding(false);
         console.log("Error", error);
       });
+    resetForm();
   };
   const saveLocation = (marker) => {
     const newMarker = {
@@ -153,7 +154,9 @@ export default function AddTrainingScreen({navigation}) {
               locationDetails: "",
               contact: "",
             }}
-            onSubmit={(values) => handleSubmit(values)}
+            onSubmit={(values, { resetForm }) =>
+              handleSubmit(values, { resetForm })
+            }
             validationSchema={validationSchema}
           >
             <View style={{ marginLeft: 15 }}>
@@ -264,7 +267,7 @@ const styles = StyleSheet.create({
   loading: {
     display: "flex",
     alignSelf: "center",
-    position:"absolute",
+    position: "absolute",
     marginTop: "150%",
   },
   form: {
