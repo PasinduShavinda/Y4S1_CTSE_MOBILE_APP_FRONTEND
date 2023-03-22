@@ -61,7 +61,6 @@ export default function TrainingItemScreen({ item, navigation }) {
             data={imageData}
             autoPlay={true}
             closeIconColor={colors.primary}
-            
           />
         </View>
         {/* 2 */}
@@ -72,16 +71,24 @@ export default function TrainingItemScreen({ item, navigation }) {
           />
           <View style={{ marginRight: 20, flex: 2 }}>
             <Text style={styles.secHeading}>{user.name}</Text>
-            {auth.currentUser.uid != item.userId && (
-              <AppButton title={"Contact"} style={styles.contactBtn} onPress={handleContactButtonPress} />
-            )}
+            <View>
+              <Text style={styles.timeSince}>{timeSince(item.created)}</Text>
+            </View>
             <View
               style={{
-                marginLeft:25
+                marginLeft: 10,
+                marginBottom:10
               }}
             >
               <StarRating rating={item.rating} />
             </View>
+            {auth.currentUser.uid != item.userId && (
+              <AppButton
+                title={"Contact"}
+                style={styles.contactBtn}
+                onPress={handleContactButtonPress}
+              />
+            )}
           </View>
           {auth.currentUser.uid == item.userId && (
             <View style={styles.like}>
@@ -242,7 +249,14 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     paddingLeft: 10,
-    marginBottom: 10,
+    marginBottom: 0,
+    color: colors.secondary,
+  },
+  timeSince: {
+    fontSize: 15,
+    fontWeight: "bold",
+    paddingLeft: 10,
+    marginBottom: 5,
     color: colors.secondary,
   },
   secText: {

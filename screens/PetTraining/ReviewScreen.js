@@ -3,12 +3,9 @@ import React, { useEffect, useState } from "react";
 import Screen from "../../components/PetTraining/common/Screen";
 import AppButton from "../../components/PetTraining/common/AppButton";
 import ReviewCard from "../../components/PetTraining/ReviewCard";
-import routes from "../../navigation/PetTraining/routes";
-import { TouchableOpacity } from "react-native";
 import ReviewBody from "../../components/PetTraining/ReviewBody";
-import { onValue, ref } from "firebase/database";
-import { db } from "../../database/firebaseConfig";
 import { getAllReviewsByItemSub } from "../../services/PetTraining/reviewService";
+import colors from "../../utils/colors";
 
 export default function ReviewScreen({ item }) {
   const [modalVisible, setModalVisible] = useState(false);
@@ -31,11 +28,17 @@ export default function ReviewScreen({ item }) {
   return (
     <Screen>
       <ScrollView>
-        {reviews.map((review, index) => {
-          if (review.trainingId === item.id) {
-            return <ReviewCard key={index} item={review} />;
-          }
-        })}
+        {reviews.length !== 0 ? (
+          reviews.map((review, index) => {
+            if (review.trainingId === item.id) {
+              return <ReviewCard key={index} item={review} />;
+            }
+          })
+        ) : (
+          <View style={styles.none}>
+            <Text style={styles.noneText}>No Reviews Yet</Text>
+          </View>
+        )}
       </ScrollView>
       <AppButton
         title={"Review"}
@@ -84,5 +87,14 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderRadius: 10,
     marginTop: 10,
+  },
+  none: {
+    paddingTop: "50%",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  noneText: {
+    fontSize: 20,
+    color: colors.secondary,
   },
 });
