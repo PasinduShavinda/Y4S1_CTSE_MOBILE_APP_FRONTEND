@@ -10,11 +10,12 @@ import {
 } from 'react-native';
 import { fireDB } from '../../../database/firebaseConfig';
 import { getDocs, collection, deleteDoc, doc } from "firebase/firestore";
-import { Icon } from 'react-native-elements'
+import { Button, Icon } from 'react-native-elements'
+import generatePDF from '../../../services/Vet/PDF_Generator';
 
 export function ViewAppointment({ navigation }) {
     const [appnts, setAppnts] = useState([]);
-    const [isLoading, setIsLoading] = useState(true)
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         const loadAppnts = async () => {
@@ -132,13 +133,14 @@ export function ViewAppointment({ navigation }) {
             <View style={{
                 marginLeft: 20,
                 marginRight: 20,
-                marginBottom: 100
+                marginBottom: 50
             }}>
                 <FlatList
                     data={appnts}
                     renderItem={renderAppointmentItem}
                     keyExtractor={(item) => item.id}
                 />
+                <Button title="Generate PDF" onPress={generatePDF}></Button>
             </View>
         </View>
     );
@@ -238,7 +240,7 @@ const styles = StyleSheet.create({
         // fontWeight: 'bold',
         paddingBottom: 8,
         textAlign: 'justify',
-        paddingTop:11
+        paddingTop: 11
     },
     headerBackgroundImage: {
         paddingBottom: 50,
