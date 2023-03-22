@@ -11,7 +11,7 @@ import {
   StatusBar,
   ScrollView,
 } from "react-native";
-import { React, useState, useEffect, useLayoutEffect } from "react";
+import { React, useState, useEffect } from "react";
 import { ListItem, Overlay, SearchBar } from "react-native-elements";
 // import Ionicons from "@expo/vector-icons/Ionicons";
 import { FontAwesome5 } from "@expo/vector-icons";
@@ -129,7 +129,7 @@ export default function Selling_Page({ navigation, route }) {
         </View>
       </View>
       <ScrollView>
-        <View>
+        <View style={styles.scrollMargin}>
           {sellingPets.map((title, key) => {
             return (
               <View key={title.id}>
@@ -257,6 +257,7 @@ const styles = StyleSheet.create({
   },
   mainContainer: {
     backgroundColor: "#EFF0F9",
+    marginBottom: 60,
   },
   tinyLogo: {
     width: 125,
@@ -280,5 +281,9 @@ const styles = StyleSheet.create({
   itemTypePet: {
     color: "#5F5F61",
     paddingBottom: 5,
+  },
+  scrollMargin: {
+    marginBottom: 40,
+    paddingBottom: 100,
   },
 });
