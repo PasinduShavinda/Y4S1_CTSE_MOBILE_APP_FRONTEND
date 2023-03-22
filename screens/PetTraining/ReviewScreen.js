@@ -70,8 +70,8 @@ const styles = StyleSheet.create({
   },
   popup: {
     backgroundColor: "white",
-    width: "80%", // adjust the width of the popup container
-    height: "50%", // adjust the height of the popup container
+    width: "80%",
+    height: "50%",
     padding: 20,
     borderRadius: 10,
     alignItems: "center",
@@ -90,8 +90,8 @@ const styles = StyleSheet.create({
   },
   none: {
     paddingTop: "50%",
-    alignItems: "center",
-    justifyContent: "center",
+    alignSelf:"center"
+    
   },
   noneText: {
     fontSize: 20,

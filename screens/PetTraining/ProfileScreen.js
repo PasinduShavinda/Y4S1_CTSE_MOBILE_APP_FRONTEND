@@ -35,15 +35,14 @@ export default function ProfileScreen({ navigation }) {
 
   useEffect(() => {
     getCurrentUser();
+    getAllTrainingsByUserSub(setListings);
     getAll();
   }, []);
   async function getCurrentUser() {
     const cUser = currentUser();
-    console.log(cUser);
     setUser(cUser);
   }
-  const getAll = async () => {
-    getAllTrainingsByUserSub(setListings);
+  const getAll = () => {
     setRefreshing(false);
   };
 
@@ -63,6 +62,7 @@ export default function ProfileScreen({ navigation }) {
   const onRefresh = useCallback(() => {
     setRefreshing(true);
     getCurrentUser();
+    getAllTrainingsByUserSub(setListings);
     getAll();
   }, []);
 
@@ -254,5 +254,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     elevation: 8,
     shadowColor: colors.secondary,
+   
   },
 });

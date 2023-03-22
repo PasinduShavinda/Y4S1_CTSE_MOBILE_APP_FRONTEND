@@ -41,7 +41,7 @@ export function getAllTrainingsSub(setListings) {
 }
 export function getAllTrainingsByUserSub(setListings) {
   const Ref = ref(db, "trainings/");
-
+  setListings([]);
   const listner = onValue(Ref, (snapshot) => {
     const data = snapshot.val();
     if (data) {
@@ -55,8 +55,10 @@ export function getAllTrainingsByUserSub(setListings) {
       if (filteredList.length !== 0) {
         setListings(filteredList);
       }
+    } else {
     }
   });
+
   return listner;
 }
 
