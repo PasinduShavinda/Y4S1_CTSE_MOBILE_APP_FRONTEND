@@ -12,6 +12,7 @@ import { fireDB } from '../../../database/firebaseConfig';
 import { getDocs, collection, deleteDoc, doc } from "firebase/firestore";
 import { Button, Icon } from 'react-native-elements'
 import generatePDF from '../../../services/Vet/PDF_Generator';
+import { FontAwesome } from '@expo/vector-icons';
 
 export function ViewAppointment({ navigation }) {
     const [appnts, setAppnts] = useState([]);
@@ -78,6 +79,7 @@ export function ViewAppointment({ navigation }) {
                     <View style={styles.editbtn}>
                         <Icon
                             name='edit'
+                            size={30}
                             color="#e6b800"
                             onPress={() => handleUpdatePress(item)}
                         />
@@ -85,6 +87,7 @@ export function ViewAppointment({ navigation }) {
                         <View style={styles.deletebtn}>
                             <Icon
                                 name='delete'
+                                size={30}
                                 color="#ff3300"
                                 onPress={() => showConfirmDialog(item)}
                             />
@@ -140,7 +143,13 @@ export function ViewAppointment({ navigation }) {
                     renderItem={renderAppointmentItem}
                     keyExtractor={(item) => item.id}
                 />
-                <Button title="Generate PDF" onPress={generatePDF}></Button>
+                <Button
+                    icon={
+                        <FontAwesome name={'download'} size={28} color={'white'} />
+                    }
+                    onPress={generatePDF}
+                    color="red"
+                ></Button>
             </View>
         </View>
     );

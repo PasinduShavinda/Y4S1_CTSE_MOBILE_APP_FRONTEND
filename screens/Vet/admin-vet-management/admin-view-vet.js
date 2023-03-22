@@ -159,12 +159,14 @@ export function AdminViewVets({ navigation }) {
                                         <Icon
                                             name='edit'
                                             color="#e6b800"
+                                            size={30}
                                             onPress={() => handleUpdatePress(v)}
                                         />
 
                                         <View style={styles.deletebtn}>
                                             <Icon
                                                 name='delete'
+                                                size={30}
                                                 color="#ff3300"
                                                 onPress={() => showConfirmDialog(v)}
                                             />
