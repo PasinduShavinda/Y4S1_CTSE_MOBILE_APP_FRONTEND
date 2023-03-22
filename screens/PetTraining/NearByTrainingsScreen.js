@@ -6,7 +6,6 @@ import routes from "../../navigation/PetTraining/routes";
 import colors from "../../utils/colors";
 export default function NearByTrainingsScreen({ route, navigation }) {
   const { data } = route.params;
-  console.log("DATA:", data);
   const nearbyLocations = data.nearbyLocations;
   const currentLocation = data.currentLocation;
 
@@ -56,7 +55,6 @@ export default function NearByTrainingsScreen({ route, navigation }) {
             >
               <View>
                 <Image style={styles.img} source={{ uri: item.images[0] }} />
-                <Text>hellow</Text>
               </View>
             </Marker>
           ))}

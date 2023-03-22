@@ -6,7 +6,7 @@ export default Object.freeze({
   PROFILE: "Profile",
   PROFILENAV: "ProfileNav",
   ITEMTOPNAV: "ItemTopNav",
-  ITEM:"Item",
+  ITEM: "Item",
   DETAILS: "Details",
   REVIEW: "Review",
   ADDTRAINING: "AddTraining",
@@ -16,4 +16,5 @@ export default Object.freeze({
   MAIN: "Main",
   ALLTRAININGS: "AllTraining",
   ADDREVIEW: "AddReview",
+  NEARBY: "NearBy",
 });

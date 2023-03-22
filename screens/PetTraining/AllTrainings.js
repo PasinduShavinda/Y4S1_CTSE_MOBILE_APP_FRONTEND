@@ -17,7 +17,7 @@ import routes from "../../navigation/PetTraining/routes";
 import * as Location from "expo-location";
 import { getNearByPlaces } from "../../services/PetTraining/locationsNearBy";
 import AppButton from "../../components/PetTraining/common/AppButton";
-import AppTextInput from '../../components/PetTraining/common/AppTextInput';
+import AppTextInput from "../../components/PetTraining/common/AppTextInput";
 export default function AllTrainings({ navigation }) {
   const [listings, setListings] = useState([]);
   const [location, setLocation] = useState(null);
@@ -36,35 +36,35 @@ export default function AllTrainings({ navigation }) {
   };
 
   const getNearBy = () => {
-    const list = [];
-
     const places = getNearByPlaces(listings, location);
 
-    console.log("plc", places);
     const data = {
       nearbyLocations: places,
       currentLocation: location,
     };
-    navigation.navigate("NearBy", { data });
+    navigation.navigate(routes.NEARBY, { data });
   };
   const getAll = () => {
     getAllTrainingsSub(setListings);
   };
   return (
     <Screen>
-      <Text>Training Available</Text>
-      <AppButton
-        title="Near by"
-        onPress={() => {
-          getNearBy();
-        }}
-      />
+      <View>
+        <Text style={styles.heading}>Training Available</Text>
+      </View>
       <View style={styles.search}>
         <AppTextInput
           width={Dimensions.get("window").width - 20}
           icon={"text-search"}
         />
       </View>
+      <AppButton
+        title="Find All Near By Trainers"
+        onPress={() => {
+          getNearBy();
+        }}
+        style={styles.nearby}
+      />
       <FlatGrid
         itemDimension={130}
         data={listings}
@@ -113,6 +113,18 @@ const styles = StyleSheet.create({
     alignSelf: "flex-end",
   },
   search: {
-    alignSelf:"center"
-  }
+    alignSelf: "center",
+  },
+  heading: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: colors.secondary,
+    margin: 10,
+    marginBottom: 0,
+  },
+  nearby: {
+    width: Dimensions.get("window").width - 25,
+    height: 40,
+    alignSelf: "center",
+  },
 });
