@@ -1,45 +1,20 @@
-import {
-  View,
-  Text,
-  ScrollView,
-  RefreshControl,
-  StyleSheet,
-  TouchableHighlight,
-  Image,
-} from "react-native";
-import React, { useCallback, useEffect, useState } from "react";
-import { getAllTrainings } from "../../services/PetTraining/trainingService";
+import { View, StyleSheet, TouchableHighlight, Image } from "react-native";
+import React, { useEffect, useState } from "react";
+import { getAllTrainingsSub } from "../../services/PetTraining/trainingService";
 import Screen from "../../components/PetTraining/common/Screen";
 import { FlatGrid } from "react-native-super-grid";
 import colors from "../../utils/colors";
 import StarRating from "../../components/PetTraining/StartRatingDisplay";
 import routes from "../../navigation/PetTraining/routes";
-import { onValue, ref } from "firebase/database";
-import { db } from "../../database/firebaseConfig";
 
 export default function AllTrainings({ navigation }) {
   const [listings, setListings] = useState([]);
-  const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
     getAll();
   }, []);
-  const onRefresh = useCallback(() => {
-    setRefreshing(true);
-    getAll();
-  }, []);
-  const getAll = async () => {
-    const Ref = ref(db, "trainings/");
-
-    onValue(Ref, (snapshot) => {
-      const data = snapshot.val();
-      const listings = Object.keys(data).map((key) => ({
-        id: key,
-        ...data[key],
-      }));
-      setListings(listings);
-      setRefreshing(false);
-    });
+  const getAll = () => {
+    getAllTrainingsSub(setListings);
   };
   return (
     <Screen>

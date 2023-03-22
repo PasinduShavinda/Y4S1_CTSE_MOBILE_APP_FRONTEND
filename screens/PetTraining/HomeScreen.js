@@ -1,22 +1,17 @@
 import {
   View,
   Text,
-  Button,
   StyleSheet,
   ScrollView,
   RefreshControl,
-  Image,
 } from "react-native";
 import React, { useCallback, useEffect, useState } from "react";
-import { getAllTrainings } from "../../services/PetTraining/trainingService";
+import { getAllTrainingsSub } from "../../services/PetTraining/trainingService";
 import ItemsRow from "../../components/PetTraining/ItemsRow";
 import Screen from "../../components/PetTraining/common/Screen";
 import colors from "../../utils/colors";
-import { ImageSlider } from "react-native-image-slider-banner";
 import ImageSliderCon from "../../components/PetTraining/ImageSlider";
 import routes from "../../navigation/PetTraining/routes";
-import { onValue, ref } from "firebase/database";
-import { db } from "../../database/firebaseConfig";
 
 export default function HomeScreen({ navigation }) {
   const [listings, setListings] = useState([]);
@@ -30,17 +25,8 @@ export default function HomeScreen({ navigation }) {
     getAll();
   }, []);
   const getAll = async () => {
-    const Ref = ref(db, "trainings/");
-
-    onValue(Ref, (snapshot) => {
-      const data = snapshot.val();
-      const listings = Object.keys(data).map((key) => ({
-        id: key,
-        ...data[key],
-      }));
-      setListings(listings);
-      setRefreshing(false);
-    });
+    getAllTrainingsSub(setListings);
+    setRefreshing(false);
   };
   return (
     <Screen>

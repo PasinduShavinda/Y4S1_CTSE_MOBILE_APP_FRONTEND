@@ -15,21 +15,43 @@ const userId = auth.currentUser?.uid;
 export async function addTraining(data) {
   const id = Date.now();
   const dbRef = ref(db, `trainings/${id}`);
-  return await set(dbRef, { ...data, id: id });
+  return await set(dbRef, { ...data, id: id, rating: 0, ratingCount: 0 });
 }
 
-export function getAllTrainings() {
+export function getAllTrainingsSub(setListings) {
   const Ref = ref(db, "trainings/");
-  let list =[]
-  onValue(Ref, (snapshot) => {
+
+  const listner = onValue(Ref, (snapshot) => {
     const data = snapshot.val();
-    const listings = Object.keys(data).map((key) => ({
-      id: key,
-      ...data[key],
-    }));
-    list = [...listings]
+    if (data) {
+      const listings = Object.keys(data).map((key) => ({
+        id: key,
+        ...data[key],
+      }));
+      setListings(listings);
+    }
   });
-  return list;
+  return listner;
+}
+export function getAllTrainingsByUserSub(setListings) {
+  const Ref = ref(db, "trainings/");
+
+  const listner = onValue(Ref, (snapshot) => {
+    const data = snapshot.val();
+    if (data) {
+      const listings = Object.keys(data).map((key) => ({
+        id: key,
+        ...data[key],
+      }));
+      const filteredList = listings.filter(
+        (item) => item.userId === auth.currentUser.uid
+      );
+      if (filteredList.length !== 0) {
+        setListings(filteredList);
+      }
+    }
+  });
+  return listner;
 }
 
 export async function updateTraining(data, id) {

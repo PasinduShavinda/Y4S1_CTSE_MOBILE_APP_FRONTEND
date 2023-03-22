@@ -18,7 +18,11 @@ import { currentUser } from "../../services/PetTraining/userService";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import routes from "../../navigation/PetTraining/routes";
 import colors from "../../utils/colors";
-import { getAllTrainings } from "../../services/PetTraining/trainingService";
+import {
+  getAllTrainings,
+  getAllTrainingsByUserSub,
+  getAllTrainingsSub,
+} from "../../services/PetTraining/trainingService";
 import ItemsRow from "../../components/PetTraining/ItemsRow";
 import { onValue, ref } from "firebase/database";
 import ProflePicUploadDialogBody from "../../components/PetTraining/ProflePicUploadDialogBody";
@@ -35,23 +39,12 @@ export default function ProfileScreen({ navigation }) {
   }, []);
   async function getCurrentUser() {
     const cUser = currentUser();
-    console.log(cUser)
+    console.log(cUser);
     setUser(cUser);
   }
   const getAll = async () => {
-    const Ref = ref(db, "trainings/");
-
-    onValue(Ref, (snapshot) => {
-      const data = snapshot.val();
-      if (data) {
-        const listings = Object.keys(data).map((key) => ({
-          id: key,
-          ...data[key],
-        }));
-        setListings(listings);
-      }
-      setRefreshing(false);
-    });
+    getAllTrainingsByUserSub(setListings);
+    setRefreshing(false);
   };
 
   const signOut = async () => {
@@ -91,7 +84,11 @@ export default function ProfileScreen({ navigation }) {
           <TouchableOpacity onPress={openDialog}>
             <Image
               style={styles.avatar}
-              source={user.dp ? {uri:user.dp}: require("../../assets/avatar.png")}
+              source={
+                user.dp !== "null"
+                  ? { uri: user.dp }
+                  : require("../../assets/avatar.png")
+              }
             />
           </TouchableOpacity>
           <View style={{ flex: 1 }}>
@@ -150,7 +147,10 @@ export default function ProfileScreen({ navigation }) {
               onPress={() => navigation.navigate("new-pets")}
             >
               <View style={styles.itemwithText}>
-                <Image style={styles.item} />
+                <Image
+                  style={styles.item}
+                  source={require("../../assets/selling.png")}
+                />
                 <Text style={styles.itemText}>Selling</Text>
               </View>
             </TouchableHighlight>
@@ -197,7 +197,7 @@ const styles = StyleSheet.create({
     margin: 10,
     borderRadius: 50,
     borderWidth: 3,
-    borderColor:colors.secondary
+    borderColor: colors.secondary,
   },
   name: {
     fontSize: 20,

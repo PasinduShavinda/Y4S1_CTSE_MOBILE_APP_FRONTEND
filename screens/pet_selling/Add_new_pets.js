@@ -30,6 +30,7 @@ export default function Add_new_pets({ navigation }) {
   const [snackbarMsg, setsnackbarMsg] = useState("");
   const [image_r, setImage_r] = useState("");
   const [snakVisible, SetSnackVisible] = useState(false);
+  const [validatePhnone, setvalidatePhnone] = useState(false);
 
   // form Data
   const [names, setnames] = useState("");
@@ -46,9 +47,13 @@ export default function Add_new_pets({ navigation }) {
   const user = "bf734bc34r74vb";
 
   const Add_new_pets = async () => {
-    if (names === "") {
+    const regex = /^(?:0|94|\+94)?(?:(11|21|23|24|25|26|27|31|32|33|34|35|36|37|38|41|45|47|51|52|54|55|57|63|65|66|67|81|912)(0|2|3|4|5|7|9)|7(0|1|2|4|5|6|7|8)\d)\d{6}$/;
+    console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+    console.log(regex.test(contactNumber));
+    if (!regex.test(contactNumber)) {
       // setsnackbarMsg("Please fill the all fields");
-      setVisible(true);
+      setvalidatePhnone(true);
+      console.log("invalidddd");
 
       // alert("");
     } else {
@@ -173,7 +178,7 @@ export default function Add_new_pets({ navigation }) {
                 </Picker>
               </View>
               <View style={[styles.formDataBox, styles.shadowProp]}>
-                <Text>Age</Text>
+                <Text>Age (months)</Text>
                 <TextInput
                   style={styles.input}
                   onChangeText={setage}
@@ -183,6 +188,15 @@ export default function Add_new_pets({ navigation }) {
                 />
               </View>
               <View style={[styles.formDataBox, styles.shadowProp]}>
+                <View>
+                  {validatePhnone ? (
+                    <Text style={{ color: "red" }}>
+                      Please Enter Valid Phone Number
+                    </Text>
+                  ) : (
+                    <Text></Text>
+                  )}
+                </View>
                 <Text>Contact Number</Text>
                 <TextInput
                   style={styles.input}
@@ -192,6 +206,7 @@ export default function Add_new_pets({ navigation }) {
                   keyboardType="numeric"
                 />
               </View>
+
               <View style={[styles.formDataBox, styles.shadowProp]}>
                 <Text>Description</Text>
                 <TextInput

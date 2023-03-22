@@ -28,18 +28,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "F:/YEAR_4/SEMESTER_1/CTSE/project/my_part/Y4S1_CTSE_MOBILE_APP_FIREBASE",
-    "node.js.selected.package.tslint": "(autodetect)"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;F:/YEAR_4/SEMESTER_1/CTSE/project/my_part/Y4S1_CTSE_MOBILE_APP_FIREBASE&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;
   }
-}]]></component>
+}</component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="ae05b03e-44d2-4e4d-9514-32aa91214d12" name="Changes" comment="" />
+      <changelist id="42c5f10e-b7e6-4c34-a8fa-15df6c293257" name="Changes" comment="implement edit pets details" />
       <created>1678371466307</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />

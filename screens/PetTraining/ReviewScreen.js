@@ -8,6 +8,7 @@ import { TouchableOpacity } from "react-native";
 import ReviewBody from "../../components/PetTraining/ReviewBody";
 import { onValue, ref } from "firebase/database";
 import { db } from "../../database/firebaseConfig";
+import { getAllReviewsByItemSub } from "../../services/PetTraining/reviewService";
 
 export default function ReviewScreen({ item }) {
   const [modalVisible, setModalVisible] = useState(false);
@@ -18,15 +19,7 @@ export default function ReviewScreen({ item }) {
   }, []);
 
   const getReviews = () => {
-    const dbRef = ref(db, "reviews/");
-    onValue(dbRef, (snapshot) => {
-      const data = snapshot.val();
-      const review = Object.keys(data).map((key) => ({
-        id: key,
-        ...data[key],
-      }));
-      setReviews(review);
-    });
+    getAllReviewsByItemSub(setReviews, item.id);
   };
 
   const openDialog = () => {
@@ -42,7 +35,7 @@ export default function ReviewScreen({ item }) {
           if (review.trainingId === item.id) {
             return <ReviewCard key={index} item={review} />;
           }
-          })}
+        })}
       </ScrollView>
       <AppButton
         title={"Review"}
@@ -56,7 +49,7 @@ export default function ReviewScreen({ item }) {
         transparent={true}
         onRequestClose={closeDialog}
       >
-        <ReviewBody onClose={closeDialog} itmeId={item.id} />
+        <ReviewBody onClose={closeDialog} item={item} />
       </Modal>
     </Screen>
   );

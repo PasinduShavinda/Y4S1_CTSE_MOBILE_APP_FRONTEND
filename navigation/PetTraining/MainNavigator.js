@@ -4,6 +4,7 @@ import { onValue, ref } from "firebase/database";
 import React, { useEffect, useState } from "react";
 import { Text } from "react-native";
 import Screen from "../../components/PetTraining/common/Screen";
+import LoadingScreen from "../../components/PetTraining/LoadingScreen";
 import { auth, db } from "../../database/firebaseConfig";
 import Selling_Page from "../../screens/pet_selling/Selling_Page";
 import { AdminDash } from "../../screens/Vet/admin-vet-management/admin-dashboard";
@@ -35,7 +36,7 @@ export default function MainNavigator({ route }) {
   if (user === null) {
     return (
       <Screen key={user}>
-        <Text>Loading....</Text>
+        <LoadingScreen />
       </Screen>
     );
   }
@@ -67,8 +68,8 @@ export default function MainNavigator({ route }) {
         options={{
           tabBarIcon: ({ focused, size, color }) => (
             <FontAwesome
-              name="user-circle-o"
-              size={40}
+              name="shopping-basket"
+              size={30}
               color={focused ? colors.secondary : colors.primary}
             />
           ),

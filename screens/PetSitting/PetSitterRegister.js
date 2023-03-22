@@ -3,7 +3,7 @@ import { StyleSheet,View, TextInput, Button, Text ,TouchableHighlight,ToastAndro
 import { MultipleSelectList ,SelectList} from 'react-native-dropdown-select-list'
 import * as ImagePicker from 'expo-image-picker';
 import { Avatar } from 'react-native-paper';
-import {fireDB,fireStorage} from '../../database/firebaseConfig'
+import {fireDB,fireStorage,auth} from '../../database/firebaseConfig'
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage"
 import {collection,addDoc, setDoc} from 'firebase/firestore'
 import { useNavigation } from "@react-navigation/native";
@@ -67,7 +67,7 @@ useEffect(()=>{
   const ReadData=async()=>{
    
 
-const docRef = doc(fireDB, "petsitters","jpp");
+const docRef = doc(fireDB, "petsitters",auth.currentUser.uid);
 
   const docSnap = await getDoc(docRef);
   if(docSnap.exists()){
@@ -163,7 +163,7 @@ const handleSubmit=async()=>{
   } else if (/^\d+$/.test(phone) === false || phone.length !== 10) {
       ToastAndroid.show("Please fill a valid mobile number", ToastAndroid.SHORT);
   } else {
-  const docRef = await setDoc(doc(fireDB,"petsitters","jk"),{
+  const docRef = await setDoc(doc(fireDB,"petsitters",auth.currentUser.uid),{
     Name:name,
     Phone:phone,
     Adress:adress,
@@ -178,7 +178,7 @@ const handleSubmit=async()=>{
 }
 
 const updateProfile=async()=>{
-  const docRef = await updateDoc(doc(fireDB,"petsitters","jki"),{
+  const docRef = await updateDoc(doc(fireDB,"petsitters",auth.currentUser.uid),{
     Name:name,
     Phone:phone,
     Adress:adress,
@@ -186,12 +186,12 @@ const updateProfile=async()=>{
     imageurl:imageurl,
     description:description,
     types:selected
-   }).then(navigation.navigate("Alldata"));
+   }).then(navigation.navigate("PetSittingHomeScreen"));
    console.log("Document written with ID",docRef.id);
 }
 
 const deleteProfile=async()=>{
-  await deleteDoc(doc(fireDB,"petsitters","jk")).then(alert("your petsitter profile is deleted"))
+  await deleteDoc(doc(fireDB,"petsitters",auth.currentUser.uid)).then(alert("your petsitter profile is deleted"))
 }
   
 const data = [
