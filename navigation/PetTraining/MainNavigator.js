@@ -49,7 +49,7 @@ export default function MainNavigator({ route }) {
       }}
     >
       <Tab.Screen
-        name="Main"
+        name="HOME"
         component={HomeNavigator}
         options={{
           tabBarIcon: ({ focused, size, color }) => (
@@ -63,7 +63,7 @@ export default function MainNavigator({ route }) {
         }}
       />
       <Tab.Screen
-        name={"buy"}
+        name={"BUY"}
         component={Selling_Page}
         options={{
           tabBarIcon: ({ focused, size, color }) => (
@@ -77,7 +77,7 @@ export default function MainNavigator({ route }) {
         }}
       />
       <Tab.Screen
-        name="sitter"
+        name="SITTER"
         component={PetsittingNavigation}
         options={{
           tabBarIcon: ({ focused, size, color }) => (
@@ -91,12 +91,12 @@ export default function MainNavigator({ route }) {
         }}
       />
       <Tab.Screen
-        name="vet"
+        name="VET"
         component={VetCustNavigator}
         options={{
           tabBarIcon: ({ focused, size, color }) => (
             <FontAwesome
-              name="user-circle-o"
+              name="stethoscope"
               size={40}
               color={focused ? colors.secondary : colors.primary}
             />
@@ -106,7 +106,7 @@ export default function MainNavigator({ route }) {
       />
       {!user.isAdmin ? (
         <Tab.Screen
-          name="ProfileNav"
+          name="PROFILE"
           component={ProfileNavigator}
           options={{
             tabBarIcon: ({ focused, size, color }) => (
@@ -121,12 +121,12 @@ export default function MainNavigator({ route }) {
         />
       ) : (
         <Tab.Screen
-          name="admin"
+          name="ADMIN"
           component={VetAdminNavigator}
           options={{
             tabBarIcon: ({ focused, size, color }) => (
               <FontAwesome
-                name="user-circle-o"
+                name="gear"
                 size={40}
                 color={focused ? colors.secondary : colors.primary}
               />
