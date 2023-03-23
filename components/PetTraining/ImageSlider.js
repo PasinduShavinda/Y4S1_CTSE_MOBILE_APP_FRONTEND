@@ -6,6 +6,7 @@ import colors from "../../utils/colors";
 export default function ImageSliderCon(){
   const images = [
     "https://firebasestorage.googleapis.com/v0/b/ctse-mobile-app.appspot.com/o/petTraining%2FFireShot_Capture_001_-__-_dribbble.com-removebg-preview%20(1).png?alt=media&token=a885b370-4d0f-4c93-9986-385f8bcc068c",
+    
   ];
 
   return (
@@ -37,7 +38,7 @@ export default function ImageSliderCon(){
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 3,
   },
   imageContainer: {
     overflow: "hidden",
