@@ -157,7 +157,7 @@ export function AdminAddDoctor({navigation}) {
     return (
         <SafeAreaView style={{ backgroundColor: COLORS.white, flex: 1 }}>
             <View>
-                <Text style={styles.createBogHeader}>Admin Add Doctor</Text>
+                <Text style={styles.createBogHeader}>Add Doctor</Text>
             </View>
             <ScrollView
                 contentContainerStyle={{ paddingTop: 50, paddingHorizontal: 20 }}>

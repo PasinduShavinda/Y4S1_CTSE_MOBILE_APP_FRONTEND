@@ -51,7 +51,7 @@ export function UpdateAppointment({ route, navigation }) {
     return (
         <SafeAreaView style={{ backgroundColor: COLORS.white, flex: 1 }}>
             <View>
-                <Text style={styles.createBogHeader}>Admin Update Doctor</Text>
+                <Text style={styles.createBogHeader}>Update Appointment</Text>
             </View>
             <ScrollView
                 contentContainerStyle={{ paddingTop: 50, paddingHorizontal: 20 }}>
@@ -122,6 +122,11 @@ export function UpdateAppointment({ route, navigation }) {
                             value={newAppntDate}
                             placeholder="date"
                         />
+                         <View style={{ margin: 20 }}>
+                            <Button onPress={() => {
+                                // setShowAppntDate(true);
+                            }} title="Pick date" />
+                        </View>
                     </View>
 
                     {/* Appointment Time field */}
@@ -132,6 +137,11 @@ export function UpdateAppointment({ route, navigation }) {
                             value={newAppntTime}
                             placeholder="time"
                         />
+                         <View style={{ margin: 20 }}>
+                            <Button onPress={() => {
+                                // setShowAppntTime(true);
+                            }} title="Pick Time" />
+                        </View>
                     </View>
                     {/* UPDATE BUTTON */}
                     <View style={styles.createNewBtnMain}>

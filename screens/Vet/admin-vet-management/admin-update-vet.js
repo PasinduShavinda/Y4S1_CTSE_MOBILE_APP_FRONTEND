@@ -141,7 +141,7 @@ export function AdminUpdateVet({ route, navigation }) {
       <ScrollView
         contentContainerStyle={{ paddingHorizontal: 20 }}>
         <View>
-          <Text style={styles.createBogHeader}>Admin Update Doctor</Text>
+          <Text style={styles.createBogHeader}>Update Doctor</Text>
         </View>
         <View style={{ marginVertical: 20 }}>
           {imageUri && <Image source={{ uri: imageUri }} style={{ width: 200, height: 200 }} />}

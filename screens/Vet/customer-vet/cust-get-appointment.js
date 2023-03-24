@@ -22,7 +22,7 @@ export function GetAppointment({ navigation }) {
     const [lname, setLName] = useState('');
     const [email, setEmail] = useState('');
     const [contact, setContact] = useState('');
-    // const [vetName, setVetName] = useState('');
+    const [vetName, setVetName] = useState('');
     const [reason, setReason] = useState('');
     const [appntDate, setAppntDate] = useState('');
     const [appntTime, setAppntTime] = useState('');
@@ -31,12 +31,6 @@ export function GetAppointment({ navigation }) {
     const [showAppntDate, setShowAppntDate] = useState(false);
     const [showAppntTime, setShowAppntTime] = useState(false);
 
-    const [open, setOpen] = useState(false);
-    const [value, setValue] = useState(null);
-    const [vetName, setVetName] = useState([
-        { label: 'Apple', value: 'apple' },
-        { label: 'Banana', value: 'banana' }
-    ]);
 
     const handleSaveAppointment = async () => {
         try {
