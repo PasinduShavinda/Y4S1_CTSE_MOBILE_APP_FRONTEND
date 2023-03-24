@@ -13,6 +13,7 @@ import { CustDash } from '../../screens/Vet/customer-vet/cust-vet-dashboard';
 import { AdminDash } from '../../screens/Vet/admin-vet-management/admin-dashboard';
 import SnackBarSave from '../../components/Vet/SnackBar';
 import SnackBarAppnt from '../../components/Vet/SnackBarAppnt';
+import { Splash } from '../../components/Vet/SplashCustHome';
 
 const Stack = createNativeStackNavigator();
 
@@ -35,6 +36,8 @@ export default function VetNavigation() {
         <Stack.Screen name="CustDash" component={CustDash} />
         <Stack.Screen name="SnackSave" component={SnackBarSave}/>
         <Stack.Screen name="SnackSaveAppnt" component={SnackBarAppnt}/>
+        <Stack.Screen name="Splash" component={Splash}/>
+
       </Stack.Navigator>
   );
 }

@@ -76,9 +76,9 @@ export default function MainNavigator() {
         name="SITTER"
         component={PetsittingNavigation}
         options={{
-          tabBarIcon: ({ focused }) => (
-            <FontAwesome
-              name="user-circle-o"
+          tabBarIcon: ({ focused, size, color }) => (
+            <MaterialCommunityIcons
+              name="dog-service"
               size={40}
               color={focused ? colors.secondary : colors.primary}
             />

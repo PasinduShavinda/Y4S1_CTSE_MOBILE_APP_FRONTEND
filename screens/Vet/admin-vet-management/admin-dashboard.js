@@ -1,7 +1,7 @@
 import React from "react";
 import { ScrollView } from "react-native";
 import { Text, View, Image, TouchableHighlight, StyleSheet } from "react-native";
-
+import { Button } from "react-native-elements";
 
 export function AdminDash({ navigation }) {
 
