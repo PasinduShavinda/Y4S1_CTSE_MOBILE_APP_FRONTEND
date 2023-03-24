@@ -9,7 +9,6 @@ import SubmitButton from "../../components/PetTraining/common/SubmitBUtton";
 import { loginUser } from "../../services/PetTraining/userService";
 import routes from "../../navigation/PetTraining/routes";
 import { Snackbar } from "react-native-paper";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 export default function LoginScreen({ navigation }) {
   const [snakVisible, SetSnackVisible] = useState(false);
@@ -29,8 +28,6 @@ export default function LoginScreen({ navigation }) {
     await loginUser(values)
       .then((response) => {
         SetSnackVisible(true);
-        console.log(response);
-
         setTimeout(() => {
           navigation.navigate(routes.HOMENAV);
         }, 2500);
@@ -46,7 +43,6 @@ export default function LoginScreen({ navigation }) {
           setErrorMessage("Invalid email");
           SetSnackVisible(true);
         }
-        console.log(error.code);
       });
     resetForm();
   };

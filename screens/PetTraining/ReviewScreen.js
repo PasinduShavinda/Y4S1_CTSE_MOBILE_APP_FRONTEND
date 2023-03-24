@@ -90,8 +90,7 @@ const styles = StyleSheet.create({
   },
   none: {
     paddingTop: "50%",
-    alignSelf:"center"
-    
+    alignSelf: "center",
   },
   noneText: {
     fontSize: 20,

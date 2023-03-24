@@ -4,7 +4,6 @@ import {
   TouchableHighlight,
   Image,
   Text,
-  Button,
   Dimensions,
 } from "react-native";
 import React, { useEffect, useState } from "react";
@@ -21,6 +20,8 @@ import AppTextInput from "../../components/PetTraining/common/AppTextInput";
 export default function AllTrainings({ navigation }) {
   const [listings, setListings] = useState([]);
   const [location, setLocation] = useState(null);
+  const [search, setSearch] = useState(null);
+
   useEffect(() => {
     getCurrentLocation();
     getAll();
@@ -47,6 +48,19 @@ export default function AllTrainings({ navigation }) {
   const getAll = () => {
     getAllTrainingsSub(setListings);
   };
+  const handleSearch = (value) => {
+    setSearch(value);
+  };
+  const getFilteredItems = () => {
+    if (search === null) {
+      return listings;
+    }
+    return listings.filter((item) =>
+      (item.locationDetails + "")
+        .toLowerCase()
+        .includes((search + "").toLowerCase())
+    );
+  };
   return (
     <Screen>
       <View>
@@ -56,6 +70,7 @@ export default function AllTrainings({ navigation }) {
         <AppTextInput
           width={Dimensions.get("window").width - 20}
           icon={"text-search"}
+          onChangeText={(value) => handleSearch(value)}
         />
       </View>
       <AppButton
@@ -67,7 +82,7 @@ export default function AllTrainings({ navigation }) {
       />
       <FlatGrid
         itemDimension={130}
-        data={listings}
+        data={getFilteredItems()}
         spacing={10}
         renderItem={({ item }) => (
           <TouchableHighlight

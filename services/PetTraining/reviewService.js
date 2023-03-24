@@ -6,7 +6,7 @@ export async function addReview(data) {
   const dbRef = ref(db, `reviews/${id}`);
   return await set(dbRef, { ...data });
 }
-export function getAllReviewsByItemSub(setState,id) {
+export function getAllReviewsByItemSub(setState, id) {
   const Ref = ref(db, "reviews/");
 
   const listner = onValue(Ref, (snapshot) => {

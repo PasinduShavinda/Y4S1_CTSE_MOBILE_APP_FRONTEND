@@ -2,13 +2,13 @@ import React from "react";
 import { View, ActivityIndicator, StyleSheet } from "react-native";
 import colors from "../../utils/colors";
 
-export default function LoadingScreen (){
+export default function LoadingScreen() {
   return (
     <View style={styles.container}>
-      <ActivityIndicator size="large" color={colors.lightPurple} />
+      <ActivityIndicator size="large" color={colors.primary} />
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     right: 0,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    backgroundColor: "rgba(223, 221, 234, 0.5)",
     zIndex: 999,
   },
 });

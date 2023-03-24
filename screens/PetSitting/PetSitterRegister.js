@@ -194,7 +194,7 @@ const updateProfile=async()=>{
 }
 
 const deleteProfile=async()=>{
-  await deleteDoc(doc(fireDB,"petsitters",auth.currentUser.uid)).then(alert("your petsitter profile is deleted"))
+  await deleteDoc(doc(fireDB,"petsitters",auth.currentUser.uid)).then(alert("your petsitter profile is deleted")).then(navigation.navigate("PetSittingHomeScreen"));
 }
   
 const data = [

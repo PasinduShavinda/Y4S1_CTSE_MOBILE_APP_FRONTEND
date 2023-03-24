@@ -48,7 +48,7 @@ export default function MainNavigator() {
         name="HOME"
         component={HomeNavigator}
         options={{
-          tabBarIcon: ({ focused, size, color }) => (
+          tabBarIcon: ({ focused }) => (
             <MaterialCommunityIcons
               name="home"
               size={40}
@@ -62,7 +62,7 @@ export default function MainNavigator() {
         name={"BUY"}
         component={Selling_Page}
         options={{
-          tabBarIcon: ({ focused, size, color }) => (
+          tabBarIcon: ({ focused }) => (
             <FontAwesome
               name="shopping-basket"
               size={30}
@@ -90,7 +90,7 @@ export default function MainNavigator() {
         name="VET"
         component={VetCustNavigator}
         options={{
-          tabBarIcon: ({ focused, size, color }) => (
+          tabBarIcon: ({ focused }) => (
             <FontAwesome
               name="stethoscope"
               size={40}
@@ -105,7 +105,7 @@ export default function MainNavigator() {
           name="PROFILE"
           component={ProfileNavigator}
           options={{
-            tabBarIcon: ({ focused, size, color }) => (
+            tabBarIcon: ({ focused }) => (
               <FontAwesome
                 name="user-circle-o"
                 size={40}
@@ -120,7 +120,7 @@ export default function MainNavigator() {
           name="ADMIN"
           component={VetAdminNavigator}
           options={{
-            tabBarIcon: ({ focused, size, color }) => (
+            tabBarIcon: ({ focused }) => (
               <FontAwesome
                 name="gear"
                 size={40}

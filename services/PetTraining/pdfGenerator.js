@@ -3,7 +3,6 @@ import { shareAsync } from "expo-sharing";
 import timeSince from "./TimeSinceCalc";
 
 const generatepdf = async (list) => {
-
   const apdata = [];
   list.forEach((doc) => {
     apdata.push({ ...doc });

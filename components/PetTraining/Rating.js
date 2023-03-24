@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import colors from "../../utils/colors";
 
-export default function Rating({onRate}){
+export default function Rating({ onRate }) {
   const [rating, setRating] = useState(0);
 
   const handleRating = (value) => {
@@ -26,14 +26,14 @@ export default function Rating({onRate}){
       </View>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     margin: 10,
     marginLeft: 0,
-    marginBottom:0,
+    marginBottom: 0,
     flexDirection: "row",
   },
   stars: {

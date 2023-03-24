@@ -15,7 +15,7 @@ function AppTextInput({ icon,width,height, ...otherProps }) {
           style={styles.icon}
         />
       )}
-      <TextInput style={styles.textInput} {...otherProps} />
+      <TextInput style={styles.textInput} {...otherProps}  />
     </View>
   );
 }

@@ -15,10 +15,7 @@ import AppFormField from "../../components/PetTraining/common/AppFormField";
 import Checkbox from "../../components/PetTraining/common/Checkbox";
 import SubmitButton from "../../components/PetTraining/common/SubmitBUtton";
 import imageUpload from "../../services/PetTraining/imageUpload";
-import {
-  addTraining,
-  updateTraining,
-} from "../../services/PetTraining/trainingService";
+import { updateTraining } from "../../services/PetTraining/trainingService";
 import { Snackbar } from "react-native-paper";
 import { auth } from "../../database/firebaseConfig";
 import MapScreen from "./SelectLocationScreen";
@@ -192,7 +189,6 @@ export default function EditTrainingScreen({ item, navigation }) {
       longitude: marker.longitude,
     };
     setLocation(newMarker);
-    console.log(marker);
   };
 
   return (
