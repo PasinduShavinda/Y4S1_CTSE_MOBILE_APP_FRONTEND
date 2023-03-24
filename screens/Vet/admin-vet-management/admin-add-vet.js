@@ -372,9 +372,10 @@ const styles = StyleSheet.create({
         marginLeft: 30,
     },
     createNewBtnMain: {
-        marginTop: 50,
+        marginTop: 20,
         marginBottom: 50,
         paddingBottom: 20,
+        fontWeight:'bold'
     },
     profilePictureContainer: {
         flexDirection: 'row',

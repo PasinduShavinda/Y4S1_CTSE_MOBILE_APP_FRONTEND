@@ -1,13 +1,11 @@
 import React, { useRef, useEffect } from 'react';
 import { Animated, Dimensions, View } from "react-native";
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-
 import Logo from '../../assets/dog-love.gif';
 import { CustViewDoc } from '../../screens/Vet/customer-vet/cust-view-vet';
-
 const BGColor = "#4D4A95"
 
-export function CustHomeSplash() {
+export function CustHomeSplash({ navigation }) {
 
   const edges = useSafeAreaInsets();
 
@@ -77,7 +75,7 @@ export function CustHomeSplash() {
       ])
         .start();
 
-    }, 100);
+    }, 4000);
 
   }, [])
 
@@ -126,7 +124,7 @@ export function CustHomeSplash() {
         ]
       }}>
 
-        <CustViewDoc></CustViewDoc>
+        <CustViewDoc navigation={navigation}></CustViewDoc>
 
       </Animated.View>
 
