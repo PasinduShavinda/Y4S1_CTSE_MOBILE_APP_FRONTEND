@@ -1,12 +1,30 @@
 import React from "react";
-import { ScrollView } from "react-native";
-import { Text, View, Image, TouchableHighlight, StyleSheet } from "react-native";
-import { Button } from "react-native-elements";
+import routes from "../../../navigation/PetTraining/routes";
+import { Text, View, Image, TouchableHighlight, StyleSheet, ScrollView, Alert } from "react-native";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 export function AdminDash({ navigation }) {
 
   return (
     <ScrollView>
+      <View>
+      <MaterialCommunityIcons
+            name="logout"
+            size={40}
+            onPress={() => {
+              Alert.alert("Sign Out", "Are you sure want  Logout?", [
+                {
+                  text: "Logout",
+                  onPress: () => navigation.navigate(routes.LOGIN),
+                },
+                {
+                  text: "Cancel",
+                  onPress: () => {},
+                },
+              ]);
+            }}
+          />
+      </View>
       <View>
         <TouchableHighlight style={{
           marginTop: 20,
