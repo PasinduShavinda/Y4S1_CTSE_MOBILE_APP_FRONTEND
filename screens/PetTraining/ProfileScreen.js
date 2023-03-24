@@ -30,6 +30,7 @@ import generatePDF from "../../services/Vet/PDF_Generator";
 import generatepdf from "../../services/PetTraining/pdfGenerator";
 import AppButton from "../../components/PetTraining/common/AppButton";
 
+
 export default function ProfileScreen({ navigation }) {
   const [user, setUser] = useState({});
   const [listings, setListings] = useState([]);
@@ -142,9 +143,14 @@ export default function ProfileScreen({ navigation }) {
                 <Text style={styles.itemText}>Training</Text>
               </View>
             </TouchableHighlight>
-            <TouchableHighlight>
+            <TouchableHighlight
+             underlayColor={colors.lightPurple}
+             onPress={() => navigation.navigate("PetSitterRegister")}>
               <View style={styles.itemwithText}>
-                <Image style={styles.item} />
+              <Image
+                  style={styles.item}
+                  source={require("../../assets/pet-sitter.png")}
+                />
                 <Text style={styles.itemText}>Sitting</Text>
               </View>
             </TouchableHighlight>
