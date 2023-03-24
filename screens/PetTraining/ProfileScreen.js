@@ -23,9 +23,10 @@ import ItemsRow from "../../components/PetTraining/ItemsRow";
 import ProflePicUploadDialogBody from "../../components/PetTraining/ProflePicUploadDialogBody";
 import generatepdf from "../../services/PetTraining/pdfGenerator";
 import AppButton from "../../components/PetTraining/common/AppButton";
+import LoadingScreen from "../../components/PetTraining/LoadingScreen";
 
 export default function ProfileScreen({ navigation }) {
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(null);
   const [listings, setListings] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
@@ -73,6 +74,13 @@ export default function ProfileScreen({ navigation }) {
   const handleGeneratePDF = async () => {
     await generatepdf(listings);
   };
+  if (user === null) {
+    return (
+      <Screen>
+        <LoadingScreen />
+      </Screen>
+    );
+  }
   return (
     <Screen>
       <ScrollView
