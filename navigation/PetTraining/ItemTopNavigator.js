@@ -1,7 +1,4 @@
-import {
-  createMaterialTopTabNavigator,
-  MaterialTopTabBar,
-} from "@react-navigation/material-top-tabs";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import ReviewScreen from "../../screens/PetTraining/ReviewScreen";
 import colors from "../../utils/colors";
 import TrainingItemNavigator from "./TrainingItemNavigator";

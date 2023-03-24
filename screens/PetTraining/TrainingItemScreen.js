@@ -13,7 +13,6 @@ import Screen from "../../components/PetTraining/common/Screen";
 import { currentUser } from "../../services/PetTraining/userService";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import colors from "../../utils/colors";
-import Rating from "../../components/PetTraining/Rating";
 import AppButton from "../../components/PetTraining/common/AppButton";
 import { ImageSlider } from "react-native-image-slider-banner";
 import Map from "../../components/PetTraining/Map";
@@ -36,7 +35,6 @@ export default function TrainingItemScreen({ item, navigation }) {
   images.forEach((image) => {
     imageData.push({ img: image });
   });
-  const types = [...item.petType];
 
   useEffect(() => {
     getCurrentUser();
@@ -46,9 +44,8 @@ export default function TrainingItemScreen({ item, navigation }) {
     getCurrentUser();
   }, []);
   const handleContactButtonPress = () => {
-
-  Linking.openURL(`whatsapp://send?phone=+${item.contact}`);
-}
+    Linking.openURL(`whatsapp://send?phone=+${item.contact}`);
+  };
   return (
     <Screen>
       <ScrollView
@@ -77,7 +74,7 @@ export default function TrainingItemScreen({ item, navigation }) {
             <View
               style={{
                 marginLeft: 10,
-                marginBottom:10
+                marginBottom: 10,
               }}
             >
               <StarRating rating={item.rating} />

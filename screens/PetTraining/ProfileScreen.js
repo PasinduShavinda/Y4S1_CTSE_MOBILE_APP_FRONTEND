@@ -13,23 +13,16 @@ import {
 } from "react-native";
 import React, { useCallback, useEffect, useState } from "react";
 import Screen from "../../components/PetTraining/common/Screen";
-import { auth, db } from "../../database/firebaseConfig";
+import { auth } from "../../database/firebaseConfig";
 import { currentUser } from "../../services/PetTraining/userService";
-import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import routes from "../../navigation/PetTraining/routes";
 import colors from "../../utils/colors";
-import {
-  getAllTrainings,
-  getAllTrainingsByUserSub,
-  getAllTrainingsSub,
-} from "../../services/PetTraining/trainingService";
+import { getAllTrainingsByUserSub } from "../../services/PetTraining/trainingService";
 import ItemsRow from "../../components/PetTraining/ItemsRow";
-import { onValue, ref } from "firebase/database";
 import ProflePicUploadDialogBody from "../../components/PetTraining/ProflePicUploadDialogBody";
-import generatePDF from "../../services/Vet/PDF_Generator";
 import generatepdf from "../../services/PetTraining/pdfGenerator";
 import AppButton from "../../components/PetTraining/common/AppButton";
-
 
 export default function ProfileScreen({ navigation }) {
   const [user, setUser] = useState({});
@@ -144,10 +137,11 @@ export default function ProfileScreen({ navigation }) {
               </View>
             </TouchableHighlight>
             <TouchableHighlight
-             underlayColor={colors.lightPurple}
-             onPress={() => navigation.navigate("PetSitterRegister")}>
+              underlayColor={colors.lightPurple}
+              onPress={() => navigation.navigate("PetSitterRegister")}
+            >
               <View style={styles.itemwithText}>
-              <Image
+                <Image
                   style={styles.item}
                   source={require("../../assets/pet-sitter.png")}
                 />
@@ -189,7 +183,11 @@ export default function ProfileScreen({ navigation }) {
             }}
           >
             <Text style={styles.secHeading}>My Listings</Text>
-            <AppButton style={styles.pdf} title="Generate PDF" onPress={handleGeneratePDF} />
+            <AppButton
+              style={styles.pdf}
+              title="Generate PDF"
+              onPress={handleGeneratePDF}
+            />
           </View>
           <ItemsRow listings={listings} navigation={navigation} />
         </View>
@@ -249,7 +247,6 @@ const styles = StyleSheet.create({
   pdf: {
     width: 130,
     height: 35,
-    
   },
   itemRow: {
     flexDirection: "row",

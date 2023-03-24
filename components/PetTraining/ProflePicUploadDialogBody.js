@@ -6,25 +6,22 @@ import AppButton from "./common/AppButton";
 import colors from "../../utils/colors";
 import { updateUser } from "../../services/PetTraining/userService";
 
-export default function ProflePicUploadDialogBody({ onClose ,user}) {
+export default function ProflePicUploadDialogBody({ onClose, user }) {
   const [uri, setUri] = useState(null);
   const handleAdd = (uri) => {
-    console.log("uri", uri);
     setUri(uri);
   };
   const handleSave = async () => {
-    await imageUpload([uri]).then(async(res) => {
+    await imageUpload([uri]).then(async (res) => {
       const data = {
         id: user.id,
         name: user.name,
         isAdmin: user.isAdmin,
-        dp:res[0]
-      }
-      await updateUser(data).then(() => { 
-        console.log("updated")
+        dp: res[0],
+      };
+      await updateUser(data).then(() => {
         onClose();
-
-      })
+      });
     });
   };
   return (
@@ -45,7 +42,11 @@ export default function ProflePicUploadDialogBody({ onClose ,user}) {
                 style={styles.btn}
                 onPress={onClose}
               />
-              <AppButton title={"Save"} style={styles.btn} onPress={()=> handleSave()} />
+              <AppButton
+                title={"Save"}
+                style={styles.btn}
+                onPress={() => handleSave()}
+              />
             </View>
           </View>
         ) : (

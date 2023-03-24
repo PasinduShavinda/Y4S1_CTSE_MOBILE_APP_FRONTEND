@@ -1,5 +1,3 @@
-import moment from "moment";
-
 export default function timeSince(date) {
   const seconds = Math.floor((new Date() - new Date(date)) / 1000);
 

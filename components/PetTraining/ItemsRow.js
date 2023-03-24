@@ -14,25 +14,12 @@ import { getAllReviewsByItemSub } from "../../services/PetTraining/reviewService
 import { Dimensions } from "react-native";
 
 export default function ItemsRow({ navigation, listings }) {
-  const [avgRate, setAvgState] = useState(3);
   const [newList, setNewList] = useState([]);
   useEffect(() => {
-    // const unsubscribeFunctions = listings.map((item) => {
-    //   const listener = getAllReviewsByItemSub(newList,setNewList, item);
-    //   return listener;
-    // });
-    getRating()
-    // return () => {
-    //   unsubscribeFunctions.forEach((unsubscribe) => {
-    //     unsubscribe();
-    //   });
-    // };
+    getRating();
   }, []);
   const getRating = () => {
-    console.log("first");
-    console.log(listings)
     listings.map((item) => {
-      
       return getAllReviewsByItemSub(newList, setNewList, item);
     });
   };

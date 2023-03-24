@@ -1,10 +1,4 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  ActivityIndicator,
-} from "react-native";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
 import React, { useState } from "react";
 import Screen from "../../components/PetTraining/common/Screen";
 import AppForm from "../../components/PetTraining/common/AppForm";
@@ -138,7 +132,6 @@ export default function AddTrainingScreen({ navigation }) {
       longitude: marker.longitude,
     };
     setLocation(newMarker);
-    console.log(marker);
   };
 
   return (

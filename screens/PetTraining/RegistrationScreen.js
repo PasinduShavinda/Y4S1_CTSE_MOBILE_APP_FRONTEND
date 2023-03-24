@@ -10,7 +10,7 @@ import routes from "../../navigation/PetTraining/routes";
 import { registerUser, saveUser } from "../../services/PetTraining/userService";
 import { Snackbar } from "react-native-paper";
 
-export default function RegistrationScreen({ route, navigation }) {
+export default function RegistrationScreen({ navigation }) {
   const validationSchema = Yup.object().shape({
     name: Yup.string()
       .min(5)
