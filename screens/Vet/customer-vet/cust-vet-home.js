@@ -14,7 +14,7 @@ export function CustHome({navigation}){
           </Text>
           <TouchableOpacity
             style={styles.btn}
-            onPress={() => navigation.navigate("CustViewDoc")}
+            onPress={() => navigation.navigate("SplashCustHome")}
           >
             <Text style={styles.text}>Next</Text>
           </TouchableOpacity>
