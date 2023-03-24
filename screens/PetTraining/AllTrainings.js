@@ -1,4 +1,12 @@
-import { View, StyleSheet, TouchableHighlight, Image } from "react-native";
+import {
+  View,
+  StyleSheet,
+  TouchableHighlight,
+  Image,
+  Text,
+  Button,
+  Dimensions,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import { getAllTrainingsSub } from "../../services/PetTraining/trainingService";
 import Screen from "../../components/PetTraining/common/Screen";
@@ -6,18 +14,57 @@ import { FlatGrid } from "react-native-super-grid";
 import colors from "../../utils/colors";
 import StarRating from "../../components/PetTraining/StartRatingDisplay";
 import routes from "../../navigation/PetTraining/routes";
-
+import * as Location from "expo-location";
+import { getNearByPlaces } from "../../services/PetTraining/locationsNearBy";
+import AppButton from "../../components/PetTraining/common/AppButton";
+import AppTextInput from "../../components/PetTraining/common/AppTextInput";
 export default function AllTrainings({ navigation }) {
   const [listings, setListings] = useState([]);
-
+  const [location, setLocation] = useState(null);
   useEffect(() => {
+    getCurrentLocation();
     getAll();
   }, []);
+
+  const getCurrentLocation = async () => {
+    const { status } = await Location.requestForegroundPermissionsAsync();
+    if (status !== "granted") {
+      return;
+    }
+    const { coords } = await Location.getCurrentPositionAsync({});
+    setLocation(coords);
+  };
+
+  const getNearBy = () => {
+    const places = getNearByPlaces(listings, location);
+
+    const data = {
+      nearbyLocations: places,
+      currentLocation: location,
+    };
+    navigation.navigate(routes.NEARBY, { data });
+  };
   const getAll = () => {
     getAllTrainingsSub(setListings);
   };
   return (
     <Screen>
+      <View>
+        <Text style={styles.heading}>Training Available</Text>
+      </View>
+      <View style={styles.search}>
+        <AppTextInput
+          width={Dimensions.get("window").width - 20}
+          icon={"text-search"}
+        />
+      </View>
+      <AppButton
+        title="Find All Near By Trainers"
+        onPress={() => {
+          getNearBy();
+        }}
+        style={styles.nearby}
+      />
       <FlatGrid
         itemDimension={130}
         data={listings}
@@ -64,5 +111,20 @@ const styles = StyleSheet.create({
     position: "absolute",
     zIndex: 999,
     alignSelf: "flex-end",
+  },
+  search: {
+    alignSelf: "center",
+  },
+  heading: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: colors.secondary,
+    margin: 10,
+    marginBottom: 0,
+  },
+  nearby: {
+    width: Dimensions.get("window").width - 25,
+    height: 40,
+    alignSelf: "center",
   },
 });

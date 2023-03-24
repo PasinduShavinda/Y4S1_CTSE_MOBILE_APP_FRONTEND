@@ -6,11 +6,11 @@ import colors from "../../../utils/colors";
 
 function AppTextInput({ icon,width,height, ...otherProps }) {
   return (
-    <View style={[styles.container, { width: width,height :height ? height :40}]}>
+    <View style={[styles.container, { width: width,height :height ? height :50}]}>
       {icon && (
         <MaterialCommunityIcons
           name={icon}
-          size={20}
+          size={30}
           color={colors.mediumGray}
           style={styles.icon}
         />
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderStyle: "solid",
     borderColor: colors.primary,
-    borderRadius: 5,
+    borderRadius: 25,
     height:40
   },
   textInput: {

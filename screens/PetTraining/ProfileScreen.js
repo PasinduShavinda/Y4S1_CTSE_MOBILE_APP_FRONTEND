@@ -26,6 +26,10 @@ import {
 import ItemsRow from "../../components/PetTraining/ItemsRow";
 import { onValue, ref } from "firebase/database";
 import ProflePicUploadDialogBody from "../../components/PetTraining/ProflePicUploadDialogBody";
+import generatePDF from "../../services/Vet/PDF_Generator";
+import generatepdf from "../../services/PetTraining/pdfGenerator";
+import AppButton from "../../components/PetTraining/common/AppButton";
+
 
 export default function ProfileScreen({ navigation }) {
   const [user, setUser] = useState({});
@@ -72,6 +76,9 @@ export default function ProfileScreen({ navigation }) {
 
   const closeDialog = () => {
     setModalVisible(false);
+  };
+  const handleGeneratePDF = async () => {
+    await generatepdf(listings);
   };
   return (
     <Screen>
@@ -136,9 +143,14 @@ export default function ProfileScreen({ navigation }) {
                 <Text style={styles.itemText}>Training</Text>
               </View>
             </TouchableHighlight>
-            <TouchableHighlight>
+            <TouchableHighlight
+             underlayColor={colors.lightPurple}
+             onPress={() => navigation.navigate("PetSitterRegister")}>
               <View style={styles.itemwithText}>
-                <Image style={styles.item} />
+              <Image
+                  style={styles.item}
+                  source={require("../../assets/pet-sitter.png")}
+                />
                 <Text style={styles.itemText}>Sitting</Text>
               </View>
             </TouchableHighlight>
@@ -155,10 +167,11 @@ export default function ProfileScreen({ navigation }) {
               </View>
             </TouchableHighlight>
             <TouchableHighlight
-             underlayColor={colors.lightPurple}
-             onPress={() => navigation.navigate("CustHome")}>
+              underlayColor={colors.lightPurple}
+              onPress={() => navigation.navigate("CustHome")}
+            >
               <View style={styles.itemwithText}>
-              <Image
+                <Image
                   style={styles.item}
                   source={require("../../assets/vet.jpg")}
                 />
@@ -168,7 +181,16 @@ export default function ProfileScreen({ navigation }) {
           </View>
         </View>
         <View style={styles.myListings}>
-          <Text style={styles.secHeading}>My Listings</Text>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              paddingRight: 10,
+            }}
+          >
+            <Text style={styles.secHeading}>My Listings</Text>
+            <AppButton style={styles.pdf} title="Generate PDF" onPress={handleGeneratePDF} />
+          </View>
           <ItemsRow listings={listings} navigation={navigation} />
         </View>
         <Button
@@ -224,6 +246,11 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     color: colors.secondary,
   },
+  pdf: {
+    width: 130,
+    height: 35,
+    
+  },
   itemRow: {
     flexDirection: "row",
     marginTop: 7,
@@ -254,6 +281,5 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     elevation: 8,
     shadowColor: colors.secondary,
-   
   },
 });

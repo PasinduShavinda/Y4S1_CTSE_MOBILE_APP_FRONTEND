@@ -162,7 +162,10 @@ const handleSubmit=async()=>{
     ToastAndroid.show("Please fill all the items", ToastAndroid.SHORT);
   } else if (/^\d+$/.test(phone) === false || phone.length !== 10) {
       ToastAndroid.show("Please fill a valid mobile number", ToastAndroid.SHORT);
-  } else {
+  }else if (/\S+@\S+\.\S+/.test(email)===false) {
+    ToastAndroid.show("Please fill a valid email", ToastAndroid.SHORT);
+}
+   else {
   const docRef = await setDoc(doc(fireDB,"petsitters",auth.currentUser.uid),{
     Name:name,
     Phone:phone,
