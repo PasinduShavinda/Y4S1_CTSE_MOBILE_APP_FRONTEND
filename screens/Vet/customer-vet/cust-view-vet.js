@@ -20,8 +20,7 @@ export function CustViewDoc({ navigation }) {
     const [vets, setVets] = useState([]);
     const [search, setSearch] = useState("");
     const [filteredVets, setFilteredVets] = useState([]);
-    const [isLoading, setIsLoading] = useState(true)
-
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         const loadVets = async () => {
@@ -141,7 +140,6 @@ export function CustViewDoc({ navigation }) {
                             exp={v.exp}
                             about={v.about}
                             loc={v.loc}
-                            onPress={() => this.props.navigation.navigate('')}
                         />
                     </View>
                 ])}
