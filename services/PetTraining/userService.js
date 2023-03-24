@@ -20,6 +20,7 @@ export async function saveUser(user, uid) {
     dp: "null",
   });
 }
+
 export function currentUser() {
   const user = auth.currentUser;
   let cuser = null;
@@ -31,6 +32,16 @@ export function currentUser() {
     }
   });
   return cuser;
+}
+export function getUser(id, setState) {
+  const Ref = ref(db, `users/${id}`);
+  const listner = onValue(Ref, (snapshot) => {
+    const data = snapshot.val();
+    if (data) {
+      setState(data);
+    }
+  });
+  return listner;
 }
 
 export async function updateUser(user) {

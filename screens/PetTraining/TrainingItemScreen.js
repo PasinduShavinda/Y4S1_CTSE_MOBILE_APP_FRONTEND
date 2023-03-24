@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import React, { useCallback, useEffect, useState } from "react";
 import Screen from "../../components/PetTraining/common/Screen";
-import { currentUser } from "../../services/PetTraining/userService";
+import { currentUser, getUser } from "../../services/PetTraining/userService";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import colors from "../../utils/colors";
 import AppButton from "../../components/PetTraining/common/AppButton";
@@ -36,12 +36,17 @@ export default function TrainingItemScreen({ item, navigation }) {
     imageData.push({ img: image });
   });
 
+  const getPostUser = () => {
+    getUser(item.userId, setUser);
+    setRefreshing(false);
+  }
+
   useEffect(() => {
-    getCurrentUser();
+    getPostUser();
   }, []);
   const onRefresh = useCallback(() => {
     setRefreshing(true);
-    getCurrentUser();
+    getPostUser();
   }, []);
   const handleContactButtonPress = () => {
     Linking.openURL(`whatsapp://send?phone=+${item.contact}`);
@@ -64,7 +69,11 @@ export default function TrainingItemScreen({ item, navigation }) {
         <View style={styles.contactDetails}>
           <Image
             style={styles.avatar}
-            source={require("../../assets/avatar.png")}
+            source={
+              user.dp !== "null"
+                ? { uri: user.dp }
+                : require("../../assets/avatar.png")
+            }
           />
           <View style={{ marginRight: 20, flex: 2 }}>
             <Text style={styles.secHeading}>{user.name}</Text>
@@ -241,6 +250,9 @@ const styles = StyleSheet.create({
     width: 70,
     height: 70,
     margin: 10,
+    borderRadius: 35,
+    borderColor: colors.secondary,
+    borderWidth: 3,
   },
   secHeading: {
     fontSize: 18,
