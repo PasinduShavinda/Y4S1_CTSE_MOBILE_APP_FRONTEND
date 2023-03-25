@@ -36,10 +36,6 @@ export default function Selling_Page({ navigation, route }) {
         array_data.push({ id: response.id, ...response.data() });
       });
       setsellingPets(array_data);
-      console.log(
-        "===============data===================>>>>>>>>>>>>>>>>>>>>>>"
-      );
-      console.log(sellingPets);
     };
     mountSellingPets();
   }, []);
@@ -51,8 +47,6 @@ export default function Selling_Page({ navigation, route }) {
       array_data.push({ id: response.id, ...response.data() });
     });
     setsellingPets(array_data);
-    console.log("===============data===================>>>>>>>>>>>>>>>>>>>>>>");
-    console.log(sellingPets);
   };
 
   const filterByTypeDog = async () => {
