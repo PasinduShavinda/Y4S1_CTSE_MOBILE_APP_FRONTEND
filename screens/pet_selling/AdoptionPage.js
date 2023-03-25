@@ -13,9 +13,11 @@ import {
 import MapView, { Marker } from "react-native-maps";
 
 export default function AdoptionPage({ navigation, route }) {
+  const { petId, latitudePass1, longitudePass1, contactNumber1 } = route.params;
+
   const ownerLocation = {
-    latitude: 6.03223,
-    longitude: 80.3161067,
+    latitude: latitudePass1,
+    longitude: longitudePass1,
     latitudeDelta: 0.01,
     longitudeDelta: 0.01,
   };
@@ -27,7 +29,7 @@ export default function AdoptionPage({ navigation, route }) {
       </View>
       <View style={styles.contactDetails}>
         <View>
-          <Text>Contact number: </Text>
+          <Text>Contact number: {contactNumber1}</Text>
         </View>
       </View>
       <View>

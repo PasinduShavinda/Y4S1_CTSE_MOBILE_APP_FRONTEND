@@ -116,10 +116,11 @@ export default function Selected_item_page({ navigation, route }) {
                     style={styles.button}
                     onPress={() => {
                       // Pass and merge params back to home screen
-                      navigation.navigate({
-                        name: "contact-details",
-                        params: { id: 1 },
-                        merge: true,
+                      navigation.navigate("contact-details", {
+                        petId: petId,
+                        latitudePass1: latitudePass1,
+                        longitudePass1: longitudePass1,
+                        contactNumber1: contactNumber1,
                       });
                     }}
                   >
