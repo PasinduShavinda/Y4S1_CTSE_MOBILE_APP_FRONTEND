@@ -3,16 +3,11 @@ import {
     StyleSheet,
     Text,
     View,
-    TouchableOpacity,
-    Image,
-    TextInput,
     SafeAreaView,
     ScrollView,
-    FlatList,
     Button,
     Alert,
 } from 'react-native';
-//import Icon from "react-native-vector-icons/FontAwesome";
 import InputField from '../../../components/Vet/InputField';
 import COLORS from '../../../utils/Vet/colors';
 import { fireDB } from '../../../database/firebaseConfig';
@@ -42,7 +37,7 @@ export function UpdateAppointment({ route, navigation }) {
             appntTime: newAppntTime,
         }).then(() => {
             Alert.alert('Successfully Updated')
-            navigation.navigate('ViewAppointment')
+            navigation.navigate('CustHome')
         }).catch((error) => {
             alert(error.message)
         })
@@ -51,7 +46,7 @@ export function UpdateAppointment({ route, navigation }) {
     return (
         <SafeAreaView style={{ backgroundColor: COLORS.white, flex: 1 }}>
             <View>
-                <Text style={styles.createBogHeader}>Admin Update Doctor</Text>
+                <Text style={styles.createBogHeader}>Update Appointment</Text>
             </View>
             <ScrollView
                 contentContainerStyle={{ paddingTop: 50, paddingHorizontal: 20 }}>
@@ -122,6 +117,11 @@ export function UpdateAppointment({ route, navigation }) {
                             value={newAppntDate}
                             placeholder="date"
                         />
+                         <View style={{ margin: 20 }}>
+                            <Button onPress={() => {
+                                // setShowAppntDate(true);
+                            }} title="Pick date" />
+                        </View>
                     </View>
 
                     {/* Appointment Time field */}
@@ -132,6 +132,11 @@ export function UpdateAppointment({ route, navigation }) {
                             value={newAppntTime}
                             placeholder="time"
                         />
+                         <View style={{ margin: 20 }}>
+                            <Button onPress={() => {
+                                // setShowAppntTime(true);
+                            }} title="Pick Time" />
+                        </View>
                     </View>
                     {/* UPDATE BUTTON */}
                     <View style={styles.createNewBtnMain}>

@@ -2,14 +2,10 @@ import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { onValue, ref } from "firebase/database";
 import React, { useEffect, useState } from "react";
-import { Text } from "react-native";
 import Screen from "../../components/PetTraining/common/Screen";
 import LoadingScreen from "../../components/PetTraining/LoadingScreen";
 import { auth, db } from "../../database/firebaseConfig";
 import Selling_Page from "../../screens/pet_selling/Selling_Page";
-import { AdminDash } from "../../screens/Vet/admin-vet-management/admin-dashboard";
-import { CustHome } from "../../screens/Vet/customer-vet/cust-vet-home";
-import { currentUser } from "../../services/PetTraining/userService";
 import colors from "../../utils/colors";
 import PetsittingNavigation from "../PetSitting/PetsittingNavigation";
 import VetAdminNavigator from "../Vet/adminNavigator";
@@ -18,7 +14,7 @@ import HomeNavigator from "./HomeNavigator";
 import ProfileNavigator from "./ProfileNavigator";
 
 const Tab = createBottomTabNavigator();
-export default function MainNavigator({ route }) {
+export default function MainNavigator() {
   const [user, setuser] = useState(null);
   useEffect(() => {
     getUser();
@@ -49,10 +45,10 @@ export default function MainNavigator({ route }) {
       }}
     >
       <Tab.Screen
-        name="Main"
+        name="HOME"
         component={HomeNavigator}
         options={{
-          tabBarIcon: ({ focused, size, color }) => (
+          tabBarIcon: ({ focused }) => (
             <MaterialCommunityIcons
               name="home"
               size={40}
@@ -63,10 +59,10 @@ export default function MainNavigator({ route }) {
         }}
       />
       <Tab.Screen
-        name={"buy"}
+        name={"BUY"}
         component={Selling_Page}
         options={{
-          tabBarIcon: ({ focused, size, color }) => (
+          tabBarIcon: ({ focused }) => (
             <FontAwesome
               name="shopping-basket"
               size={30}
@@ -77,12 +73,12 @@ export default function MainNavigator({ route }) {
         }}
       />
       <Tab.Screen
-        name="sitter"
+        name="SITTER"
         component={PetsittingNavigation}
         options={{
           tabBarIcon: ({ focused, size, color }) => (
-            <FontAwesome
-              name="user-circle-o"
+            <MaterialCommunityIcons
+              name="dog-service"
               size={40}
               color={focused ? colors.secondary : colors.primary}
             />
@@ -91,12 +87,12 @@ export default function MainNavigator({ route }) {
         }}
       />
       <Tab.Screen
-        name="vet"
+        name="VET"
         component={VetCustNavigator}
         options={{
-          tabBarIcon: ({ focused, size, color }) => (
+          tabBarIcon: ({ focused }) => (
             <FontAwesome
-              name="user-circle-o"
+              name="stethoscope"
               size={40}
               color={focused ? colors.secondary : colors.primary}
             />
@@ -106,10 +102,10 @@ export default function MainNavigator({ route }) {
       />
       {!user.isAdmin ? (
         <Tab.Screen
-          name="ProfileNav"
+          name="PROFILE"
           component={ProfileNavigator}
           options={{
-            tabBarIcon: ({ focused, size, color }) => (
+            tabBarIcon: ({ focused }) => (
               <FontAwesome
                 name="user-circle-o"
                 size={40}
@@ -121,12 +117,12 @@ export default function MainNavigator({ route }) {
         />
       ) : (
         <Tab.Screen
-          name="admin"
+          name="ADMIN"
           component={VetAdminNavigator}
           options={{
-            tabBarIcon: ({ focused, size, color }) => (
+            tabBarIcon: ({ focused }) => (
               <FontAwesome
-                name="user-circle-o"
+                name="gear"
                 size={40}
                 color={focused ? colors.secondary : colors.primary}
               />

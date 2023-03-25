@@ -1,25 +1,29 @@
-import React, { useState } from "react";
+import React from "react";
 import { View, Text, StyleSheet } from "react-native";
-import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import colors from "../../utils/colors";
 
-export default function StarRating({ rating, text=true }){
-
+export default function StarRating({ rating, text = true }) {
   const renderStar = (index) => {
     if (index <= Math.floor(rating)) {
       return (
-        <MaterialCommunityIcons
-          name="star"
-          size={24}
-          color="gold"
-        />
+        <MaterialCommunityIcons name="star" size={24} color={colors.primary} />
       );
-    } else if (index === (Math.floor(rating)) + 1 && (rating % 1 !== 0)) {
+    } else if (index === Math.floor(rating) + 1 && rating % 1 !== 0) {
       return (
-        <MaterialCommunityIcons name="star-half-full" size={24} color="gold" />
+        <MaterialCommunityIcons
+          name="star-half-full"
+          size={24}
+          color={colors.primary}
+        />
       );
     } else {
       return (
-        <MaterialCommunityIcons name="star-outline" size={24} color="gold" />
+        <MaterialCommunityIcons
+          name="star-outline"
+          size={24}
+          color={colors.primary}
+        />
       );
     }
   };
@@ -32,8 +36,7 @@ export default function StarRating({ rating, text=true }){
       {text && <Text style={styles.ratingText}>({rating.toFixed(1)})</Text>}
     </View>
   );
-};
-
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -44,7 +47,6 @@ const styles = StyleSheet.create({
   ratingText: {
     fontSize: 13,
     fontWeight: "bold",
-    marginLeft:10
+    marginLeft: 10,
   },
 });
-

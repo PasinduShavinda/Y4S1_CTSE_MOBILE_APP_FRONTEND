@@ -6,40 +6,43 @@ import * as Yup from "yup";
 import AppFormField from "../../components/PetTraining/common/AppFormField";
 import colors from "../../utils/colors";
 import SubmitButton from "../../components/PetTraining/common/SubmitBUtton";
-import { doc, setDoc, addDoc, collection } from "firebase/firestore";
-import { fireDB } from "../../database/firebaseConfig";
-import {
-  loginUser,
-  registerUser,
-} from "../../services/PetTraining/userService";
+import { loginUser } from "../../services/PetTraining/userService";
 import routes from "../../navigation/PetTraining/routes";
-
-// import routes from "../navigation/routes";
-// import { getCurrentUser, loginUser } from "../api/authService";
 import { Snackbar } from "react-native-paper";
 
 export default function LoginScreen({ navigation }) {
   const [snakVisible, SetSnackVisible] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const validationSchema = Yup.object().shape({
-    email: Yup.string(),
-    password: Yup.string(),
+    email: Yup.string()
+      .email("Please enter a valid email")
+      .required("Email is required")
+      .label("Email"),
+    password: Yup.string()
+      .required()
+      .min(6)
+      .label("Password"),
   });
   const handleSubmit = async (values, { resetForm }) => {
-    // Add a new document in collection "cities"
-    //console.log(validationSchema);
-
     await loginUser(values)
       .then((response) => {
         SetSnackVisible(true);
-        console.log(response);
-
         setTimeout(() => {
           navigation.navigate(routes.HOMENAV);
         }, 2500);
       })
       .catch((error) => {
-        console.log(error);
+        if (error.code === "auth/user-not-found") {
+          setErrorMessage("User not found");
+          SetSnackVisible(true);
+        } else if (error.code === "auth/wrong-password") {
+          setErrorMessage("Wrong password");
+          SetSnackVisible(true);
+        } else if (error.code === "auth/invalid-email") {
+          setErrorMessage("Invalid email");
+          SetSnackVisible(true);
+        }
       });
     resetForm();
   };
@@ -69,6 +72,7 @@ export default function LoginScreen({ navigation }) {
                 maxLength={255}
                 name="email"
                 placeholder="Enter Email"
+                icon={"email"}
               />
               <Text style={styles.text}>Password</Text>
               <AppFormField
@@ -76,6 +80,7 @@ export default function LoginScreen({ navigation }) {
                 maxLength={255}
                 name="password"
                 placeholder="Enter Password"
+                icon={"key"}
                 secureTextEntry
               />
             </View>
@@ -103,15 +108,27 @@ export default function LoginScreen({ navigation }) {
         duration={2000}
         action={{
           label: "OK",
-          labelStyle: { color: colors.secondary, fontSize: 18 },
+          labelStyle: {
+            color: errorMessage === null ? colors.secondary : colors.red,
+            fontSize: 18,
+          },
           onPress: () => {
             SetSnackVisible(false);
           },
         }}
-        style={{ backgroundColor: colors.lightPurple }}
+        style={{
+          backgroundColor: colors.lightPurple,
+        }}
       >
         <View>
-          <Text style={styles.snackbar}>Loged In Successfully</Text>
+          <Text
+            style={{
+              ...styles.snackbar,
+              color: errorMessage === null ? colors.secondary : colors.red,
+            }}
+          >
+            {errorMessage === null ? "Login Successful" : errorMessage}
+          </Text>
         </View>
       </Snackbar>
     </Screen>
@@ -152,7 +169,6 @@ const styles = StyleSheet.create({
     paddingLeft: 90,
   },
   snackbar: {
-    color: colors.secondary,
     fontSize: 18,
   },
 });

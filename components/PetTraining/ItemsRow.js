@@ -11,27 +11,15 @@ import StarRating from "./StartRatingDisplay";
 import routes from "../../navigation/PetTraining/routes";
 import colors from "../../utils/colors";
 import { getAllReviewsByItemSub } from "../../services/PetTraining/reviewService";
+import { Dimensions } from "react-native";
 
 export default function ItemsRow({ navigation, listings }) {
-  const [avgRate, setAvgState] = useState(3);
   const [newList, setNewList] = useState([]);
   useEffect(() => {
-    // const unsubscribeFunctions = listings.map((item) => {
-    //   const listener = getAllReviewsByItemSub(newList,setNewList, item);
-    //   return listener;
-    // });
-    getRating()
-    // return () => {
-    //   unsubscribeFunctions.forEach((unsubscribe) => {
-    //     unsubscribe();
-    //   });
-    // };
+    getRating();
   }, []);
   const getRating = () => {
-    console.log("first");
-    console.log(listings)
     listings.map((item) => {
-      
       return getAllReviewsByItemSub(newList, setNewList, item);
     });
   };
@@ -39,24 +27,30 @@ export default function ItemsRow({ navigation, listings }) {
   return (
     <ScrollView horizontal={true}>
       <View style={styles.itemRow}>
-        {listings.map((item, index) => {
-          return (
-            <TouchableHighlight
-              key={index}
-              underlayColor={colors.lightPurple}
-              onPress={() => navigation.navigate(routes.ITEMTOPNAV, { item })}
-            >
-              <View style={{ margin: 10 }}>
-                <Image style={styles.item} source={{ uri: item.images[0] }} />
-                <StarRating rating={item.rating} />
-                <Image
-                  style={styles.itemIcon}
-                  source={require("../../assets/training.png")}
-                />
-              </View>
-            </TouchableHighlight>
-          );
-        })}
+        {listings.length !== 0 ? (
+          listings.map((item, index) => {
+            return (
+              <TouchableHighlight
+                key={index}
+                underlayColor={colors.lightPurple}
+                onPress={() => navigation.navigate(routes.ITEMTOPNAV, { item })}
+              >
+                <View style={{ margin: 10 }}>
+                  <Image style={styles.item} source={{ uri: item.images[0] }} />
+                  <StarRating rating={item.rating} />
+                  <Image
+                    style={styles.itemIcon}
+                    source={require("../../assets/training.png")}
+                  />
+                </View>
+              </TouchableHighlight>
+            );
+          })
+        ) : (
+          <View style={styles.none}>
+            <Text style={styles.noneText}>No Listings</Text>
+          </View>
+        )}
       </View>
     </ScrollView>
   );
@@ -85,5 +79,16 @@ const styles = StyleSheet.create({
     position: "absolute",
     zIndex: 999,
     alignSelf: "flex-end",
+  },
+  none: {
+    paddingLeft: "35%",
+    paddingTop: "10%",
+    width: Dimensions.get("window").width,
+  },
+  noneText: {
+    fontSize: 20,
+    height: 170,
+
+    color: colors.secondary,
   },
 });

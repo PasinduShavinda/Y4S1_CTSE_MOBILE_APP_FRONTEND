@@ -42,7 +42,7 @@ const SnackBarAppnt = ({ navigation }) => {
                 <View style = {{marginBottom: 20,borderRadius: 20, width: 80, fontSize: 30}}>
                     <Button
                         title="OK"
-                        onPress={() => navigation.navigate('ViewAppointment')}
+                        onPress={() => navigation.navigate('CustViewDoc')}
                         color="purple"
                         
                     />

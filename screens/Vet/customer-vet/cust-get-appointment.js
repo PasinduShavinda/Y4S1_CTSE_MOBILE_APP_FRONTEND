@@ -14,7 +14,6 @@ import { fireDB } from '../../../database/firebaseConfig';
 import { collection, addDoc } from "firebase/firestore";
 import MyDatePicker from '../../../components/Vet/MyDatePicker';
 import MyTimePicker from '../../../components/Vet/MyTimePicker';
-// import DropDownPicker from 'react-native-dropdown-picker';
 import { Picker } from "@react-native-picker/picker";
 
 export function GetAppointment({ navigation }) {
@@ -22,7 +21,7 @@ export function GetAppointment({ navigation }) {
     const [lname, setLName] = useState('');
     const [email, setEmail] = useState('');
     const [contact, setContact] = useState('');
-    // const [vetName, setVetName] = useState('');
+    const [vetName, setVetName] = useState('');
     const [reason, setReason] = useState('');
     const [appntDate, setAppntDate] = useState('');
     const [appntTime, setAppntTime] = useState('');
@@ -31,12 +30,6 @@ export function GetAppointment({ navigation }) {
     const [showAppntDate, setShowAppntDate] = useState(false);
     const [showAppntTime, setShowAppntTime] = useState(false);
 
-    const [open, setOpen] = useState(false);
-    const [value, setValue] = useState(null);
-    const [vetName, setVetName] = useState([
-        { label: 'Apple', value: 'apple' },
-        { label: 'Banana', value: 'banana' }
-    ]);
 
     const handleSaveAppointment = async () => {
         try {
@@ -86,7 +79,10 @@ export function GetAppointment({ navigation }) {
         }
 
         if (!contact) {
-            handleError('Contact number cannot be empty', 'contact');
+            handleError('Please input phone number', 'contact');
+            isValid = false;
+        } else if (!contact.match(/^(\+\d{1,3}[- ]?)?\d{10}$/)) {
+            handleError('Contact number can only contain numbers', 'contact');
             isValid = false;
         }
 
@@ -100,15 +96,15 @@ export function GetAppointment({ navigation }) {
             isValid = false;
         }
 
-        if (!appntDate) {
-            handleError('Appointment date is mandatory', 'appntDate');
-            isValid = false;
-        }
+        // if (!appntDate) {
+        //     handleError('Appointment date is mandatory', 'appntDate');
+        //     isValid = false;
+        // }
 
-        if (!appntTime) {
-            handleError('Appointment time is mandatory', 'appntTime');
-            isValid = false;
-        }
+        // if (!appntTime) {
+        //     handleError('Appointment time is mandatory', 'appntTime');
+        //     isValid = false;
+        // }
         if (isValid) {
             handleSaveAppointment();
             _navigateToSnackAppnt()
@@ -193,11 +189,11 @@ export function GetAppointment({ navigation }) {
                     <View>
                         <Text style={styles.titleStyle}>Select Veterinarian</Text>
                         <View style={styles.formDataBox}>
-                            <Text>Veterinarian</Text>
-                            <Picker
+                            <Picker style = {{backgroundColor:'#dfddea'}}
                                 selectedValue={vetName}
                                 onValueChange={(itemValue, itemIndex) => setVetName(itemValue)}
-                            >
+                            >   
+                                <Picker.Item label="Select Vet" value="" />
                                 <Picker.Item label="Dr.John Willium" value="Dr.John Willium" />
                                 <Picker.Item label="Dr.Marien Smith" value="Dr.Marien Smith" />
                                 <Picker.Item label="Dr.Shane Perera" value="Dr.Shane Perera" />
@@ -228,8 +224,8 @@ export function GetAppointment({ navigation }) {
                             value={appntDate}
                             placeholder="Select date"
                             editable={false}
-                            onFocus={() => handleError(null, 'appntDate')}
-                            error={errors.appntDate}
+                            // onFocus={() => handleError(null, 'appntDate')}
+                            // error={errors.appntDate}
                         />
                         <View style={{ margin: 20 }}>
                             <Button onPress={() => {
@@ -246,8 +242,8 @@ export function GetAppointment({ navigation }) {
                             value={appntTime}
                             placeholder="time"
                             editable={false}
-                            onFocus={() => handleError(null, 'appntTime')}
-                            error={errors.appntTime}
+                            // onFocus={() => handleError(null, 'appntTime')}
+                            // error={errors.appntTime}
                         />
                         <View style={{ margin: 20 }}>
                             <Button onPress={() => {

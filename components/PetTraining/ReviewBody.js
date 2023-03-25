@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import React, { useState } from "react";
 import AppForm from "./common/AppForm";
 import colors from "../../utils/colors";
@@ -37,16 +37,13 @@ export default function ReviewBody({ onClose, item }) {
       userName: user.name,
       dp: user.dp,
     };
-    console.log(data);
     await addReview(data)
       .then(async () => {
         const training = item;
         const rating = item.rating;
         const totRate = item.ratingCount;
         training.ratingCount += 1;
-        console.log(rating, totRate);
-        training.rating =
-          (rating * totRate + rate) / (training.ratingCount);
+        training.rating = (rating * totRate + rate) / training.ratingCount;
         await updateTraining(training, item.id).then(() => {
           onClose();
         });

@@ -84,7 +84,6 @@ export function AdminViewVets({ navigation }) {
     };
 
     const handleUpdatePress = (item) => {
-        // Navigate to the update form screen with the selected user's ID
         navigation.navigate('AdminUpdateDoc', {
             vetId: item.id,
             name: item.name,
@@ -159,12 +158,14 @@ export function AdminViewVets({ navigation }) {
                                         <Icon
                                             name='edit'
                                             color="#e6b800"
+                                            size={30}
                                             onPress={() => handleUpdatePress(v)}
                                         />
 
                                         <View style={styles.deletebtn}>
                                             <Icon
                                                 name='delete'
+                                                size={30}
                                                 color="#ff3300"
                                                 onPress={() => showConfirmDialog(v)}
                                             />
@@ -192,7 +193,6 @@ export function AdminViewVets({ navigation }) {
                                                 name="place"
                                                 underlayColor="transparent"
                                                 iconStyle={styles.placeIcon}
-                                            // onPress={this.onPressPlace}
                                             />
                                         </View>
                                         <View style={styles.userCityRow}>

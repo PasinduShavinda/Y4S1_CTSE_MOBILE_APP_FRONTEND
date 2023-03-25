@@ -14,7 +14,7 @@ export function CustHome({navigation}){
           </Text>
           <TouchableOpacity
             style={styles.btn}
-            onPress={() => navigation.navigate("CustViewDoc")}
+            onPress={() => navigation.navigate("SplashCustHome")}
           >
             <Text style={styles.text}>Next</Text>
           </TouchableOpacity>
@@ -33,7 +33,6 @@ export function CustHome({navigation}){
       img: {
         height: 450,
         width: "100%",
-        // resizeMode: "contain",
       },
       title: {
         color: "black",
@@ -43,7 +42,6 @@ export function CustHome({navigation}){
       },
       detail: {
         color: "blue",
-        // fontFamily: "Montserrat_400Regular",
         fontSize: 18,
         textAlign: "center",
         paddingHorizontal: 20,
@@ -58,7 +56,6 @@ export function CustHome({navigation}){
         borderRadius: 30,
       },
       text: {
-        // fontFamily: "Montserrat_600SemiBold",
         fontSize: 30,
         color: "white",
       },

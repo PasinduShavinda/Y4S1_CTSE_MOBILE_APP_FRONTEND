@@ -10,10 +10,9 @@ import {
 } from "react-native";
 import React, { useCallback, useEffect, useState } from "react";
 import Screen from "../../components/PetTraining/common/Screen";
-import { currentUser } from "../../services/PetTraining/userService";
+import { currentUser, getUser } from "../../services/PetTraining/userService";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import colors from "../../utils/colors";
-import Rating from "../../components/PetTraining/Rating";
 import AppButton from "../../components/PetTraining/common/AppButton";
 import { ImageSlider } from "react-native-image-slider-banner";
 import Map from "../../components/PetTraining/Map";
@@ -21,33 +20,37 @@ import { auth } from "../../database/firebaseConfig";
 import { deleteTraining } from "../../services/PetTraining/trainingService";
 import routes from "../../navigation/PetTraining/routes";
 import StarRating from "../../components/PetTraining/StartRatingDisplay";
+import timeSince from "../../services/PetTraining/TimeSinceCalc";
 
 export default function TrainingItemScreen({ item, navigation }) {
-  console.log(item);
   const [user, setUser] = useState({});
   const [refreshing, setRefreshing] = useState(false);
   function getCurrentUser() {
     const cUser = currentUser();
     setUser(cUser);
+    setRefreshing(false);
   }
   const imageData = [];
   const images = [...item.images];
   images.forEach((image) => {
     imageData.push({ img: image });
   });
-  const types = [...item.petType];
+
+  const getPostUser = () => {
+    getUser(item.userId, setUser);
+    setRefreshing(false);
+  }
 
   useEffect(() => {
-    getCurrentUser();
+    getPostUser();
   }, []);
   const onRefresh = useCallback(() => {
     setRefreshing(true);
-    getCurrentUser();
+    getPostUser();
   }, []);
   const handleContactButtonPress = () => {
-
-  Linking.openURL(`whatsapp://send?phone=+${item.contact}`);
-}
+    Linking.openURL(`whatsapp://send?phone=+${item.contact}`);
+  };
   return (
     <Screen>
       <ScrollView
@@ -60,27 +63,38 @@ export default function TrainingItemScreen({ item, navigation }) {
             data={imageData}
             autoPlay={true}
             closeIconColor={colors.primary}
-            
           />
         </View>
         {/* 2 */}
         <View style={styles.contactDetails}>
           <Image
             style={styles.avatar}
-            source={require("../../assets/avatar.png")}
+            source={
+              user.dp !== "null"
+                ? { uri: user.dp }
+                : require("../../assets/avatar.png")
+            }
           />
           <View style={{ marginRight: 20, flex: 2 }}>
             <Text style={styles.secHeading}>{user.name}</Text>
-            {auth.currentUser.uid != item.userId && (
-              <AppButton title={"Contact"} style={styles.contactBtn} onPress={handleContactButtonPress} />
-            )}
+            <View>
+              <Text style={styles.timeSince}>{timeSince(item.created)}</Text>
+            </View>
             <View
               style={{
-                marginLeft:25
+                marginLeft: 10,
+                marginBottom: 10,
               }}
             >
               <StarRating rating={item.rating} />
             </View>
+            {auth.currentUser.uid != item.userId && (
+              <AppButton
+                title={"Contact"}
+                style={styles.contactBtn}
+                onPress={handleContactButtonPress}
+              />
+            )}
           </View>
           {auth.currentUser.uid == item.userId && (
             <View style={styles.like}>
@@ -236,12 +250,22 @@ const styles = StyleSheet.create({
     width: 70,
     height: 70,
     margin: 10,
+    borderRadius: 35,
+    borderColor: colors.secondary,
+    borderWidth: 3,
   },
   secHeading: {
     fontSize: 18,
     fontWeight: "bold",
     paddingLeft: 10,
-    marginBottom: 10,
+    marginBottom: 0,
+    color: colors.secondary,
+  },
+  timeSince: {
+    fontSize: 15,
+    fontWeight: "bold",
+    paddingLeft: 10,
+    marginBottom: 5,
     color: colors.secondary,
   },
   secText: {

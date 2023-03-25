@@ -20,8 +20,7 @@ export function CustViewDoc({ navigation }) {
     const [vets, setVets] = useState([]);
     const [search, setSearch] = useState("");
     const [filteredVets, setFilteredVets] = useState([]);
-    const [isLoading, setIsLoading] = useState(true)
-
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         const loadVets = async () => {
@@ -141,7 +140,6 @@ export function CustViewDoc({ navigation }) {
                             exp={v.exp}
                             about={v.about}
                             loc={v.loc}
-                            onPress={() => this.props.navigation.navigate('')}
                         />
                     </View>
                 ])}
@@ -176,15 +174,6 @@ export function CustViewDoc({ navigation }) {
                     />
                 </TouchableOpacity>
             </ScrollView>
-            {/*             
-            <View style={styles.createNewBtnMain}>
-                    <Button
-                        title="Customer View Appointment"
-                        onPress={() => navigation.navigate('ViewAppointment')}
-                        style={styles.createNewBtn}
-                        color="blue"
-                    />
-                </View> */}
 
             <ScrollView
                 horizontal
@@ -209,7 +198,7 @@ export function CustViewDoc({ navigation }) {
                         height: 180,
                         borderRadius: 10,
                         marginTop: 4,
-                        marginLeft:12
+                        marginLeft: 12
 
                     }}
                         source={{
@@ -218,25 +207,6 @@ export function CustViewDoc({ navigation }) {
                     />
                 </TouchableOpacity>
             </ScrollView>
-
-            {/* <Text style={{
-                marginTop: 20,
-                color: "#4f4a4a",
-                fontSize: 18,
-                //fontFamily:"calibri"
-            }}>
-                Best Sellers
-            </Text> */}
-
-
-            {/* <ScrollView
-                showsHorizontalScrollIndicator={false}
-                horizontal>
-                
-                    <Best/>
-                    <Best/>
-                    <Best/>
-            </ScrollView> */}
         </ScrollView>
     );
 }

@@ -2,12 +2,13 @@ import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Dimensions, Button } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
-// import { firebase } from "../firebase/config";
 
-export default function MapScreen({onSave, style, preLocation}) {
+export default function MapScreen({ onSave, style, preLocation }) {
   const [location, setLocation] = useState(null);
   const [marker, setMarker] = useState(null);
-  const [markers, setMarkers] = useState(preLocation !== null ? [preLocation ]: []);
+  const [markers, setMarkers] = useState(
+    preLocation !== null ? [preLocation] : []
+  );
 
   useEffect(() => {
     async function getCurrentLocation() {
@@ -19,7 +20,6 @@ export default function MapScreen({onSave, style, preLocation}) {
       const { coords } = await Location.getCurrentPositionAsync({});
       setLocation(coords);
     }
-    
 
     getCurrentLocation();
   }, []);
@@ -30,13 +30,11 @@ export default function MapScreen({onSave, style, preLocation}) {
   };
 
   const handleSavePress = () => {
-    
-    onSave(marker)
+    onSave(marker);
     const newMarker = {
       latitude: marker.latitude,
       longitude: marker.longitude,
     };
-    console.log(marker)
     setMarkers([]);
     setMarkers([newMarker]);
     setMarker(null);
@@ -80,12 +78,15 @@ export default function MapScreen({onSave, style, preLocation}) {
             <Button title="Save" onPress={handleSavePress} />
           </View>
         )}
-        {markers.length !==0 && (
-          <View style={{marginLeft:10}} >
-            <Button title="Clear" onPress={() => {
-              setMarkers([])
-              setMarker(null)
-            }} />
+        {markers.length !== 0 && (
+          <View style={{ marginLeft: 10 }}>
+            <Button
+              title="Clear"
+              onPress={() => {
+                setMarkers([]);
+                setMarker(null);
+              }}
+            />
           </View>
         )}
       </View>
@@ -107,6 +108,6 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 20,
     alignSelf: "center",
-    flexDirection:"row"
+    flexDirection: "row",
   },
 });

@@ -10,11 +10,13 @@ import {
 } from 'react-native';
 import { fireDB } from '../../../database/firebaseConfig';
 import { getDocs, collection, deleteDoc, doc } from "firebase/firestore";
-import { Icon } from 'react-native-elements'
+import { Button, Icon } from 'react-native-elements'
+import generatePDF from '../../../services/Vet/PDF_Generator';
+import { FontAwesome } from '@expo/vector-icons';
 
 export function ViewAppointment({ navigation }) {
     const [appnts, setAppnts] = useState([]);
-    const [isLoading, setIsLoading] = useState(true)
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         const loadAppnts = async () => {
@@ -40,7 +42,6 @@ export function ViewAppointment({ navigation }) {
     }
 
     const handleUpdatePress = (item) => {
-        // Navigate to the update form screen with the selected user's ID
         navigation.navigate('UpdateAppointment', {
             appntId: item.id,
             fname: item.fname,
@@ -58,7 +59,7 @@ export function ViewAppointment({ navigation }) {
         const appntRef = doc(fireDB, 'appointments', appntId)
         await deleteDoc(appntRef)
             .then(() => {
-                navigation.navigate('ViewAppointment');
+                navigation.navigate('CustHome');
             }).catch((error) => {
                 alert(error.message)
             })
@@ -77,6 +78,7 @@ export function ViewAppointment({ navigation }) {
                     <View style={styles.editbtn}>
                         <Icon
                             name='edit'
+                            size={30}
                             color="#e6b800"
                             onPress={() => handleUpdatePress(item)}
                         />
@@ -84,6 +86,7 @@ export function ViewAppointment({ navigation }) {
                         <View style={styles.deletebtn}>
                             <Icon
                                 name='delete'
+                                size={30}
                                 color="#ff3300"
                                 onPress={() => showConfirmDialog(item)}
                             />
@@ -100,6 +103,15 @@ export function ViewAppointment({ navigation }) {
                     <Text style={styles.userNameText}>Reason : {item.reason}</Text>
                     <Text style={styles.userNameText}>Appointement Date : {item.appntDate}</Text>
                     <Text style={styles.userNameText}>Appointement Time {item.appntTime}</Text>
+                </View>
+                <View>
+                    <Button
+                        icon={
+                            <FontAwesome name={'download'} size={28} color={'white'} />
+                        }
+                        onPress={generatePDF}
+                        color="red"
+                    ></Button>
                 </View>
             </ImageBackground>
         </View>
@@ -127,12 +139,12 @@ export function ViewAppointment({ navigation }) {
     return (
         <View style={styles.mainSheet}>
             <View>
-                <Text style={styles.createHeader}> Appointement Details</Text>
+                <Text style={styles.createHeader}> Appointment Details</Text>
             </View>
             <View style={{
                 marginLeft: 20,
                 marginRight: 20,
-                marginBottom: 100
+                marginBottom: 50
             }}>
                 <FlatList
                     data={appnts}
@@ -238,10 +250,9 @@ const styles = StyleSheet.create({
         // fontWeight: 'bold',
         paddingBottom: 8,
         textAlign: 'justify',
-        paddingTop:11
+        paddingTop: 11
     },
     headerBackgroundImage: {
-        paddingBottom: 50,
         paddingTop: 25,
         borderRadius: 15,
     },

@@ -2,8 +2,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { doc, getDoc, setDoc } from "firebase/firestore";
-import { auth, db, fireDB } from "../../database/firebaseConfig";
+import { auth, db } from "../../database/firebaseConfig";
 import { onValue, ref, set, update } from "firebase/database";
 
 export async function registerUser(user) {
@@ -14,8 +13,14 @@ export async function loginUser(user) {
 }
 export async function saveUser(user, uid) {
   const Ref = ref(db, `users/${uid}`);
-  return await set(Ref, { name: user.name, isAdmin: false, id: uid, dp: "null" });
+  return await set(Ref, {
+    name: user.name,
+    isAdmin: false,
+    id: uid,
+    dp: "null",
+  });
 }
+
 export function currentUser() {
   const user = auth.currentUser;
   let cuser = null;
@@ -27,6 +32,16 @@ export function currentUser() {
     }
   });
   return cuser;
+}
+export function getUser(id, setState) {
+  const Ref = ref(db, `users/${id}`);
+  const listner = onValue(Ref, (snapshot) => {
+    const data = snapshot.val();
+    if (data) {
+      setState(data);
+    }
+  });
+  return listner;
 }
 
 export async function updateUser(user) {

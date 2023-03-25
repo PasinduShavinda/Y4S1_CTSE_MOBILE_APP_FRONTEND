@@ -13,37 +13,34 @@ import {
 } from "react-native";
 import React, { useCallback, useEffect, useState } from "react";
 import Screen from "../../components/PetTraining/common/Screen";
-import { auth, db } from "../../database/firebaseConfig";
+import { auth } from "../../database/firebaseConfig";
 import { currentUser } from "../../services/PetTraining/userService";
-import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import routes from "../../navigation/PetTraining/routes";
 import colors from "../../utils/colors";
-import {
-  getAllTrainings,
-  getAllTrainingsByUserSub,
-  getAllTrainingsSub,
-} from "../../services/PetTraining/trainingService";
+import { getAllTrainingsByUserSub } from "../../services/PetTraining/trainingService";
 import ItemsRow from "../../components/PetTraining/ItemsRow";
-import { onValue, ref } from "firebase/database";
 import ProflePicUploadDialogBody from "../../components/PetTraining/ProflePicUploadDialogBody";
+import generatepdf from "../../services/PetTraining/pdfGenerator";
+import AppButton from "../../components/PetTraining/common/AppButton";
+import LoadingScreen from "../../components/PetTraining/LoadingScreen";
 
 export default function ProfileScreen({ navigation }) {
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(null);
   const [listings, setListings] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
     getCurrentUser();
+    getAllTrainingsByUserSub(setListings);
     getAll();
   }, []);
   async function getCurrentUser() {
     const cUser = currentUser();
-    console.log(cUser);
     setUser(cUser);
   }
-  const getAll = async () => {
-    getAllTrainingsByUserSub(setListings);
+  const getAll = () => {
     setRefreshing(false);
   };
 
@@ -63,6 +60,7 @@ export default function ProfileScreen({ navigation }) {
   const onRefresh = useCallback(() => {
     setRefreshing(true);
     getCurrentUser();
+    getAllTrainingsByUserSub(setListings);
     getAll();
   }, []);
 
@@ -73,6 +71,16 @@ export default function ProfileScreen({ navigation }) {
   const closeDialog = () => {
     setModalVisible(false);
   };
+  const handleGeneratePDF = async () => {
+    await generatepdf(listings);
+  };
+  if (user === null) {
+    return (
+      <Screen>
+        <LoadingScreen />
+      </Screen>
+    );
+  }
   return (
     <Screen>
       <ScrollView
@@ -136,9 +144,15 @@ export default function ProfileScreen({ navigation }) {
                 <Text style={styles.itemText}>Training</Text>
               </View>
             </TouchableHighlight>
-            <TouchableHighlight>
+            <TouchableHighlight
+              underlayColor={colors.lightPurple}
+              onPress={() => navigation.navigate("PetSitterRegister")}
+            >
               <View style={styles.itemwithText}>
-                <Image style={styles.item} />
+                <Image
+                  style={styles.item}
+                  source={require("../../assets/pet-sitter.png")}
+                />
                 <Text style={styles.itemText}>Sitting</Text>
               </View>
             </TouchableHighlight>
@@ -154,16 +168,35 @@ export default function ProfileScreen({ navigation }) {
                 <Text style={styles.itemText}>Selling</Text>
               </View>
             </TouchableHighlight>
-            <TouchableHighlight>
+            <TouchableHighlight
+              underlayColor={colors.lightPurple}
+              onPress={() => navigation.navigate("CustHome")}
+            >
               <View style={styles.itemwithText}>
-                <Image style={styles.item} />
-                <Text style={styles.itemText}>Vat</Text>
+                <Image
+                  style={styles.item}
+                  source={require("../../assets/vet.jpg")}
+                />
+                <Text style={styles.itemText}>VET</Text>
               </View>
             </TouchableHighlight>
           </View>
         </View>
         <View style={styles.myListings}>
-          <Text style={styles.secHeading}>My Listings</Text>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              paddingRight: 10,
+            }}
+          >
+            <Text style={styles.secHeading}>My Listings</Text>
+            <AppButton
+              style={styles.pdf}
+              title="Generate PDF"
+              onPress={handleGeneratePDF}
+            />
+          </View>
           <ItemsRow listings={listings} navigation={navigation} />
         </View>
         <Button
@@ -211,7 +244,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     elevation: 8,
     shadowColor: colors.secondary,
-    paddingBottom: 10,
+    paddingBottom: 20,
   },
   secHeading: {
     fontSize: 18,
@@ -219,9 +252,13 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     color: colors.secondary,
   },
+  pdf: {
+    width: 130,
+    height: 35,
+  },
   itemRow: {
     flexDirection: "row",
-    marginTop: 5,
+    marginTop: 7,
   },
   itemwithText: {
     flexDirection: "column",
@@ -239,7 +276,7 @@ const styles = StyleSheet.create({
     borderColor: colors.primary,
     borderWidth: 3,
     borderRadius: 50,
-    margin: 10,
+    margin: 8,
   },
   myListings: {
     borderColor: colors.white,
