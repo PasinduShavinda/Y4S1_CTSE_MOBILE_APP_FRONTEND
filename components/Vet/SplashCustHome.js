@@ -75,7 +75,7 @@ export function CustHomeSplash({ navigation }) {
       ])
         .start();
 
-    }, 4000);
+    }, 2000);
 
   }, [])
 

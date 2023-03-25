@@ -60,7 +60,7 @@ export function ViewAppointment({ navigation }) {
         const appntRef = doc(fireDB, 'appointments', appntId)
         await deleteDoc(appntRef)
             .then(() => {
-                navigation.navigate('ViewAppointment');
+                navigation.navigate('CustHome');
             }).catch((error) => {
                 alert(error.message)
             })
@@ -105,6 +105,15 @@ export function ViewAppointment({ navigation }) {
                     <Text style={styles.userNameText}>Appointement Date : {item.appntDate}</Text>
                     <Text style={styles.userNameText}>Appointement Time {item.appntTime}</Text>
                 </View>
+                <View>
+                    <Button
+                        icon={
+                            <FontAwesome name={'download'} size={28} color={'white'} />
+                        }
+                        onPress={generatePDF}
+                        color="red"
+                    ></Button>
+                </View>
             </ImageBackground>
         </View>
     );
@@ -131,7 +140,7 @@ export function ViewAppointment({ navigation }) {
     return (
         <View style={styles.mainSheet}>
             <View>
-                <Text style={styles.createHeader}> Appointement Details</Text>
+                <Text style={styles.createHeader}> Appointment Details</Text>
             </View>
             <View style={{
                 marginLeft: 20,
@@ -143,13 +152,6 @@ export function ViewAppointment({ navigation }) {
                     renderItem={renderAppointmentItem}
                     keyExtractor={(item) => item.id}
                 />
-                <Button
-                    icon={
-                        <FontAwesome name={'download'} size={28} color={'white'} />
-                    }
-                    onPress={generatePDF}
-                    color="red"
-                ></Button>
             </View>
         </View>
     );
@@ -252,7 +254,6 @@ const styles = StyleSheet.create({
         paddingTop: 11
     },
     headerBackgroundImage: {
-        paddingBottom: 50,
         paddingTop: 25,
         borderRadius: 15,
     },

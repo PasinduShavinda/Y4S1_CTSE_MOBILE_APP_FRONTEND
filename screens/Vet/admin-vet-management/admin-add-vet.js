@@ -105,6 +105,9 @@ export function AdminAddDoctor({navigation}) {
         if (!contact) {
             handleError('Please input phone number', 'contact');
             isValid = false;
+        } else if (!contact.match(/^(\+\d{1,3}[- ]?)?\d{10}$/)) {
+            handleError('Please input a valid contact number', 'contact');
+            isValid = false;
         }
 
         if (!email) {
@@ -119,10 +122,10 @@ export function AdminAddDoctor({navigation}) {
             handleError('Please input charge', 'charge');
             isValid = false;
         }
-        //   else if (!inputs.email.match(/\S+@\S+\.\S+/)) {
-        //     handleError('Please input a valid email', 'email');
-        //     isValid = false;
-        //   }
+          else if (!charge.match(/^-?(\d+\.?\d*)$|(\d*\.?\d+)$/)) {
+            handleError('Please input only numbers', 'charge');
+            isValid = false;
+          }
 
         if (!exp) {
             handleError('Please input experience', 'exp');

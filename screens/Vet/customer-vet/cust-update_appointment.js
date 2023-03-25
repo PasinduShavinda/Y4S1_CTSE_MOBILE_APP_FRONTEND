@@ -42,7 +42,7 @@ export function UpdateAppointment({ route, navigation }) {
             appntTime: newAppntTime,
         }).then(() => {
             Alert.alert('Successfully Updated')
-            navigation.navigate('ViewAppointment')
+            navigation.navigate('CustHome')
         }).catch((error) => {
             alert(error.message)
         })

@@ -80,7 +80,10 @@ export function GetAppointment({ navigation }) {
         }
 
         if (!contact) {
-            handleError('Contact number cannot be empty', 'contact');
+            handleError('Please input phone number', 'contact');
+            isValid = false;
+        } else if (!contact.match(/^(\+\d{1,3}[- ]?)?\d{10}$/)) {
+            handleError('Contact number can only contain numbers', 'contact');
             isValid = false;
         }
 
@@ -94,15 +97,15 @@ export function GetAppointment({ navigation }) {
             isValid = false;
         }
 
-        if (!appntDate) {
-            handleError('Appointment date is mandatory', 'appntDate');
-            isValid = false;
-        }
+        // if (!appntDate) {
+        //     handleError('Appointment date is mandatory', 'appntDate');
+        //     isValid = false;
+        // }
 
-        if (!appntTime) {
-            handleError('Appointment time is mandatory', 'appntTime');
-            isValid = false;
-        }
+        // if (!appntTime) {
+        //     handleError('Appointment time is mandatory', 'appntTime');
+        //     isValid = false;
+        // }
         if (isValid) {
             handleSaveAppointment();
             _navigateToSnackAppnt()
@@ -222,8 +225,8 @@ export function GetAppointment({ navigation }) {
                             value={appntDate}
                             placeholder="Select date"
                             editable={false}
-                            onFocus={() => handleError(null, 'appntDate')}
-                            error={errors.appntDate}
+                            // onFocus={() => handleError(null, 'appntDate')}
+                            // error={errors.appntDate}
                         />
                         <View style={{ margin: 20 }}>
                             <Button onPress={() => {
@@ -240,8 +243,8 @@ export function GetAppointment({ navigation }) {
                             value={appntTime}
                             placeholder="time"
                             editable={false}
-                            onFocus={() => handleError(null, 'appntTime')}
-                            error={errors.appntTime}
+                            // onFocus={() => handleError(null, 'appntTime')}
+                            // error={errors.appntTime}
                         />
                         <View style={{ margin: 20 }}>
                             <Button onPress={() => {
