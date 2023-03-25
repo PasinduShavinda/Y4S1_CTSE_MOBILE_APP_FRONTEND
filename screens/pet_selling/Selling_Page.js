@@ -16,6 +16,7 @@ import { ListItem, Overlay, SearchBar } from "react-native-elements";
 // import Ionicons from "@expo/vector-icons/Ionicons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
 // import Item from "../../components/pet_selling/Item";
 import { Foundation } from "@expo/vector-icons";
 import { get_all_pets } from "../../services/pet_selling/selling_service";
@@ -188,9 +189,9 @@ export default function Selling_Page({ navigation, route }) {
             <Text style={styles.categoryNames}>Birds</Text>
           </View>
           <View style={styles.topBtn}>
-            <MaterialCommunityIcons.Button
+            <MaterialIcons.Button
               style={styles.iconStyle}
-              name="bird"
+              name="clear-all"
               size={30}
               color="black"
               backgroundColor="#ffffff"
