@@ -25,7 +25,8 @@ var petsType = "Cats";
 
 export default function Selling_Page({ navigation, route }) {
   const [sellingPets, setsellingPets] = useState([]);
-  const [petType, setPetType] = useState("Dog");
+  // const [petType, setPetType] = useState("Dog");
+  const [searchBar, setSearchBar] = useState("");
 
   useEffect(() => {
     const mountSellingPets = async () => {
@@ -134,6 +135,27 @@ export default function Selling_Page({ navigation, route }) {
 
     // .filter((item) => item.category === petsType)
   };
+  const updateSearch = async (search) => {
+    setSearchBar(search);
+    console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>updateSearch");
+    console.log(searchBar);
+    const search_data = await get_all_pets();
+    console.log(">>>>>>>>>>>>>>>>>>>>>>Birds1");
+    console.log(search_data);
+    const array_data_Birds = [];
+    search_data.forEach((response) => {
+      array_data_Birds.push({ id: response.id, ...response.data() });
+    });
+    // setsellingPets(array_data_Birds);
+    const data_Birds = array_data_Birds.filter(function(item) {
+      return item.name == searchBar;
+    });
+    // alert("");
+    // petsType = type;
+    console.log(">>>>>>>>>>>>>>>>>>>>>>Birds2");
+    console.log(data_Birds);
+    setsellingPets(data_Birds);
+  };
 
   return (
     <View style={styles.mainContainer}>
@@ -143,6 +165,8 @@ export default function Selling_Page({ navigation, route }) {
         lightTheme
         round
         autoCorrect={false}
+        onChangeText={updateSearch}
+        value={searchBar}
       />
       {/* <FontAwesome5.Button
           style={styles.iconStyle}
