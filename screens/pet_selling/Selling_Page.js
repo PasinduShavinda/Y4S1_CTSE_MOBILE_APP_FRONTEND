@@ -41,22 +41,38 @@ export default function Selling_Page({ navigation, route }) {
     };
     mountSellingPets();
   }, []);
-  const filterByTypeDog = async () => {
-    petsType = "Dogs";
-    // alert(petsType);
-    // const filteredArray =
+
+  const mountSellingPetsAll = async () => {
     const data_ = await get_all_pets();
     const array_data = [];
     data_.forEach((response) => {
       array_data.push({ id: response.id, ...response.data() });
     });
     setsellingPets(array_data);
-    const data = sellingPets.filter(function(item) {
+    console.log("===============data===================>>>>>>>>>>>>>>>>>>>>>>");
+    console.log(sellingPets);
+  };
+
+  const filterByTypeDog = async () => {
+    petsType = "Dogs";
+    // alert(petsType);
+    // const filteredArray =
+    const data_Dog = await get_all_pets();
+    console.log(">>>>>>>>>>>>>>>>>>>>>>Dog1");
+    console.log(data_Dog);
+    const array_data_Dog = [];
+    data_Dog.forEach((response) => {
+      array_data_Dog.push({ id: response.id, ...response.data() });
+    });
+    // setsellingPets(array_data);
+    const data_dog = array_data_Dog.filter(function(item) {
       return item.category == "Dog";
     });
     // alert("");
     // petsType = type;
-    setsellingPets(data);
+    console.log(">>>>>>>>>>>>>>>>>>>>>>Dog2");
+    console.log(data_dog);
+    setsellingPets(data_dog);
   };
   const filterByTypeCats = async () => {
     // alert(petsType);
@@ -68,30 +84,74 @@ export default function Selling_Page({ navigation, route }) {
     // alert("");
     // petsType = type;
     // setsellingPets(data);
-    const data_ = await get_all_pets();
-    const array_data = [];
-    data_.forEach((response) => {
-      array_data.push({ id: response.id, ...response.data() });
+    const data_Cat = await get_all_pets();
+    console.log(">>>>>>>>>>>>>>>>>>>>>>Cat1");
+    console.log(data_Cat);
+    const array_data_cat = [];
+    data_Cat.forEach((response) => {
+      array_data_cat.push({ id: response.id, ...response.data() });
     });
-    setsellingPets(array_data);
-    const data = sellingPets.filter(function(item) {
+    // setsellingPets(array_data_cat);
+    const data_cat = array_data_cat.filter(function(item) {
       return item.category == "Cats";
     });
     // alert("");
     // petsType = type;
-    setsellingPets(data);
+    console.log(">>>>>>>>>>>>>>>>>>>>>>Cat2");
+    console.log(data_cat);
+    setsellingPets(data_cat);
+
+    // .filter((item) => item.category === petsType)
+  };
+
+  const filterByTypeBirds = async () => {
+    // alert(petsType);
+    petsType = "Birds";
+    // const filteredArray =
+    // const data = sellingPets.filter(function (item) {
+    //   return item.category == "Dog";
+    // });
+    // alert("");
+    // petsType = type;
+    // setsellingPets(data);
+    const data__Birds = await get_all_pets();
+    console.log(">>>>>>>>>>>>>>>>>>>>>>Birds1");
+    console.log(data__Birds);
+    const array_data_Birds = [];
+    data__Birds.forEach((response) => {
+      array_data_Birds.push({ id: response.id, ...response.data() });
+    });
+    // setsellingPets(array_data_Birds);
+    const data_Birds = array_data_Birds.filter(function(item) {
+      return item.category == "Birds";
+    });
+    // alert("");
+    // petsType = type;
+    console.log(">>>>>>>>>>>>>>>>>>>>>>Birds2");
+    console.log(data_Birds);
+    setsellingPets(data_Birds);
 
     // .filter((item) => item.category === petsType)
   };
 
   return (
     <View style={styles.mainContainer}>
+      {/* <View style={styles.searchBarComponent}> */}
       <SearchBar
         placeholder="Search Here..."
         lightTheme
         round
         autoCorrect={false}
       />
+      {/* <FontAwesome5.Button
+          style={styles.iconStyle}
+          name="dog"
+          size={30}
+          color="black"
+          backgroundColor="#ffffff"
+          onPress={filterByTypeDog}
+        />
+      </View> */}
       <View>
         <View style={styles.container}>
           <View style={styles.topBtn}>
@@ -123,8 +183,20 @@ export default function Selling_Page({ navigation, route }) {
               size={30}
               color="black"
               backgroundColor="#ffffff"
+              onPress={filterByTypeBirds}
             />
             <Text style={styles.categoryNames}>Birds</Text>
+          </View>
+          <View style={styles.topBtn}>
+            <MaterialCommunityIcons.Button
+              style={styles.iconStyle}
+              name="bird"
+              size={30}
+              color="black"
+              backgroundColor="#ffffff"
+              onPress={mountSellingPetsAll}
+            />
+            <Text style={styles.categoryNames}>All</Text>
           </View>
         </View>
       </View>
@@ -285,5 +357,10 @@ const styles = StyleSheet.create({
   scrollMargin: {
     marginBottom: 40,
     paddingBottom: 100,
+  },
+  searchBarComponent: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "flex-end",
   },
 });
