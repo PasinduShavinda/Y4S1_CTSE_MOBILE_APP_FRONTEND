@@ -1,8 +1,0 @@
-
-IT20122096	De Alwis Gunathilake W.L.D.C.K	-Pet Training, Login, Registration
-
-IT20122614	Madushan S.H.K	---------------- Pet Selling
-
-IT20140298	Shavinda W.A.P	---------------- Veterinary Service
-
-IT20137700	Kalansooriya S.H. -------------- Pet Sitting	
