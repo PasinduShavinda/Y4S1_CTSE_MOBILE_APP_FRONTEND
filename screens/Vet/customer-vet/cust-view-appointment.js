@@ -42,7 +42,6 @@ export function ViewAppointment({ navigation }) {
     }
 
     const handleUpdatePress = (item) => {
-        // Navigate to the update form screen with the selected user's ID
         navigation.navigate('UpdateAppointment', {
             appntId: item.id,
             fname: item.fname,

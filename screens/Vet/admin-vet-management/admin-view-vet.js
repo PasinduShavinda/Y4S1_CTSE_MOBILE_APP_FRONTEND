@@ -84,7 +84,6 @@ export function AdminViewVets({ navigation }) {
     };
 
     const handleUpdatePress = (item) => {
-        // Navigate to the update form screen with the selected user's ID
         navigation.navigate('AdminUpdateDoc', {
             vetId: item.id,
             name: item.name,
@@ -194,7 +193,6 @@ export function AdminViewVets({ navigation }) {
                                                 name="place"
                                                 underlayColor="transparent"
                                                 iconStyle={styles.placeIcon}
-                                            // onPress={this.onPressPlace}
                                             />
                                         </View>
                                         <View style={styles.userCityRow}>

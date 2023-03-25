@@ -14,7 +14,6 @@ import { fireDB } from '../../../database/firebaseConfig';
 import { collection, addDoc } from "firebase/firestore";
 import MyDatePicker from '../../../components/Vet/MyDatePicker';
 import MyTimePicker from '../../../components/Vet/MyTimePicker';
-// import DropDownPicker from 'react-native-dropdown-picker';
 import { Picker } from "@react-native-picker/picker";
 
 export function GetAppointment({ navigation }) {

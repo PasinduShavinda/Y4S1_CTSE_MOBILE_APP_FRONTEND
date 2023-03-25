@@ -44,14 +44,6 @@ export function AdminUpdateVet({ route, navigation }) {
   }
 
   const handleChooseImage = async () => {
-    // Request permission to access the user's camera roll
-    // const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    // if (status !== 'granted') {
-    //   Alert.alert('Permission denied', 'Sorry, we need camera roll permissions to make this work!', [{ text: 'OK' }]);
-    //   return;
-    // }
-
-    // Launch the image picker and allow the user to choose an image
     const result = await ImagePicker.launchImageLibraryAsync({ mediaTypes: ImagePicker.MediaTypeOptions.Images, allowsEditing: true, aspect: [4, 3], quality: 1 });
     if (!result.canceled) {
       setImageUri(result.assets[0].uri);
@@ -106,11 +98,7 @@ export function AdminUpdateVet({ route, navigation }) {
       handleError('Please input charge', 'charge');
       isValid = false;
     }
-    //   else if (!inputs.email.match(/\S+@\S+\.\S+/)) {
-    //     handleError('Please input a valid email', 'email');
-    //     isValid = false;
-    //   }
-
+    
     if (!exp) {
       handleError('Please input experience', 'exp');
       isValid = false;

@@ -32,7 +32,6 @@ export function DocParts(props) {
                 marginVertical: 10
             }}>
                 <Text style={{
-                    // fontFamily: "Bold",
                     color: "#4f4a4a",
                     fontSize: 17,
                     marginTop: 5,
@@ -45,7 +44,6 @@ export function DocParts(props) {
                 color: "red",
                 fontSize: 18,
                 marginTop: 5,
-                // fontFamily: "Bold"
             }}>
                 {props.spec}
             </Text>
@@ -59,13 +57,10 @@ export function DocParts(props) {
                 <Icon
                     name="phone"
                     underlayColor="transparent"
-                // onPress={this.onPressPlace}
                 />
                 <View>
                     <Text style={{
                         fontSize: 15,
-                        
-                        // fontFamily: "Bold"
                     }}>{props.contact}</Text>
                 </View>
                 <View style={{
@@ -84,12 +79,10 @@ export function DocParts(props) {
                 <Icon
                     name="email"
                     underlayColor="transparent"
-                // onPress={this.onPressPlace}
                 />
                 <View>
                     <Text style={{
                         fontSize: 15,
-                        // fontFamily: "Bold"
                     }}>{props.email}</Text>
                 </View>
                 <View style={{
@@ -107,12 +100,10 @@ export function DocParts(props) {
                 <Icon
                     name="place"
                     underlayColor="transparent"
-                // onPress={this.onPressPlace}
                 />
                 <View>
                     <Text style={{
                         fontSize: 15,
-                        // fontFamily: "Bold"
                     }}>{props.loc}</Text>
                 </View>
                 <View style={{
@@ -130,12 +121,10 @@ export function DocParts(props) {
                 <Icon
                     name=""
                     underlayColor="transparent"
-                // onPress={this.onPressPlace}
                 />
                 <View>
                     <Text style={{
                         fontSize: 15,
-                        // fontFamily: "Bold"
                     }}>Charges : LKR {props.charge}</Text>
                 </View>
                 <View style={{
@@ -153,12 +142,10 @@ export function DocParts(props) {
                 <Icon
                     name=""
                     underlayColor="transparent"
-                // onPress={this.onPressPlace}
                 />
                 <View>
                     <Text style={{
                         fontSize: 15,
-                        // fontFamily: "Bold"
                     }}>Experience : {props.exp}</Text>
                 </View>
                 <View style={{
@@ -176,12 +163,10 @@ export function DocParts(props) {
                 <Icon
                     name=""
                     underlayColor="transparent"
-                // onPress={this.onPressPlace}
                 />
                 <View>
                     <Text style={{
                         fontSize: 15,
-                        // fontFamily: "Bold"
                     }}>About : {props.about}</Text>
                 </View>
                 <View style={{

@@ -3,16 +3,11 @@ import {
     StyleSheet,
     Text,
     View,
-    TouchableOpacity,
-    Image,
-    TextInput,
     SafeAreaView,
     ScrollView,
-    FlatList,
     Button,
     Alert,
 } from 'react-native';
-//import Icon from "react-native-vector-icons/FontAwesome";
 import InputField from '../../../components/Vet/InputField';
 import COLORS from '../../../utils/Vet/colors';
 import { fireDB } from '../../../database/firebaseConfig';

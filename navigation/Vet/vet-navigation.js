@@ -9,11 +9,9 @@ import { ViewAppointment } from '../../screens/Vet/customer-vet/cust-view-appoin
 import { UpdateAppointment } from '../../screens/Vet/customer-vet/cust-update_appointment';
 import { CustViewDoc } from '../../screens/Vet/customer-vet/cust-view-vet';
 import { CustHome } from '../../screens/Vet/customer-vet/cust-vet-home';
-import { CustDash } from '../../screens/Vet/customer-vet/cust-vet-dashboard';
 import { AdminDash } from '../../screens/Vet/admin-vet-management/admin-dashboard';
 import SnackBarSave from '../../components/Vet/SnackBar';
 import SnackBarAppnt from '../../components/Vet/SnackBarAppnt';
-import { Splash } from '../../components/Vet/SplashCustHome';
 
 const Stack = createNativeStackNavigator();
 
@@ -33,10 +31,8 @@ export default function VetNavigation() {
         <Stack.Screen name="UpdateAppointment" component={UpdateAppointment} />
         <Stack.Screen name="CustViewDoc" component={CustViewDoc} />
         <Stack.Screen name="CustHome" component={CustHome} />
-        <Stack.Screen name="CustDash" component={CustDash} />
         <Stack.Screen name="SnackSave" component={SnackBarSave}/>
         <Stack.Screen name="SnackSaveAppnt" component={SnackBarAppnt}/>
-        <Stack.Screen name="Splash" component={Splash}/>
 
       </Stack.Navigator>
   );

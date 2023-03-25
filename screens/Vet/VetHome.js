@@ -3,14 +3,9 @@ import {
     StyleSheet,
     Text,
     View,
-    TouchableOpacity,
-    Image,
-    TextInput,
     SafeAreaView,
     ScrollView,
-    FlatList,
     Button,
-    Alert,
 } from 'react-native';
 
 export function VetHome({ navigation }) {
@@ -19,73 +14,27 @@ export function VetHome({ navigation }) {
             <View>
                 <Text style={styles.createBogHeader}>Vet Home Page</Text>
             </View>
-        <ScrollView>
-            <View style={styles.bodySheet}>
-                
-                {/* <View style={styles.createNewBtnMain}>
-                    <Button
-                        title="Admin Add Doctor"
-                        onPress={() => navigation.navigate('AdminAddDoc')}
-                        style={styles.createNewBtn}
-                        color="blue"
-                    />
-                </View>
+            <ScrollView>
+                <View style={styles.bodySheet}>
+                    <View style={styles.createNewBtnMain}>
+                        <Button
+                            title="Customer Home Page"
+                            onPress={() => navigation.navigate('CustHome')}
+                            style={styles.createNewBtn}
+                            color="blue"
+                        />
+                    </View>
 
-                <View style={styles.createNewBtnMain}>
-                    <Button
-                        title="Admin View Doctor"
-                        onPress={() => navigation.navigate('AdminViewDoc')}
-                        style={styles.createNewBtn}
-                        color="blue"
-                    />
-                </View>
+                    <View style={styles.createNewBtnMain}>
+                        <Button
+                            title="Admin Dashboard"
+                            onPress={() => navigation.navigate('AdminDash')}
+                            style={styles.createNewBtn}
+                            color="blue"
+                        />
+                    </View>
 
-                <View style={styles.createNewBtnMain}>
-                    <Button
-                        title="Customer Get Appointment"
-                        onPress={() => navigation.navigate('GetAppointment')}
-                        style={styles.createNewBtn}
-                        color="blue"
-                    />
                 </View>
-
-                <View style={styles.createNewBtnMain}>
-                    <Button
-                        title="Customer View Appointment"
-                        onPress={() => navigation.navigate('ViewAppointment')}
-                        style={styles.createNewBtn}
-                        color="blue"
-                    />
-                </View>
-
-                <View style={styles.createNewBtnMain}>
-                    <Button
-                        title="Customer View Vets"
-                        onPress={() => navigation.navigate('CustViewDoc')}
-                        style={styles.createNewBtn}
-                        color="blue"
-                    />
-                </View> */}
-
-                <View style={styles.createNewBtnMain}>
-                    <Button
-                        title="Customer Home Page"
-                        onPress={() => navigation.navigate('CustHome')}
-                        style={styles.createNewBtn}
-                        color="blue"
-                    />
-                </View>
-
-                <View style={styles.createNewBtnMain}>
-                    <Button
-                        title="Admin Dashboard"
-                        onPress={() => navigation.navigate('AdminDash')}
-                        style={styles.createNewBtn}
-                        color="blue"
-                    />
-                </View>
-                
-            </View>
             </ScrollView>
         </SafeAreaView>
     );
@@ -93,7 +42,6 @@ export function VetHome({ navigation }) {
 
 const styles = StyleSheet.create({
     createBogHeader: {
-        //   color: "blue",
         textAlign: "center",
         fontSize: 22,
         marginTop: 80,
@@ -138,7 +86,6 @@ const styles = StyleSheet.create({
         marginTop: 10,
     },
     titleStyle: {
-        //   color: "blue",
         fontSize: 16,
         marginBottom: 15,
         marginTop: 32,
@@ -148,20 +95,17 @@ const styles = StyleSheet.create({
         padding: 10,
         outline: 1,
         borderBottomWidth: 2,
-        //   borderColor: "blue",
     },
     multiText: {
         paddingLeft: 10,
         outline: 1,
         borderWidth: 2,
-        //   borderColor: "blue",
     },
     dateInput: {
         height: 40,
         padding: 10,
         outline: 1,
         borderWidth: 2,
-        //   borderColor: "blue",
     },
     createNewBtn: {
         marginTop: 50,
@@ -170,7 +114,7 @@ const styles = StyleSheet.create({
         marginLeft: 30,
     },
     createNewBtnMain: {
-        marginTop:5,
+        marginTop: 5,
         marginBottom: 20,
         paddingBottom: 20,
     },
